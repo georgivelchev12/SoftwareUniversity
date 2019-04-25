@@ -1,2 +1,1 @@
-function solve(a){
-  asdas
+
