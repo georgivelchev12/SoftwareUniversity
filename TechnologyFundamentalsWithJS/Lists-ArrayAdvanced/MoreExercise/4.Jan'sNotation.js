@@ -36,6 +36,9 @@ function solve(arr) {
         }
     }
 }
-solve([3,
+solve([5,
+    3,
     4,
-    '+']);
+    '*',
+    '-']
+   );
