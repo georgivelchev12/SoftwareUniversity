@@ -1,10 +1,6 @@
 
 function Vacation(number, students, days) {
-    let studentsprice = 0;
-    let businessprice = 0;
-    let regularprice = 0;
     let sum = 0;
-    let totalprice = 0;
     if (days == "Friday" && students == "Students") {
         sum = number * 8.45;
     }
@@ -32,6 +28,7 @@ function Vacation(number, students, days) {
     else if (days == "Sunday" && students == "Regular") {
         sum = number * 22.50;
     }
+    
     if (number >= 30 && students == "Students") {
         sum = sum - (0.15 * sum);
     }
