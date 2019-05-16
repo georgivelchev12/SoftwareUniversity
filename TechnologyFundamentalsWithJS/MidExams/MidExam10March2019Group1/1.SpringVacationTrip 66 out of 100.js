@@ -6,11 +6,12 @@ function solve(arr) {
     let food = arr.shift();
     let priceForRoom = arr.shift();
     let travelledDistance;
-   // let strtoarr = travelledDistance.split(' ');
+    // let strtoarr = travelledDistance.split(' ');
     let recievedMoney = 0;
     let consumedFuel = 0;
+
     if (groupPeople > 10) {
-        priceForRoom*=0.75;
+        priceForRoom *= 0.75;
     }
     let foodExpenses = food * groupPeople * days;
     let priceHotelAllNights = priceForRoom * groupPeople * days;
@@ -34,11 +35,23 @@ function solve(arr) {
         let money = budget - currentExpenses;
         console.log(`You have reached the destination. You have ${money.toFixed(2)}$ budget left.`);
     }
-    else{
+    else {
         let money = currentExpenses - budget;
         console.log(`Not enough money to continue the trip. You need ${money.toFixed(2)}$ more.`);
-        
     }
-    
-
 }
+
+solve([7,
+    12000,
+    5,
+    1.5,
+    10,
+    20,
+    512,
+    318,
+    202,
+    154,
+    222,
+    108,
+    123
+])
