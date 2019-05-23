@@ -13,7 +13,7 @@ function solve(input) {
     let studentEntries = [...students.entries()];
 
     
-    studentEntries.sort((a,b) => average(a,b));
+    studentEntries.sort((a,b) => average(a,b)) //(average(a[1]) - average(b[1])));
 
     for (const line of studentEntries) {
         console.log(line[0] + ': ' + line[1].join(', '));
@@ -34,6 +34,8 @@ function solve(input) {
 
         return Aaverage - Baverage;
     }
+
+    let average = grades => grades.reduce((a,b) => a + b) /grades.length;
 }
 
 solve(['Lilly 4 6 6 5',
