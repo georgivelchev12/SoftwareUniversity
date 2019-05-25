@@ -20,8 +20,7 @@ function solve(input) {
             else {
                 existingTown.set(town,price)
             }
-        }
-        
+        } 
     }
 
     let countriesEntries = [...countries.entries()]
@@ -31,11 +30,7 @@ function solve(input) {
         let townEntries = [...townsMap]
         .sort((a,b)=> a[1] - b[1])
         .map(element => `${element[0]} -> ${element[1]}`)
-    
-    
         console.log(`${country} -> ${townEntries.join(' ')}`);
-        
-        
     }
 }
 

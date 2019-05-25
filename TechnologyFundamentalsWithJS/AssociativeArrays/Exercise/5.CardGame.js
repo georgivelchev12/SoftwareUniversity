@@ -1,5 +1,4 @@
 function solve(input) {
-
     let power = {
         '2': 2, '3': 3, '4': 4,
         '5': 5, '6': 6, '7': 7,
@@ -18,24 +17,19 @@ function solve(input) {
         for (const card of cards) {
             let p = card.slice(0, card.length - 1)
             let t = card[card.length - 1]
-            cards.splice(cards.indexOf(card),1,power[p] * type[t])
+            cards.splice(cards.indexOf(card), 1, power[p] * type[t])
         }
-
         if (!players.hasOwnProperty(name)) {
             players[name] = [];
         }
         players[name] = players[name]
-        .concat(cards)
-        .filter((card,index,deck) => index == deck.indexOf(card))
-        
+            .concat(cards)
+            .filter((card, index, deck) => index == deck.indexOf(card))
     }
-    
     for (const player in players) {
-        let deckValue = players[player].reduce((a,b) => a+b,0)
-        console.log(`${player}: ${deckValue}`);
-        
+        let deckValue = players[player].reduce((a, b) => a + b, 0)
+        console.log(`${player}: ${deckValue}`)
     }
-
 }
 
 
