@@ -33,6 +33,7 @@ function solve(arr) {
         else if (operator == '/') {
             numbers[numbers.length - 2] /= numbers[numbers.length - 1];
             numbers.splice(numbers.length - 1, 1);
+
         }
     }
 }
