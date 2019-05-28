@@ -2,6 +2,8 @@ function solve(params) {
     let armies = new Map();
     for (command of params) {
         if (command.includes('arrives')) {
+            // let splited = command.split(' ')
+            // let nameLeader = splited.slice(0,splited.length-1).join(' ');
             let nameLeader = command.substr(0, (command.length - 8));
             if (!armies.has(nameLeader)) {
                 armies.set(nameLeader, []);
@@ -16,7 +18,9 @@ function solve(params) {
                 armies.set(nameLeader, currentArmy);
             }
         } else if (command.includes(' defeated')) {
-            let nameLeader = command.substr(0, (command.length - 9));
+            let splited = command.split(' ')
+            let nameLeader = splited.slice(0,splited.length-1).join(' ');
+            //let nameLeader = command.substr(0, (command.length - 9));
             if (armies.has(nameLeader)) {
                 armies.delete(nameLeader);
             }
@@ -91,7 +95,7 @@ function solve(params) {
     }
 }
 
-solve(['Rick Burr arrives',
+solve(['Rickard Burr arrives',
     'Fergus: Wexamp, 30245',
     'Rick Burr: Juard, 50000',
     'Findlay arrives',
