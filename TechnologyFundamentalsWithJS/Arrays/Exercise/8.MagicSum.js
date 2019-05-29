@@ -1,6 +1,5 @@
-function solve(arr) {
-    let fixedArr = arr[0].split(' ');
-    let num = arr[1].split(' ');
+function solve(fixedArr,num) {
+
     let magicSum = 0;
     for (let i = 0; i < fixedArr.length; i++) {
         for (let j = i+1; j < fixedArr.length; j++) {
@@ -10,3 +9,4 @@ function solve(arr) {
         }
     }
 }
+solve([1,7,6,2,19,23],8)
