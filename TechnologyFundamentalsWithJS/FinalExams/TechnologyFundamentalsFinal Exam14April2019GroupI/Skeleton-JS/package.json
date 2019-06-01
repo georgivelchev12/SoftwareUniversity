@@ -1,0 +1,17 @@
+{
+  "name": "rescue-register",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "generate": "^0.14.0",
+    "handlebars": "4.1.0",
+    "helper": "0.0.13",
+    "mongodb": "^3.2.4",
+    "mongoose": "^5.5.7"
+  }
+}
