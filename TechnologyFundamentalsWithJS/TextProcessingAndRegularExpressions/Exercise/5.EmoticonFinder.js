@@ -1,7 +1,8 @@
 function solve(input) {
     input = input.split(' ');
     for (const element of input) {
-        if (element.length ===2 && element.startsWith(':')) {
+        if (element.length ===2 
+            && element.startsWith(':')) {
             console.log(element);
         }
     }
