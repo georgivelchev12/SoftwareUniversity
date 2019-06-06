@@ -1,0 +1,49 @@
+<div class="wrapper">
+    <form class="competitor-create" action="/edit/{{competitor._id}}" method="post">
+        <div class="create-header">
+            Edit Competitor
+        </div>
+        <div class="create-competitoritem">
+            <div class="create-competitoritem-label">Name</div>
+            <input type="text" class="create-competitoritem-content" name="name" value="{{competitor.name}}"
+                   required/>
+        </div>
+        <div class="create-competitoritem">
+            <div class="create-competitoritem-label">Age</div>
+            <input type="number" min="1" class="create-competitoritem-content" name="age" value="{{competitor.age}}"
+                   required/>
+        </div>
+
+        <div class="create-competitoritem">
+            <div class="create-competitoritem-label">Team</div>
+            <input class="create-competitoritem-content" name="team"
+                   value="{{competitor.team}}" required/>
+        </div>
+
+        <div class="create-competitoritem">
+            <div class="create-competitoritem-label">Category</div>
+            <select class="create-competitoritem-content" name="category" id="category">
+                {{#ifCond competitor.category "Superbike and Senior TT Races" }}
+                    <option selected value="Superbike and Senior TT Races">Superbike and Senior TT Races</option>
+                    <option value="Sidecar TT Races">Sidecar TT Races</option>
+                    <option value="Superstock TT Race">Superstock TT Race</option>
+                {{/ifCond}}
+                {{#ifCond competitor.category "Sidecar TT Races" }}
+                    <option value="Superbike and Senior TT Races">Superbike and Senior TT Races</option>
+                    <option selected value="Sidecar TT Races">Sidecar TT Races</option>
+                    <option value="Superstock TT Race">Superstock TT Race</option>
+                {{/ifCond}}
+                {{#ifCond competitor.category "Superstock TT Race" }}
+                    <option value="Superbike and Senior TT Races">Superbike and Senior TT Races</option>
+                    <option value="Sidecar TT Races">Sidecar TT Races</option>
+                    <option selected value="Superstock TT Race">Superstock TT Race</option>
+                {{/ifCond}}
+            </select>
+        </div>
+
+        <div class="create-button-holder">
+            <button type="submit" class="button">Edit</button>
+            <a type="button" href="/" class="button">Back</a>
+        </div>
+    </form>
+</div>
