@@ -1,0 +1,52 @@
+<div class="wrapper">
+    <main>
+        <form class="animal-create" action="/edit/{{animal._id}}" method="post">
+            <div class="create-header">
+                Edit Animal Data
+            </div>
+            <div class="create-animal-item">
+                <div class="create-animal-item-label">Kind</div>
+                <input type="text" class="create-animal-item-content" name="kind" value="{{animal.kind}}"
+                       required/>
+            </div>
+            <div class="create-animal-item">
+                <div class="create-animal-item-label">Chip Number</div>
+                <input type="number" min="1" class="create-animal-item-content" name="chipNumber"
+                       value="{{animal.chipNumber}}" required/>
+            </div>
+
+            <div class="create-animal-item">
+                <div class="create-animal-item-label">Gender</div>
+                {{#ifCond animal.gender "Male" }}
+                    <div class="gender-select">
+                        <div class="radio-div">
+                            <input class="radio-input" type="radio" name="gender" value="Male" id="male" checked>
+                            <label class="radio-label" for="male">Male</label>
+                        </div>
+                        <div class="radio-div">
+                            <input class="radio-input" type="radio" name="gender" value="Female" id="female">
+                            <label class="radio-label" for="female">Female</label>
+                        </div>
+                    </div>
+                {{/ifCond}}
+                {{#ifCond animal.gender "Female" }}
+                    <div class="gender-select">
+                        <div class="radio-div">
+                            <input class="radio-input" type="radio" name="gender" value="Male" id="male">
+                            <label class="radio-label" for="male">Male</label>
+                        </div>
+                        <div class="radio-div">
+                            <input class="radio-input" type="radio" name="gender" value="Female" id="female" checked>
+                            <label class="radio-label" for="female">Female</label>
+                        </div>
+                    </div>
+                {{/ifCond}}
+            </div>
+
+            <div class="create-button-holder">
+                <button type="submit" class="button">Edit Animal Data</button>
+                <a type="button" href="/" class="button">Back</a>
+            </div>
+        </form>
+    </main>
+</div>

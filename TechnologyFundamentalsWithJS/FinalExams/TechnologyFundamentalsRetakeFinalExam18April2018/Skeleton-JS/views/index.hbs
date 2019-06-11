@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <main>
+        <h1>Wildlife Refuge Database</h1>
+
+        <div class="button-holder">
+            <a type="button" href="/create" class="button">Register a New Animal</a>
+        </div>
+        <div class="content">
+            <div class="header">
+                <div class="animal-label">Chip Number</div>
+                <div class="animal-label">Kind</div>
+                <div class="animal-label">Gender</div>
+                <div class="actions-label">Actions</div>
+            </div>
+            <div class="main">
+                {{#each animals}}
+                    <div class="animal">
+                        <div class="animal-item">
+                            {{chipNumber}}
+                        </div>
+                        <div class="animal-item">
+                            {{kind}}
+                        </div>
+                        <div class="animal-item">
+                            {{gender}}
+                        </div>
+                        <div class="animal-item animal-actions">
+                            <a type="button" href="/edit/{{id}}" class="animal-button">Edit</a>
+                            <a type="button" href="/delete/{{id}}" class="animal-button">Remove</a>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </main>
+</div>
