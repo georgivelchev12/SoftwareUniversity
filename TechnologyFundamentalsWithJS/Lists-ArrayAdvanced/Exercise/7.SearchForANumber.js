@@ -11,5 +11,5 @@ function searchForNumber(firstArr, secondArr) {
             counter++;
         }
     }
-    console.log(`Number ${searchNum} occurs ${counter} time.`);
+    console.log(`Number ${searchNum} occurs ${counter} times.`);
 }
