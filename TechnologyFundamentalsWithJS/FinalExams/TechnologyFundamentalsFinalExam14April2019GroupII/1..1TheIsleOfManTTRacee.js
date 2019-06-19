@@ -13,7 +13,9 @@ function solve(arr) {
             if (element.match(pattern)
                 && geohashCode.length == geohashLength) {
                 name = name.slice(1, name.length - 1);
-                geohashCode = geohashCode.split('').map(x => String.fromCharCode(x.charCodeAt(0) + geohashLength)).join('')
+                geohashCode = geohashCode.split('')
+                .map(x => String.fromCharCode(x.charCodeAt(0) + geohashLength))
+                .join('')
                 console.log(`Coordinates found! ${name} -> ${geohashCode}`);
                 break;
             }
