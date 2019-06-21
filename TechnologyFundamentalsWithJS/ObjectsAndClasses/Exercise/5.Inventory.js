@@ -12,7 +12,11 @@ function solve(input) {
             items:items
         })
     }
-    console.log(JSON.stringify(inventory));
+    let sortedInventory = inventory.sort((a,b) => a['level'] - b['level']);
+    for (const item of sortedInventory) {
+        item['items'] = item['items'].sort((a,b) => a.localeCompare(b));
+        console.log(`Hero: ${item['name']}\nlevel => ${item['level']}\nitems => ${item['items'].join(', ')}`)
+    }
 }
 
 solve(["Isacc / 25 / Apple, GravityGun",

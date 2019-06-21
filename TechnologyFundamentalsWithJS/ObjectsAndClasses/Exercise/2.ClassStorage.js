@@ -5,16 +5,14 @@ class Storage {
         this.totalCost = 0
     }
     addProduct(product) {
-        if (product.quantity >= 0) {
             this.capacity -= product.quantity;
             this.totalCost += product.price * product.quantity;
             this.storage.push(product);
-        }
     }
     getProducts() {
-        for (let product of storage.storage) {
-            console.log(JSON.stringify(product));
-        }
+        return this.storage
+        .map(x => JSON.stringify(x))
+        .join('\n');
     }
 }
 let productOne = {name: 'Cucamber', price: 1.50, quantity: 15};
