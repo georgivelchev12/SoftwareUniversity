@@ -19,7 +19,7 @@ function solve(input) {
         }
         else {
             let [name,dlc] = string.split(':');
-            let gameToAddDLC = games.find(e => e.name == name);
+            let gameToAddDLC = games.find(e => e['name'] == name);
             if (gameToAddDLC) {
                 gameToAddDLC['dlc'] = dlc;
                 gameToAddDLC['price']= gameToAddDLC['price']+ (gameToAddDLC['price']*0.2)
