@@ -41,7 +41,6 @@ function solve(input) {
                 break;
             case 'Stop':
                 console.log(collectionOfWords.join(' '));
-
                 break;
         }
     }
