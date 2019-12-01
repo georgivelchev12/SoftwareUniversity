@@ -3,15 +3,18 @@ function solve(arr) {
     for (let i = 0; i < arr.length; i++) {
         let currentElement = arr[i];
         let isTopIntegers = true;
-        for (let j = i+1; j < arr.length; j++) {
-            if (currentElement<=arr[j]) {
-                isTopIntegers=false;
+        for (let j = i + 1; j < arr.length; j++) {
+            if (currentElement <= arr[j]) {
+                arr[i] = arr[j];
+                isTopIntegers = false;
                 break;
             }
         }
-        if (isTopIntegers==true) {
+        if (isTopIntegers == true) {
             topIntegers.push(currentElement);
         }
     }
-    console.log(topIntegers.join(' '));
+    console.log(arr.join(' '));
 }
+
+solve([1, 4, 3, 2])
