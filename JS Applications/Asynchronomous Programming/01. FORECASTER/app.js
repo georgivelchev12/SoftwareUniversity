@@ -1,3 +1,4 @@
+// try to enter New York, London or Barcelona
 function attachEvents() {
     const elements = {
         inputField: document.getElementById('location'),
