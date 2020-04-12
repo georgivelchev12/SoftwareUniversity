@@ -1,3 +1,14 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>Find a movie</h1>
+    <p>Search for a movie using the form below:</p>
+    <form action="">
+      <input type="text" class="form-control" />
+      <button>Search</button>
+    </form>
+  </div>
+</div>
+
 <div class="panel panel-default mt-5 pt-5">
   <div class="panel-heading">
     <h3 class="panel-title">Popular Movies</h3>
@@ -22,7 +33,44 @@
 
   <div class="panel-body">
     <div class="row" *ngIf="theaters">
-      <div class="col-md-2" *ngFor="let movie of theaters.results; let i = index">
+      <div
+        class="col-md-2"
+        *ngFor="let movie of theaters.results; let i = index"
+      >
+        <app-movie [movieElm]="movie" *ngIf="i < 6"></app-movie>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Kids Movies</h3>
+  </div>
+
+  <div class="panel-body">
+    <div class="row" *ngIf="kids">
+      <div
+        class="col-md-2"
+        *ngFor="let movie of kids.results; let i = index"
+      >
+        <app-movie [movieElm]="movie" *ngIf="i < 6"></app-movie>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Drama Movies</h3>
+  </div>
+
+  <div class="panel-body">
+    <div class="row" *ngIf="drama">
+      <div
+        class="col-md-2"
+        *ngFor="let movie of drama.results; let i = index"
+      >
         <app-movie [movieElm]="movie" *ngIf="i < 6"></app-movie>
       </div>
     </div>

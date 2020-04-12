@@ -10,6 +10,8 @@ import { Movies } from '../models/movies';
 export class MoviesComponent implements OnInit {
   popular: Movies;
   theaters: Movies;
+  kids: Movies;
+  drama:Movies;
 
   constructor(private moviesService: MoviesService) {}
 
@@ -19,6 +21,12 @@ export class MoviesComponent implements OnInit {
     });
     this.moviesService.theaters.subscribe((data) => {
       this.theaters = data;
+    });
+    this.moviesService.getKids().subscribe((data) => {
+      this.kids = data;
+    });
+    this.moviesService.getDrama().subscribe((data) => {
+      this.drama = data;
     });
   }
 }
