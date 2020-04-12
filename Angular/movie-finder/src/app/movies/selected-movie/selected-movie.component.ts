@@ -19,6 +19,10 @@ export class SelectedMovieComponent implements OnInit {
       let id = params["id"];
       this.movieService.getMovie(id).subscribe((selectedMovie) => {
         this.myMovie = selectedMovie;
+        this.myMovie.release_date = this.myMovie.release_date
+          .split("-")
+          .reverse()
+          .join("/");
       });
     });
   }

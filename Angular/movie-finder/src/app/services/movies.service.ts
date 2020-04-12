@@ -45,4 +45,9 @@ export class MoviesService {
       `${this.path}${this.movie}${id}?api_key=${apiKey}&language=en-US`
     );
   }
+  findAMovie(myQuery) {
+    return this.httpClient.get(
+      `${this.path}search/movie?api_key=${apiKey}&query=${myQuery}`
+    );
+  }
 }

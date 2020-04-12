@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MoviesService } from "../services/movies.service";
-import { Movies } from '../models/movies';
+import { Movies } from "../models/movies";
 
 @Component({
   selector: "app-movies",
@@ -11,10 +11,17 @@ export class MoviesComponent implements OnInit {
   popular: Movies;
   theaters: Movies;
   kids: Movies;
-  drama:Movies;
+  drama: Movies;
+  searchedRes: any;
+  isSearch: boolean = false;
 
   constructor(private moviesService: MoviesService) {}
-
+  search(myQuery) {
+    this.moviesService.findAMovie(myQuery.search).subscribe((data) => {
+      this.searchedRes = data;
+      this.isSearch = true;
+    });
+  }
   ngOnInit() {
     this.moviesService.getPopular().subscribe((data) => {
       this.popular = data;
