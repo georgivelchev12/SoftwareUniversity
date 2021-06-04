@@ -1,4 +1,3 @@
-const { query } = require("express");
 const fs = require("fs/promises");
 const uniqid = require("uniqid");
 let data = {};
