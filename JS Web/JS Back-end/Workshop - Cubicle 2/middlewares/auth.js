@@ -7,9 +7,10 @@ module.exports = () => (req, res, next) => {
     req.auth = {
         register,
         login,
+        logout,
     };
 
-    if (readToken(req)) {
+    if (readToken()) {
         next();
     }
 
@@ -41,6 +42,10 @@ module.exports = () => (req, res, next) => {
         }
     }
 
+    async function logout() {
+        res.clearCookie(COOKIE_NAME);
+    }
+
     function createToken(user) {
         const userViewModel = {
             _id: user._id,
@@ -51,13 +56,13 @@ module.exports = () => (req, res, next) => {
         return userViewModel;
     }
 
-    function readToken(req) {
+    function readToken() {
         const token = req.cookies[COOKIE_NAME];
         if (token) {
             try {
                 const userData = jwt.verify(token, TOKEN_SECRET);
                 req.user = userData;
-                console.log("Known user", userData.username);
+                res.locals.user = { userData };
             } catch (err) {
                 res.clearCookie(COOKIE_NAME);
                 res.redirect("/auth/login");
