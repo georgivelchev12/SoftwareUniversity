@@ -5,6 +5,7 @@ router.get("/register", (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
+
     try {
         await req.auth.register(req.body);
         res.redirect("/products");
