@@ -20,8 +20,9 @@ const schema = new Schema({
         min: 1,
         max: 6,
     },
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-    accessories: [{ type: Schema.Types.ObjectId, ref: 'Accessory' }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    accessories: [{ type: Schema.Types.ObjectId, ref: "Accessory" }],
+    author: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = model("Cube", schema);

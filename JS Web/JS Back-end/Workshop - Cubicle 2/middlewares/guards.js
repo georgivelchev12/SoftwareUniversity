@@ -7,6 +7,7 @@ function isAuth() {
         }
     };
 }
+
 function isGuest() {
     return (req, res, next) => {
         if (req.user == undefined) {
@@ -17,7 +18,17 @@ function isGuest() {
     };
 }
 
+function isOwner() {
+    return (req, res, next) => {
+        if (req.data.cube?.authorId == req.user?._id) {
+            next();
+        } else {
+            res.redirect("/auth/login");
+        }
+    };
+}
 module.exports = {
     isAuth,
     isGuest,
+    isOwner,
 };
