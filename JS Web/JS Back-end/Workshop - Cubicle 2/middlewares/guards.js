@@ -18,7 +18,6 @@ function isGuest() {
     };
 }
  
-
 function isOwner() {
     return (req, res, next) => {
         if (req.data.cube?.authorId == req.user?._id) {
