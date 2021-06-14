@@ -7,7 +7,7 @@
   <p><span>Difficulty level:</span> {{difficulty}}</p>
 
   <a class="btn" href="/products">Back</a>
-  
+
   {{#if isOwner}}
   <a class="btn" href="/products/details/{{_id}}/attach">Attach Stickers</a>
   <a class="btn" href="/products/edit/{{_id}}">Edit</a>
@@ -27,10 +27,10 @@
 
 <div class="details">
   <form action="/comments/{{_id}}/create" method="POST">
-    <span>
+    {{!-- <span>
       Your name:
       <input type="text" name="author">
-    </span>
+    </span> --}}
     <span>
       Comment:
       <textarea name="content" cols="30" rows="10"></textarea>
