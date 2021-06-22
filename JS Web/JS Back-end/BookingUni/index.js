@@ -12,11 +12,6 @@ const routesConfig = require("./config/routes");
     expressConfig(app);
     routesConfig(app);
 
-    // Remove later
-    app.get("/", (req, res) => {
-        res.send("It works");
-    });
-
     app.listen(PORT, () => {
         console.log(`Server listen on port: http://localhost:${PORT}`);
     });
