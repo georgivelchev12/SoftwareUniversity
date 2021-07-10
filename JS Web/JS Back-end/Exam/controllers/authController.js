@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { body, validationResult } = require("express-validator");
-const { isGuest } = require("../middlewares/guards");
+const { isGuest, isUser } = require("../middlewares/guards");
+const { getUserById } = require("../services/user");
 
 router.get("/register", isGuest(), (req, res) => {
     res.render("user/register");
@@ -9,13 +10,10 @@ router.get("/register", isGuest(), (req, res) => {
 router.post(
     "/register",
     isGuest(),
-    body("email", "Invalid email").isEmail(),
+    body("email").isEmail().withMessage("Not valid email"),
     body("password")
-        .isLength({ min: 5 })
-        .withMessage("Password must be at least 5 characters long")
-        .bail()
-        .matches(/[a-zA-Z0-9]/)
-        .withMessage("Password may contain only english letters and numbers"),
+        .isLength({ min: 4 })
+        .withMessage("Password must be at least 4 characters long"),
     body("rePass").custom((value, { req }) => {
         if (value != req.body.password) {
             throw new Error("Password missmatch");
@@ -24,7 +22,6 @@ router.post(
     }),
     async (req, res) => {
         const { errors } = validationResult(req);
-        console.log(errors);
         try {
             if (errors.length > 0) {
                 const message = errors.map((e) => e.msg).join("\n");
@@ -32,16 +29,15 @@ router.post(
                 throw new Error(message);
             }
             await req.auth.register(
-                req.body.username,
-                req.body.email,
-                req.body.password
+                req.body.email.trim(),
+                req.body.password.trim(),
+                req.body.gender.trim()
             );
             res.redirect("/");
         } catch (err) {
             const ctx = {
                 errors: err.message.split("\n"),
                 userData: {
-                    username: req.body.username,
                     email: req.body.email,
                 },
             };
@@ -56,16 +52,16 @@ router.get("/login", isGuest(), (req, res) => {
 
 router.post("/login", isGuest(), async (req, res) => {
     try {
-        await req.auth.login(
-            req.body.username,
-            req.body.password
-        );
+        await req.auth.login(req.body.email.trim(), req.body.password.trim());
         res.redirect("/");
     } catch (err) {
+        let errors = [err.message];
+        if (err.type == "credential") {
+            errors = ["Incorrect email or password"];
+        }
         const ctx = {
-            errors: [err.message],
+            errors,
             userData: {
-                username: req.body.username,
                 email: req.body.email,
             },
         };
@@ -75,6 +71,26 @@ router.post("/login", isGuest(), async (req, res) => {
 router.get("/logout", (req, res) => {
     req.auth.logout();
     res.redirect("/");
+});
+
+router.get("/profile", isUser(), async (req, res) => {
+    try {
+        const user = await getUserById(req.user._id);
+
+        if (user._id != req.user._id) {
+            throw new Error("Profile error");
+        }
+        const userData = {
+            email: user.email,
+            gender: user.gender,
+            tripsHistory: user.tripsHistory,
+            tripsCount: user.tripsHistory.length
+        };
+        res.render("user/profile", { userData });
+    } catch (err) {
+        console.log(err.message);
+        res.redirect("/");
+    }
 });
 
 module.exports = router;
