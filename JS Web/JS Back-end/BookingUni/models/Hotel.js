@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const schema = new Schema({
-    name:     { type: String, required: [true, 'All fields are required'], minLength: 4 },
+    name:     { type: String, required: true, minLength: 4 },
     city:     { type: String, required: true, minLength: 3 },
     imageUrl: { type: String, required: true, match: [/^https?/, 'Image must be a valid URL'] },
     rooms:    { type: Number, required: true, min: 1, max: 100 },

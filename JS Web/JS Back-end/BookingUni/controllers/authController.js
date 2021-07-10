@@ -58,10 +58,12 @@ router.post("/login", isGuest(), async (req, res) => {
     try {
         await req.auth.login(
             req.body.username,
+            req.body.email,
             req.body.password
         );
         res.redirect("/");
     } catch (err) {
+        console.log("in login: ", err.message);
         const ctx = {
             errors: [err.message],
             userData: {
