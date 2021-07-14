@@ -1,0 +1,33 @@
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"] {
+  width: 100%;
+  color: $main;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  height: 40px;
+  padding: 7px 14px;
+  background: $light;
+  line-height: 1.3em;
+  position: relative;
+  font-family: $main-font;
+  border-radius: 0;
+  border-bottom: 1px solid $middle-gray;
+  transition: background 0.3s, border 0.3s ease-in-out;
+  &:focus {
+    border-color: $secondary;
+    outline: none;
+  }
+  &:disabled {
+    background-color: $gray;
+  }
+}
+textarea {
+  height: auto;
+  margin-bottom: 10px;
+}

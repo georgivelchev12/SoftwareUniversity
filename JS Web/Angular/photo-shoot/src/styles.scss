@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'setup';
+
+@import 'grid/reset';
+@import 'grid/mixins';
+@import 'grid/fonts';
+@import 'grid/responsive';
+
+@import 'plugins/slider'; 
+@import 'plugins/nice-select';  
+@import 'plugins/datepicker';  
+
+@import 'global/globals';
+@import 'global/typography';
+@import 'global/buttons';
+@import 'global/forms';
+@import 'global/navigation';
+@import 'global/popups';
+@import 'global/icons';
+
+@import 'design/header';
+@import 'design/footer';
+@import 'design/page';

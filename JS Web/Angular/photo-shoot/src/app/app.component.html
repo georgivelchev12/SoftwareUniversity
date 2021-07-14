@@ -1,1 +1,68 @@
-<router-outlet></router-outlet>
+<!-- Mobile navi handler -->
+<input type="checkbox" id="toggle_nav">
+<!-- Header -->
+<header role="banner" id="header">
+    <div class="fixed_cont">
+        <div class="row header_middle">
+            <div class="col medium_5 default_flex default_middle default_between">
+                <a rel="home" href="index.html" class="header_logo" title="Logo">
+                    <img src="images/logo.svg" alt="Logo">
+                </a>
+                <!-- Open mobile navigation -->
+                <label class="toggle_nav open" for="toggle_nav"></label>
+            </div>
+            <nav role="navigation" class="col medium_7 nav_wrapper">
+                <!-- Close mobile navigation -->
+                <label class="toggle_nav close" for="toggle_nav"></label>
+                <ul class="main_navi">
+                    <li class="list_item dropdown_link">
+                        <a href="#" title="Link" class="dropdown_toggle_mobile has_sub">
+                            ПРОДУКТИ <span class="dropdown_icon"></span>
+                        </a>
+                        <ul class="dropdown_menu">
+                            <li class="list_item"><a href="#">Item1</a></li>
+                            <li class="list_item"><a href="#">Item2</a></li>
+                            <li class="list_item active"><a href="#">Item3</a></li>
+                        </ul>
+                    </li>
+                    <li class="list_item dropdown_link">
+                        <a href="#" title="Link" class="dropdown_toggle_mobile has_sub">
+                            УСЛУГИ <span class="dropdown_icon"></span>
+                        </a>
+                        <ul class="dropdown_menu">
+                            <li class="list_item"><a href="#">Item1</a></li>
+                            <li class="list_item"><a href="#">Item2</a></li>
+                            <li class="list_item"><a href="#">Item3</a></li>
+                            <li class="list_item"><a href="#">Item4</a></li>
+                            <li class="list_item"><a href="#">Item5</a></li>
+                            <li class="list_item"><a href="#">Item6</a></li>
+                            <li class="list_item"><a href="#">Item7</a></li>
+                        </ul>
+                    </li>
+                    <li class="list_item">
+                        <a href="#" title="Link">За нас</a>
+                    </li>
+                    <li class="list_item">
+                        <a href="#" title="Link">Контакти</a>
+                    </li>
+
+                    <!-- <li class="add_links">
+                        <a href="#" title="Footer Link">Footer Link</a>
+                     </li> -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<main>
+    <a href="#slide_form" class="btn popup_toggle">Toggle slide form popup</a>
+
+    <app-auth></app-auth>
+    <router-outlet></router-outlet>
+</main>
+
+
+<footer id="footer">
+    FOOTER TEXT
+</footer>

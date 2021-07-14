@@ -1,0 +1,10 @@
+/***** Footer *****/
+footer {
+  background: $main;
+  color: $light;
+  padding: 15px 0;
+
+  z-index: 1;
+  @include position(absolute, null null 0 0);
+  width: 100%;
+}

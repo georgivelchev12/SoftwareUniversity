@@ -1,0 +1,48 @@
+// Image path
+$image-url: "../images/" !default;
+
+// Fonts
+$main-font: 'Montserrat', sans-serif;
+// $secondary-font: "HelveticaNeue", sans-serif;
+$icons: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+
+// Base font-size
+$base-fz: 15px;
+
+// Colors
+$main: #2d2d2d;
+$secondary: #ff4b2b;
+$tertiary: #f7f7f7;
+
+$light: #fff;
+$gray: #363636;
+$light-gray: #ededed;
+$middle-gray: #939393;
+$color-gray: #b4b4b4;
+$dark: #2d2d2d;
+$black: #000;
+
+// Grid base options
+$row-width: 1200px;
+$col-gap: 10px;
+
+// Mobile navigation icon
+// ionicons
+// $open-nav:	'\f20d';
+// $close-nav:	'\f2d7';
+
+// Fontawesome
+$open-nav: "\f0c9";
+$close-nav: "\f00d";
+
+// Responsive breakpoints
+$breakpoints: (
+  "tiny": 480px,
+  "small": 640px,
+  "medium": 768px,
+  "large": 992px,
+  "giant": 1200px,
+  // 'layout': $row-width, /*** If its bigger than "Giant"
+);
+// Number of columns
+$column-count: 12;
