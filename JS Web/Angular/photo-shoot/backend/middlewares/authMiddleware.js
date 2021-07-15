@@ -8,7 +8,8 @@ module.exports = () => async (req, res, next) => {
     createToken,
   };
 
-  const tokenFromHeaders = req.headers.authorization?.split(" ")[1];
+  const tokenFromHeaders = req.headers.authorization?.split(" ")[1] || false;
+
   if (tokenFromHeaders) {
     try {
       const userData = jwt.verify(tokenFromHeaders, process.env.TOKEN_SECRET);
@@ -22,13 +23,16 @@ module.exports = () => async (req, res, next) => {
   function createToken(user) {
     const userViewModel = { _id: user._id, email: user.email };
 
-    const token = jwt.sign(userViewModel, process.env.TOKEN_SECRET, {
+    const token = jwt.sign(
+      userViewModel, 
+      process.env.TOKEN_SECRET, {
       expiresIn: "1h",
     });
 
     return {
       token,
       expiresIn: 3600,
+      userEmail: user.email,
     };
   }
 

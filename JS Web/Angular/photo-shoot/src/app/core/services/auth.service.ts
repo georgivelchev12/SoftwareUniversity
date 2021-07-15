@@ -6,8 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthModel } from 'src/app/components/authentication/auth.model';
 
-const BACKEND_URL = environment.apiUrl + "/user" 
-
+const BACKEND_URL = environment.apiUrl + '/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -19,12 +18,47 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-   //  private toastr: ToastrService,
+    //  private toastr: ToastrService,
     private router: Router
   ) {}
 
   register(user: AuthModel) {
-    return this.http.post(`${BACKEND_URL}/register`, user);
+    return this.http
+      .post<{
+        token: string;
+        expiresIn: number;
+        currentUserRole: string;
+        userEmail: string;
+      }>(`${BACKEND_URL}/register`, user)
+      .subscribe(
+        (data) => {
+          if (data.token) {
+            this.token = data.token;
+            const expiresInDuration = data.expiresIn;
+            this.userPermissions = 'admin';
+            this.userEmail = data.userEmail;
+
+            this.tokenTimer = setTimeout(() => {
+              this.logout();
+            }, expiresInDuration * 1000);
+
+            this.isAuthenticated = true;
+
+            const now = new Date();
+            const expirationDate = new Date(
+              now.getTime() + expiresInDuration * 1000
+            );
+
+            this.saveAuthData(
+              this.token,
+              expirationDate,
+              this.userPermissions,
+              this.userEmail
+            );
+          }
+        },
+        (err) => {}
+      );
   }
 
   // Login / Logout functions
@@ -35,6 +69,7 @@ export class AuthService {
     return this.userEmail;
   }
   getToken() {
+    console.log('getToken() => ', this.token);
     return this.token;
   }
   getIsAuth() {
@@ -53,7 +88,7 @@ export class AuthService {
           if (data.token) {
             this.token = data.token;
             const expiresInDuration = data.expiresIn;
-            this.userPermissions = data.currentUserRole;
+            this.userPermissions = 'admin';
             this.userEmail = data.userEmail;
 
             this.tokenTimer = setTimeout(() => {
@@ -67,9 +102,14 @@ export class AuthService {
               now.getTime() + expiresInDuration * 1000
             );
 
-            this.saveAuthData(this.token, expirationDate, this.userPermissions, this.userEmail);
+            this.saveAuthData(
+              this.token,
+              expirationDate,
+              this.userPermissions,
+              this.userEmail
+            );
             // this.toastr.success('You logged in successfully', 'Success!');
-            this.router.navigate(['/']);
+            // this.router.navigate(['/']);
           }
 
           //you can set this object as value
@@ -83,7 +123,7 @@ export class AuthService {
           // }
         },
         (err) => {
-         //  this.toastr.error(err.error.description, 'Error!');
+          //  this.toastr.error(err.error.description, 'Error!');
         }
       );
   }
@@ -94,7 +134,7 @@ export class AuthService {
     this.clearAuthData();
     clearTimeout(this.tokenTimer);
     this.router.navigate(['/login']);
-   //  this.toastr.success('You logout successfully!', 'Success!');
+    //  this.toastr.success('You logout successfully!', 'Success!');
   }
 
   isUserLogged() {
@@ -137,7 +177,8 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userPermissions = localStorage.getItem('permissions');
-    const userEmail = localStorage.getItem('email')
+    const userEmail = localStorage.getItem('email');
+
     if (!token || !expirationDate || !userPermissions || !userEmail) {
       return;
     }
@@ -145,42 +186,53 @@ export class AuthService {
       token,
       expirationDate: new Date(expirationDate),
       userPermissions,
-      userEmail
+      userEmail,
     };
   }
 
   // Login / Logout functions / END
 
-  myProfile(){
-    return this.http.get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/my-profile`).pipe(map((userData) => this.mapId(userData)));
-  }
-
-  getUsers(){
+  myProfile() {
     return this.http
-    .get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/list`)
-    .pipe(map((userData) => this.mapId(userData)));
+      .get<{ message: string; users: Array<Object> }>(
+        `${BACKEND_URL}/my-profile`
+      )
+      .pipe(map((userData) => this.mapId(userData)));
   }
 
-  disableUser(userId, body){
-    return this.http.put<{ message: string }>(`${BACKEND_URL}/${userId}`, body).pipe((err) => err);
+  getUsers() {
+    return this.http
+      .get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/list`)
+      .pipe(map((userData) => this.mapId(userData)));
   }
 
-  restoreUser(userId, body){
-    return this.http.put<{ message: string }>(`${BACKEND_URL}/restore-user/${userId}`, body).pipe((err) => err);
+  disableUser(userId, body) {
+    return this.http
+      .put<{ message: string }>(`${BACKEND_URL}/${userId}`, body)
+      .pipe((err) => err);
   }
 
-  deleteUser(userId){
-    return this.http.delete<{ message: string }>(`${BACKEND_URL}/${userId}`).pipe((err) => err);
+  restoreUser(userId, body) {
+    return this.http
+      .put<{ message: string }>(`${BACKEND_URL}/restore-user/${userId}`, body)
+      .pipe((err) => err);
   }
 
-  changeNames(model){
+  deleteUser(userId) {
+    return this.http
+      .delete<{ message: string }>(`${BACKEND_URL}/${userId}`)
+      .pipe((err) => err);
+  }
+
+  changeNames(model) {
     // Send only form model, because we store current user id in our req as userId - see ./backend/middleware/check-auth.js
-    return this.http.put<{ message: string }>(`${BACKEND_URL}/my-profile/change-names`, model);
-
+    return this.http.put<{ message: string }>(
+      `${BACKEND_URL}/my-profile/change-names`,
+      model
+    );
   }
 
   mapId(userData) {
-    
     return userData.users.map((user) => {
       return {
         // Spread operator to make copy of user key:value instead of typing it all
@@ -190,5 +242,4 @@ export class AuthService {
       };
     });
   }
-
 }

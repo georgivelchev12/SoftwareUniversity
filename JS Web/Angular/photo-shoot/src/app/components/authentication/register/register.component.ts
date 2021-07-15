@@ -21,25 +21,17 @@ export class RegisterComponent implements OnInit {
 
   constructor(public authService: AuthService, public router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.authService.isUserLogged());
+  }
 
   register() {
+
     this.user = {
       email: this.form.value.email,
       password: this.form.value.password,
     };
     console.log(this.user);
-    this.authService.register(this.user).subscribe(
-      (data) => {
-        this.router.navigateByUrl('/login');
-        // this.toastr.success(
-        //   'You registered successfully. You should login now!',
-        //   'Success!'
-        // );
-      },
-      (error) => {
-        // this.toastr.error(error.error.message, 'Error!');
-      }
-    );
+    this.authService.register(this.user);
   }
 }
