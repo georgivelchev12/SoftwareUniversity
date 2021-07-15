@@ -1,15 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthModel } from '../auth.model';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  user: AuthModel;
 
-  constructor() { }
+  // To do... add validators
+  form = new FormGroup({
+    email: new FormControl('', []),
+    password: new FormControl('', []),
+    rePassword: new FormControl('', []),
+  });
 
-  ngOnInit() {
+  constructor(public authService: AuthService, public router: Router) {}
+
+  ngOnInit() {}
+
+  register() {
+    this.user = {
+      email: this.form.value.email,
+      password: this.form.value.password,
+    };
+    console.log(this.user);
+    this.authService.register(this.user).subscribe(
+      (data) => {
+        this.router.navigateByUrl('/login');
+        // this.toastr.success(
+        //   'You registered successfully. You should login now!',
+        //   'Success!'
+        // );
+      },
+      (error) => {
+        // this.toastr.error(error.error.message, 'Error!');
+      }
+    );
   }
-
 }
