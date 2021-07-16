@@ -2,18 +2,17 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
 async function registerUser(req, res, next) {
+  console.log('in registerUser');
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   const user = new User({
     email: req.body.email,
     hashedPassword,
   });
-  console.log(user);
-
   await user.save();
-
   res.status(200).json({ ...req.auth.createToken(user) });
 }
+
 async function loginUser(req, res, next) {
   const user = await getUserByUsername(username);
 
