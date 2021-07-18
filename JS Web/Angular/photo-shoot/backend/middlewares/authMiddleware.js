@@ -6,20 +6,24 @@ module.exports = () => (req, res, next) => {
     createToken,
   };
 
-  if (req.headers.authorization) {
-    const tokenFromHeaders = req.headers.authorization.split(" ")[1];
+  try {
+    const tokenFromHeaders = req.headers.authorization?.split(" ")[1];
     if (tokenFromHeaders !== undefined) {
-      try {
-        const userData = jwt.verify(tokenFromHeaders, process.env.TOKEN_SECRET);
-        req.user = userData;
-      } catch (err) {
-        console.log("AuthMiddleware error:", err.message);
-      }
+      const userData = jwt.verify(tokenFromHeaders, process.env.TOKEN_SECRET);
+      req.user = userData;
     }
+    next();
+  } catch (err) {
+    res.status(403).json({ message: "Invalid access token! Please login." });
+    return;
   }
 
   function createToken(user) {
-    const userViewModel = { _id: user._id, email: user.email };
+    const userViewModel = {
+      _id: user._id,
+      email: user.email,
+      role: "admin",
+    };
 
     const token = jwt.sign(userViewModel, process.env.TOKEN_SECRET, {
       expiresIn: "1h",
@@ -31,6 +35,4 @@ module.exports = () => (req, res, next) => {
       userEmail: user.email,
     };
   }
-
-  next();
 };

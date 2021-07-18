@@ -56,32 +56,30 @@ let controller = {
         link.addEventListener("click", function (event) {
           event.preventDefault();
           const href = link.getAttribute("href");
-          const offsetTop = document.querySelector(href).offsetTop - 150; // - 150 because of fixed menu
-          window.scrollTo({
-            top: offsetTop,
-            behavior: "smooth",
-          });
+          if (document.querySelector(href)) {
+            const offsetTop = document.querySelector(href).offsetTop - 150; // - 150 because of fixed menu
+            window.scrollTo({
+              top: offsetTop,
+              behavior: "smooth",
+            });
+          }
         });
       });
   },
   togglePopUps: function () {
-    let popupOpen = document.querySelectorAll(".popup_toggle");
-    var popupClose = document.querySelectorAll(".popup_wrap .close_btn");
-
-    popupOpen.forEach(function (btn) {
-      btn.addEventListener("click", function () {
+    $("body").on("click", ".popup_toggle", function () {
+      let popup = document.querySelector(this.getAttribute("href"));
+      if (popup) {
+        popup.classList.add("active_pop");
         document.body.classList.add("disable_scroll");
-        document
-          .querySelector(btn.getAttribute("href"))
-          .classList.add("active_pop");
-      });
+      }
     });
-
-    popupClose.forEach(function (btn) {
-      btn.addEventListener("click", () => {
+    $("body").on("click", ".popup_wrap .close_btn", function () {
+      let popup = document.querySelector(".popup_wrap")
+      if(popup){
+        popup.classList.remove("active_pop");
         document.body.classList.remove("disable_scroll");
-        document.querySelector(".popup_wrap").classList.remove("active_pop");
-      });
+      }
     });
   },
   // slidersInit: function () {
@@ -131,13 +129,14 @@ let controller = {
     });
   },
   toggleProductTabs: function () {
+    
     // Toggle random block
-    $("[data-toggler]").click(function () {
+    $("body").on("click", "[data-toggler]", function () {
       let attrValue = $(this).attr("data-toggler");
       $("#" + attrValue).slideToggle(200, "linear", function () {});
       $(this).toggleClass("active");
     });
-
+    
     // Tabs filter
     $(".filter_tabs .tabs .tab").click(function (e) {
       e.preventDefault();

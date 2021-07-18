@@ -13,7 +13,7 @@ export class AuthService {
   token: string;
   isAuthenticated: boolean;
   tokenTimer: NodeJS.Timer;
-  userPermissions: string;
+  userRole: string;
   userEmail: string;
 
   constructor(
@@ -23,47 +23,67 @@ export class AuthService {
   ) {}
 
   register(user: AuthModel) {
+    return this.http.post(`${BACKEND_URL}/register`, user).subscribe(
+      (data) => {
+        // this.loginAction(data);
+      },
+      (err) => {}
+    );
+  }
+
+  login(user: AuthModel) {
     return this.http
       .post<{
         token: string;
         expiresIn: number;
         currentUserRole: string;
         userEmail: string;
-      }>(`${BACKEND_URL}/register`, user)
+      }>(`${BACKEND_URL}/login`, user)
       .subscribe(
         (data) => {
-          if (data.token) {
-            this.token = data.token;
-            const expiresInDuration = data.expiresIn;
-            this.userPermissions = 'admin';
-            this.userEmail = data.userEmail;
-
-            this.tokenTimer = setTimeout(() => {
-              this.logout();
-            }, expiresInDuration * 1000);
-
-            this.isAuthenticated = true;
-
-            const now = new Date();
-            const expirationDate = new Date(
-              now.getTime() + expiresInDuration * 1000
-            );
-
-            this.saveAuthData(
-              this.token,
-              expirationDate,
-              this.userPermissions,
-              this.userEmail
-            );
-          }
+          this.loginAction(data);
         },
         (err) => {}
       );
   }
 
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.clearAuthData();
+    clearTimeout(this.tokenTimer);
+    this.router.navigate(['/']);
+    //  this.toastr.success('You logout successfully!', 'Success!');
+  }
+
+  loginAction(data) {
+    if (data.token) {
+      this.token = data.token;
+      const expiresInDuration = data.expiresIn;
+      this.userRole = 'admin';
+      this.userEmail = data.userEmail;
+
+      this.tokenTimer = setTimeout(() => {
+        this.logout();
+      }, expiresInDuration * 1000);
+
+      this.isAuthenticated = true;
+
+      const now = new Date();
+      const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+
+      this.saveAuthData(
+        this.token,
+        expirationDate,
+        this.userRole,
+        this.userEmail
+      );
+    }
+  }
+
   // Login / Logout functions
-  getUserPermissions() {
-    return this.userPermissions;
+  getUserRole() {
+    return this.userRole;
   }
   getUserEmail() {
     return this.userEmail;
@@ -75,69 +95,8 @@ export class AuthService {
   getIsAuth() {
     return this.isAuthenticated;
   }
-  login(user: AuthModel) {
-    return this.http
-      .post<{
-        token: string;
-        expiresIn: number;
-        currentUserRole: string;
-        userEmail: string;
-      }>(`${BACKEND_URL}/login`, user)
-      .subscribe(
-        (data) => {
-          if (data.token) {
-            this.token = data.token;
-            const expiresInDuration = data.expiresIn;
-            this.userPermissions = 'admin';
-            this.userEmail = data.userEmail;
 
-            this.tokenTimer = setTimeout(() => {
-              this.logout();
-            }, expiresInDuration * 1000);
-
-            this.isAuthenticated = true;
-
-            const now = new Date();
-            const expirationDate = new Date(
-              now.getTime() + expiresInDuration * 1000
-            );
-
-            this.saveAuthData(
-              this.token,
-              expirationDate,
-              this.userPermissions,
-              this.userEmail
-            );
-            // this.toastr.success('You logged in successfully', 'Success!');
-            // this.router.navigate(['/']);
-          }
-
-          //you can set this object as value
-          //, {
-          //  disableTimeOut: true
-          //}
-          // if (data["_kmd"]["roles"] !== undefined) {
-          //   console.log("trueee");
-          // } else {
-          //   console.log("falseeee");
-          // }
-        },
-        (err) => {
-          //  this.toastr.error(err.error.description, 'Error!');
-        }
-      );
-  }
-
-  logout() {
-    this.token = null;
-    this.isAuthenticated = false;
-    this.clearAuthData();
-    clearTimeout(this.tokenTimer);
-    this.router.navigate(['/login']);
-    //  this.toastr.success('You logout successfully!', 'Success!');
-  }
-
-  isUserLogged() {
+  autoAuthUser() {
     const authInfo = this.getAuthData();
     if (!authInfo) {
       return;
@@ -146,7 +105,7 @@ export class AuthService {
     const expiresIn = authInfo.expirationDate.getTime() - now.getTime();
     if (expiresIn > 0) {
       this.token = authInfo.token;
-      this.userPermissions = authInfo.userPermissions;
+      this.userRole = authInfo.userRole;
       this.userEmail = authInfo.userEmail;
       this.isAuthenticated = true;
       this.tokenTimer = setTimeout(() => {
@@ -159,33 +118,33 @@ export class AuthService {
   private saveAuthData(
     token: string,
     expirationDate: Date,
-    userPermissions: string,
+    userRole: string,
     userEmail: string
   ) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
-    localStorage.setItem('permissions', userPermissions);
+    localStorage.setItem('role', userRole);
     localStorage.setItem('email', userEmail);
   }
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
-    localStorage.removeItem('permissions');
+    localStorage.removeItem('role');
     localStorage.removeItem('email');
   }
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
-    const userPermissions = localStorage.getItem('permissions');
+    const userRole = localStorage.getItem('role');
     const userEmail = localStorage.getItem('email');
 
-    if (!token || !expirationDate || !userPermissions || !userEmail) {
+    if (!token || !expirationDate || !userRole || !userEmail) {
       return;
     }
     return {
       token,
       expirationDate: new Date(expirationDate),
-      userPermissions,
+      userRole,
       userEmail,
     };
   }

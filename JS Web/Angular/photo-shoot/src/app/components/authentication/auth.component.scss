@@ -4,7 +4,8 @@
   .slide_form {
     margin: 0 0 40px;
     border-radius: 10px;
-    background: #fff;
+    background: $light;
+    border: 2px solid $light;
     position: relative;
     overflow: hidden;
     width: 768px;
@@ -72,8 +73,8 @@
       z-index: 100;
 
       .overlay {
-        background: #ff416c;
-        background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 /
+        background: $secondary;
+        background: linear-gradient(to right, $accent, $secondary) no-repeat 0 0 /
           cover;
         color: #fff;
         position: relative;
@@ -141,7 +142,12 @@
 
     h1 {
       font-weight: bold;
-      margin: 0;
+      margin: 0 0 15px;
+      
+      @media(max-width: 700px){
+        margin: 20px 0 5px;
+        font-size: 20px;
+      }
     }
 
     h2 {
@@ -155,7 +161,7 @@
       margin: 15px 0;
       transition: all 0.3s;
       &:hover {
-        color: #ff416c;
+        color: $secondary;
       }
     }
     span {
@@ -168,6 +174,9 @@
       line-height: 20px;
       letter-spacing: 0.5px;
       margin: 20px 0 30px;
+      @media(max-width: 700px){
+        margin: 10px 0;
+      }
     }
     .social-container {
       margin: 20px 0;
@@ -185,14 +194,12 @@
 
     button {
       border-radius: 20px;
-      border: 1px solid #ff4b2b;
-      background: #ff4b2b;
+      border: 1px solid $accent;
+      background: $accent;
       color: white;
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-      padding: 12px 45px;
       letter-spacing: 1px;
+      margin: 10px 0 0px;
+      padding: 6px 40px;
       transition: transform 80ms ease-in;
       &:active {
         transform: scale(0.95);
@@ -220,21 +227,21 @@
         }
         &.sign-in-container {
           left: 0 !important;
-          height: 65% !important;
+          height: 60% !important;
           width: 100% !important;
         }
 
         &.sign-up-container {
           left: 0 !important;
-          height: 65% !important;
+          height: 60% !important;
           width: 100% !important;
         }
       }
       .overlay-container {
         left: 0 !important;
-        top: 65% !important;
+        top: 60% !important;
         width: 100% !important;
-        height: 35% !important;
+        height: 40% !important;
         overflow: hidden !important;
         transition: all 0.6s ease-in-out !important;
         z-index: 100 !important;

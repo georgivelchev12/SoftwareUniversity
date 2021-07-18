@@ -164,3 +164,34 @@ ul.default_list {
     object-fit: contain;
   }
 }
+
+// default is none
+.toggle_data {
+  display: none;
+}
+.separator {
+  margin: 16px 0;
+  background: #E1E7E7;
+  @include box(100%, 1px);
+  &.small_separator {
+    margin: 20px 0;
+  }
+  &.medium_separator {
+    margin: 25px 0;
+  }
+  &.large_separator {
+    margin: 30px 0;
+  }
+  &.giant_separator {
+    margin: 35px 0;
+  }
+  &.m_0 {
+    margin: 0;
+  }
+  &.mb_0 {
+    margin-bottom: 0;
+  }
+  &.mt_0 {
+    margin-top: 0;
+  }
+}

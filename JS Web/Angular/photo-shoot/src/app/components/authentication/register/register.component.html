@@ -1,14 +1,15 @@
 <!-- <form [formGroup]="form" (ngSubmit)="register()"> -->
 <form [formGroup]="form" (ngSubmit)="register()">
   <h1>Create Account</h1>
+  <!-- <span>fill the fields with your information to create account</span> -->
+  <!-- To do ... add notification -->
+  <input type="email" formControlName="email" placeholder="Email" />
+  <input type="password" formControlName="password" placeholder="Password" />
+  <input type="password" formControlName="rePassword" placeholder="Repeat password" />
+  <button type="submit">Sign Up</button>
   <div class="social-container">
     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
   </div>
-  <span>or use your email for registration</span>
-  <input type="email" formControlName="email" placeholder="Email" />
-  <input type="password" formControlName="password" placeholder="Password" />
-  <input type="password" formControlName="rePassword" placeholder="Repeat password" />
-  <button type="submit">Sign Up</button>
 </form>

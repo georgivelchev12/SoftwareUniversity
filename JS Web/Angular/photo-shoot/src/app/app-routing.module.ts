@@ -8,7 +8,7 @@ const routes: Routes = [
   //   pathMatch: 'full',
   //   canActivate: [AuthGuard]
   // },
-  // { path: 'register', component: AuthComponent },
+  // { path: 'register', component: LoginRegisterTemplateComponent },
 
   // { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] },
 ];

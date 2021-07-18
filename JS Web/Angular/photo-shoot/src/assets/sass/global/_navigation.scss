@@ -19,7 +19,7 @@
       &:last-child {
         border-bottom: none;
       }
-      a {
+      a:not(.btn) {
         color: $light-gray;
         display: block;
         padding: 12px 10px;
@@ -67,19 +67,18 @@
     height: 100%;
     li {
       &:first-child a {
-        margin-left: 0;
+        margin-left: 0 !important;
       }
       &:last-child a {
-        margin-right: 0;
+        margin-right: 0 !important;
       }
-      a {
+      a:not(.btn) {
         height: 100%;
         color: $main;
         display: flex;
         align-items: center;
-        overflow: hidden;
+        // overflow: hidden;
         position: relative;
-        text-transform: uppercase;
         margin: 0 7px;
         font-size: 14px;
         @include breakpoint(large) {
@@ -134,6 +133,7 @@ label[for="toggle_nav"] {
       padding: 7px 10px;
       content: $open-nav;
       background-color: $secondary;
+      font-weight: 900;
     }
     &:after {
       top: 0;
@@ -151,6 +151,7 @@ label[for="toggle_nav"] {
     @include position(absolute, 0 0 null null);
     z-index: 1;
     &:before {
+      font-weight: 900;
       content: $close-nav;
       padding: 7px 10px 6px;
       width: 40px;
@@ -186,6 +187,108 @@ header .dropdown_link {
     transform: translateY(0);
     transition-delay: 0s, 0s, 0.3s;
   }
+  .profile {
+    font-size: 30px !important;
+    color: $secondary !important;
+    &:hover {
+      color: $accent !important;
+    }
+    & + .dropdown_menu {
+      width: 280px;
+      padding: 20px;
+      text-align: center;
+
+      figure {
+        position: relative;
+        @include box(120px);
+        border-radius: 100%;
+        background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        img {
+          @include position(absolute, 0 null null 0);
+          border-radius: 100%;
+        }
+        span {
+          font-size: 60px;
+          font-weight: 600;
+          color: $light;
+        }
+        .upload_photo {
+          height: 38px;
+          width: 37px;
+          @include position(absolute, null -5px -5px null);
+          background: $light;
+          border-radius: 100%;
+          &:hover:before {
+            background: $secondary;
+            color: $light;
+          }
+          &:before {
+            @include position(absolute, 50% null null 50%);
+            transform: translate(-50%, -50%);
+            font-size: 15px;
+            width: 30px;
+            height: 30px;
+            box-shadow: 0 3px 6px 0 rgba($color: $black, $alpha: 0.16);
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+          }
+        }
+      }
+      .name {
+        display: block;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 20px 0 8px;
+      }
+      .email {
+        display: block;
+        color: $dark;
+        font-size: 13px;
+        margin-bottom: 20px;
+      }
+      .btn {
+        display: block;
+        margin: 12px 0;
+      }
+      .language_dropdown {
+        text-align: left;
+        a {
+          display: inline-block;
+          font-size: 13px;
+          color: $dark;
+          padding: 10px 0;
+          margin: 0 !important;
+          &:hover,
+          &.active {
+            color: $secondary;
+          }
+          &.current {
+            position: relative;
+            padding-right: 16px;
+            padding-top: 0;
+            &:before {
+              font-weight: 900;
+              content: "\f0d7";
+              font-family: $icons;
+              @include position(absolute, 0px 0 null null);
+              font-size: 15px;
+              transition: transform 0.3s;
+            }
+            &.active:before {
+              transform: rotateX(180deg);
+            }
+          }
+        }
+      }
+    }
+  }
   .dropdown_menu {
     position: relative;
     padding: 0;
@@ -193,22 +296,22 @@ header .dropdown_link {
     background: $gray;
 
     @include breakpoint(medium) {
-      @include position(absolute, calc(100% - 20px) null null 0);
-      padding: 15px 25px;
-      // width: auto;
-      max-width: calc(100% * 2);
-      width: 1000px;
-
-      box-shadow: 0px 15px 20px -15px rgba(0, 0, 0, 0.25);
-      background: #EDEDED;
+      position: relative;
+      @include position(absolute, calc(100% - 0px) 0 null null);
+      padding: 15px 20px;
+      width: 240px;
+      box-shadow: 0px 3px 6px 0 rgba($black, 0.16);
       transition: all 0.3s ease 0s, visibility 0s linear 0.3s,
         z-index 0s linear 0.01s;
+      border-top: 5px solid $secondary;
+      border-radius: 10px;
 
       //hide dropdown menu
       visibility: hidden;
       pointer-events: none;
       opacity: 0;
-      transform: translateY(10px);
+      transform: translate(0, -20px);
+      background: #fff;
     }
     .list_item {
       display: block;
@@ -252,4 +355,13 @@ header .dropdown_link {
     padding-left: 0;
     flex-direction: row;
   }
+}
+
+
+
+header .login i{
+  margin-right: 5px;
+  color: $secondary;
+  font-size: 18px;
+
 }

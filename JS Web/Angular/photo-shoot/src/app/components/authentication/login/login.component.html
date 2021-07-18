@@ -1,13 +1,13 @@
-<form action="#">
+<form [formGroup]="form" (ngSubmit)="login()">
   <h1>Sign In</h1>
+  <!-- <span>or use your account</span> -->
+  <input type="email" formControlName="email" placeholder="Email" />
+  <input type="password" formControlName="password" placeholder="Password" />
+  <!-- <a href="#">Forgot your password?</a> -->
+  <button type="submit">Sign In</button>
   <div class="social-container">
     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
   </div>
-  <span>or use your account</span>
-  <input type="email" placeholder="Email" />
-  <input type="password" placeholder="Password" />
-  <a href="#">Forgot your password?</a>
-  <button>Sign In</button>
 </form>

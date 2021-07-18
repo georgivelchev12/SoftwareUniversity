@@ -21,17 +21,13 @@ export class RegisterComponent implements OnInit {
 
   constructor(public authService: AuthService, public router: Router) {}
 
-  ngOnInit() {
-    console.log(this.authService.isUserLogged());
-  }
+  ngOnInit() {}
 
   register() {
-
     this.user = {
       email: this.form.value.email,
       password: this.form.value.password,
     };
-    console.log(this.user);
     this.authService.register(this.user);
   }
 }
