@@ -1,0 +1,18 @@
+<form [formGroup]="form" (ngSubmit)="create()" class="contact-form">
+
+  <div class="input_wrap">
+    <label>Title:</label>
+    <input type="text" placeholder="Enter Title" formControlName="title" />
+  </div>
+
+  <div class="input_wrap">
+    <input type="file" #filePicker (change)="onImagePicked($event)">
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+      <img [src]="imagePreview" [alt]="form.value.title">
+    </div>
+  </div>
+
+  <button type="submit" class="btn" [disabled]="!form.valid">
+    Create course
+  </button>
+</form>

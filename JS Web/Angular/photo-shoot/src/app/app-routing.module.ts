@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreatePhotoComponent } from './components/photos/create-photo/create-photo.component';
 
 const routes: Routes = [
   // {
@@ -8,7 +9,7 @@ const routes: Routes = [
   //   pathMatch: 'full',
   //   canActivate: [AuthGuard]
   // },
-  // { path: 'register', component: LoginRegisterTemplateComponent },
+  { path: 'photo/create', component: CreatePhotoComponent },
 
   // { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] },
 ];
