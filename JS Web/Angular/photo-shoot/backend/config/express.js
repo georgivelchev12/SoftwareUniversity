@@ -22,7 +22,7 @@ module.exports = (app) => {
   // app.use("/courses-project/images", express.static(`${process.env.BACKEND_IMAGE_FOLDER || ""}images`));
   // have BACKEND_IMAGE_FOLDER because local server path is different
   app.use(
-    "/images",
+    "/photo-shoot/images",
     express.static(`${process.env.BACKEND_IMAGE_FOLDER || ""}images`)
   );
 
