@@ -33,4 +33,9 @@ export class PhotoService {
     // formData.append
     return this.http.post(`${BACKEND_URL}/`, photoData)
   }
+
+
+  getCategories(){
+    return this.http.get<{ message: string; categories: [] }>(`${environment.apiUrl}/categories`)
+  }
 }
