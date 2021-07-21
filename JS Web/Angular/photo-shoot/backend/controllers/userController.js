@@ -15,8 +15,8 @@ async function registerUser(req, res, next) {
     });
     await user.save();
     res.status(200).json({
-      message: 'You have registered successfully!',
-      ...req.auth.createToken(user)
+      message: "You have registered successfully!",
+      ...req.auth.createToken(user),
     });
   } catch (err) {
     console.log("registerUser error:", err.message);
@@ -30,18 +30,30 @@ async function loginUser(req, res, next) {
     // to do res.json
     throw new Error("Wrong username or password");
   } else {
-    const isMatch = await bcrypt.compare(req.body.password, user.hashedPassword);
+    const isMatch = await bcrypt.compare(
+      req.body.password,
+      user.hashedPassword
+    );
     if (!isMatch) {
-    // to do res.json
+      // to do res.json
       throw new Error("Wrong username or password");
     } else {
       res.status(200).json({
-        message: 'You logged in successfully!',
-        ...req.auth.createToken(user)
+        message: "You logged in successfully!",
+        ...req.auth.createToken(user),
       });
     }
   }
 }
+
+async function editUser(req, res) {
+  const user = await getUserByEmail(req.body.email);
+  
+}
+async function myProfile(req, res) {
+  
+}
+
 async function listUsers(req, res, next) {
   console.log(req.user);
   res.status(200).json({ message: "List Users" });
@@ -50,5 +62,7 @@ async function listUsers(req, res, next) {
 module.exports = {
   listUsers,
   registerUser,
-  loginUser
+  editUser,
+  loginUser,
+  myProfile
 };

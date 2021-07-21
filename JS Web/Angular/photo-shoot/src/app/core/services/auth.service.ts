@@ -22,10 +22,11 @@ export class AuthService {
     private router: Router
   ) {}
 
+  // Auth functions / Start
   register(user: AuthModel) {
     return this.http.post(`${BACKEND_URL}/register`, user).subscribe(
       (data) => {
-        // this.loginAction(data);
+        this.loginAction(data);
       },
       (err) => {}
     );
@@ -79,6 +80,16 @@ export class AuthService {
         this.userEmail
       );
     }
+  }
+  // Auth functions / End
+
+  
+  editUser(user) {
+    console.log('inAUthservice editUser: ', user);
+    return this.http.post(`${BACKEND_URL}/edit/${user._id}`, user);
+  }
+  getMyProfile(){
+    return this.http.get(`${BACKEND_URL}/myprofile`);
   }
 
   // Login / Logout functions
