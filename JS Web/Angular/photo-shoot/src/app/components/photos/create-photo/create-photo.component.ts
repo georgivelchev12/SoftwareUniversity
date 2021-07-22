@@ -16,7 +16,7 @@ export class CreatePhotoComponent implements OnInit {
     description: new FormControl(''),
     image: new FormControl(null, {
       validators: [Validators.required],
-      // asyncValidators: [mimeType],
+      asyncValidators: [mimeType],
     }),
     categories: new FormArray([], []),
   });

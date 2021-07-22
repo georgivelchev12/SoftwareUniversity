@@ -5,6 +5,9 @@ function filterEmptyArr(arr) {
 
 // Get image file
 function getImagePath(req, forDeleteUrl = undefined) {
+  if(!req.file){
+    return false;  
+  }
   if (forDeleteUrl) {
     const fileName = forDeleteUrl.split("/photo-shoot/")[1];
     const imgFile = `${process.env.BACKEND_IMAGE_FOLDER || ""}${fileName}`;

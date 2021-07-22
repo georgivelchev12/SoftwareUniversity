@@ -9,15 +9,6 @@ const MIME_TYPE_MAP = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-
-    // let imageStorageMap = {};
-    // if (req.user) {
-    //   imageStorageMap = {
-    //     "/photo-shoot/api/photo/": `/${req.user._id}/photos`,
-    //   };
-    // }
-
-
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error("Invalid mime type");
     if (isValid) {
@@ -27,7 +18,11 @@ const storage = multer.diskStorage({
     const date = new Date();
     const month = ("0" + (date.getMonth() + 1)).slice(-2);
     const year = date.getFullYear()
-    const pathToStoreImg = `/${year}/${month}`;
+    let pathToStoreImg = `/${year}/${month}`;
+
+    if (file.originalname.includes('@')) {
+      pathToStoreImg = `/users`
+    }
 
 
     fs.mkdir(
@@ -35,7 +30,6 @@ const storage = multer.diskStorage({
         { recursive: true },
         error => cb(error, `${process.env.BACKEND_IMAGE_FOLDER || ""}images${pathToStoreImg}`)
     )
-
 
     // fs.mkdir(
     //     `${process.env.BACKEND_IMAGE_FOLDER || ""}images${imageStorageMap[req.originalUrl]}`,

@@ -83,10 +83,26 @@ export class AuthService {
   }
   // Auth functions / End
 
-  
+
   editUser(user) {
-    console.log('inAUthservice editUser: ', user);
-    return this.http.post(`${BACKEND_URL}/edit/${user._id}`, user);
+    let postData;
+    console.log('before:', typeof user.imgUrl, user.imgUrl);
+    if(typeof user.imgUrl === 'object'){
+      postData = new FormData();
+      postData.append('email', user.email)
+      postData.append('firstName', user.firstName)
+      postData.append('lastName', user.lastName)
+      postData.append('info', user.info)
+      postData.append('phone', user.phone)
+      postData.append('image', user.imgUrl, user.email)
+      console.log(user.imgUrl, user.email);
+    } else{
+      postData = {
+        ...user
+      }
+    }
+    console.log(postData);
+    return this.http.put(`${BACKEND_URL}/edit`, postData);
   }
   getMyProfile(){
     return this.http.get(`${BACKEND_URL}/myprofile`);

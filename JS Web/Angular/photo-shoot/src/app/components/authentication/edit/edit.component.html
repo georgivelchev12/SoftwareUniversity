@@ -1,15 +1,14 @@
-<form [formGroup]="form" (ngSubmit)="edit()">
+<form [formGroup]="form" (ngSubmit)="edit()" *ngIf="profile">
   <h1>Edit your account</h1>
-  <input type="email" formControlName="email" placeholder="Email" value="{{profile?.email}}" />
-  <input type="firstName" formControlName="firstName" placeholder="First Name" value="{{profile?.firstName}}"/>
-  <input type="lastName" formControlName="lastName" placeholder="Last Name"  value="{{profile?.lastName}}"/>
-  <textarea formControlName="info" placeholder="Short info" value="{{profile?.info}}"></textarea>
-  <input type="phone" formControlName="phone" placeholder="Phone" value="{{profile?.phone}}" />
+  <input type="email" formControlName="email" placeholder="Email" />
+  <input type="firstName" formControlName="firstName" placeholder="First Name" />
+  <input type="lastName" formControlName="lastName" placeholder="Last Name" />
+  <textarea formControlName="info" placeholder="Short info"></textarea>
+  <input type="phone" formControlName="phone" placeholder="Phone" />
 
   <input type="file" #filePicker (change)="onImagePicked($event)">
   <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
     <img [src]="imagePreview" [alt]="form.value.title">
   </div>
-    
+
   <button type="submit">Edit</button>
-</form>
