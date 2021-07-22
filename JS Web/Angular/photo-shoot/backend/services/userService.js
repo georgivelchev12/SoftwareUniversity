@@ -4,7 +4,11 @@ async function getUserByEmail(email) {
     email: { $regex: email, $options: "i" },
   });
 }
+async function getUserById(id) {
+  return await User.findById(id);
+}
 
 module.exports = {
   getUserByEmail,
+  getUserById,
 };

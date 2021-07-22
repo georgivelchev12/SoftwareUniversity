@@ -7,26 +7,40 @@ import { AuthService } from 'src/app/core/services/auth.service';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class EditComponent implements OnInit {
+export class EditUserComponent implements OnInit {
   imagePreview;
+  profile;
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required]),
-    description: new FormControl(''),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    info: new FormControl(''),
+    phone: new FormControl(''),
     image: new FormControl(null, {
       validators: [Validators.required],
+      // To do ....
       // asyncValidators: [mimeType],
     }),
-    categories: new FormArray([], []),
   });
 
 
   constructor(public authService: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.getMyProfile().subscribe(data => {
+      this.profile = data['user'];
+      console.log(this.profile);
+    })
+  }
 
   edit(){
-    
+    console.log(this.form.value);
+    this.profile = this.form.value;
+    console.log(this.profile);
+    this.authService.editUser(this.profile).subscribe(data => {
+      console.log('Data from: ', data);
+    })
   }
 
   onImagePicked(event){

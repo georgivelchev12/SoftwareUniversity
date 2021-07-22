@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
-const { getUserByEmail } = require("../services/userService");
+const { getUserByEmail, getUserById } = require("../services/userService");
 
 async function registerUser(req, res, next) {
   try {
@@ -47,11 +47,20 @@ async function loginUser(req, res, next) {
 }
 
 async function editUser(req, res) {
-  const user = await getUserByEmail(req.body.email);
+  const user = await getUserById(req.body.email);
   
+  console.log('in editUser: ', user);
+  res.status(200).json({message: 'Edit success!', user})
 }
 async function myProfile(req, res) {
-  
+  try {
+    const user = await User.findById(req.user._id);
+    user.hashedPassword = null;
+    res.status(200).json({message: 'User fetched!', user})
+    
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 async function listUsers(req, res, next) {
