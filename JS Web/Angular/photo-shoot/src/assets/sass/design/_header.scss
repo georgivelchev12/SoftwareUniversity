@@ -11,7 +11,7 @@ header {
   &.is_stuck {
     @include position(fixed, 0 null null 0);
     .header_middle {
-      height: 80px;
+      height: 70px;
     }
   }
   .fixed_cont {
@@ -19,7 +19,7 @@ header {
   }
   .header_middle {
     transition: all 0.3s;
-    height: 90px;
+    height: 80px;
     .header_logo {
       display: flex;
       align-items: center;

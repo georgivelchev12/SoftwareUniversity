@@ -1,0 +1,13 @@
+<div class="photo_list">
+  <div class="photo"
+    *ngFor="let photo of photos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
+    {{photo.title}}
+
+  </div>
+</div>
+
+
+
+
+<!-- <pagination-controls (pageChange)="currentPage = $event" [maxSize]="5" previousLabel="" nextLabel=""></pagination-controls> -->
+<pagination-controls (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>

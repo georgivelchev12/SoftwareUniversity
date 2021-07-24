@@ -7,11 +7,16 @@ let controller = {
     controller.navbarDropdownHandler();
     // controller.slidersInit();
 
-    if ($(".filter_select").length) {
-      $(".filter_select").niceSelect();
-    }
     // controller.menuOutHandler();
     controller.toggleProductTabs();
+
+    setTimeout(function () {
+    if ($("select").length) {
+      $("select").niceSelect();
+    }
+    }, 1000);
+
+  
   },
   mobileCheckboxClass: function () {
     // Mobile Checkbox add class to the body
@@ -36,10 +41,8 @@ let controller = {
       //  FOOTER ABSOLUTE
       document.body.style.paddingBottom =
         document.querySelector("footer").clientHeight + "px";
-      document.body.style.minHeight =
-        "calc(100vh - " +
-        document.querySelector("footer").clientHeight * 2 +
-        "px)";
+      // document.body.style.minHeight =
+      //   "calc(100vh - " + document.querySelector("footer").clientHeight + "px)";
     }
     fixedNavbarHandler();
     window.addEventListener("scroll", function () {
@@ -75,8 +78,8 @@ let controller = {
       }
     });
     $("body").on("click", ".popup_wrap .close_btn", function () {
-      let popup = document.querySelector(".popup_wrap")
-      if(popup){
+      let popup = document.querySelector(".popup_wrap");
+      if (popup) {
         popup.classList.remove("active_pop");
         document.body.classList.remove("disable_scroll");
       }
@@ -129,16 +132,15 @@ let controller = {
     });
   },
   toggleProductTabs: function () {
-    
     // Toggle random block
     $("body").on("click", "[data-toggler]", function () {
       let attrValue = $(this).attr("data-toggler");
       $("#" + attrValue).slideToggle(200, "linear", function () {});
       $(this).toggleClass("active");
     });
-    
+
     // Tabs filter
-    $(".filter_tabs .tabs .tab").click(function (e) {
+    $("body").on("click", ".filter_tabs .tabs .tab", function (e) {
       e.preventDefault();
       $(this).addClass("active").siblings().removeClass("active");
       let a = $(this).children();

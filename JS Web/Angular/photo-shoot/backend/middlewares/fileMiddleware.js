@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     const year = date.getFullYear()
     let pathToStoreImg = `/${year}/${month}`;
 
-    if (file.originalname.includes('@')) {
+    if (file.originalname.includes('profileImage-') || file.originalname.includes('coverImage-') ) {
       pathToStoreImg = `/users`
     }
 
@@ -44,4 +44,7 @@ const storage = multer.diskStorage({
   },
 });
 
-module.exports = multer({ storage: storage }).single("image");
+module.exports = multer({ storage: storage }).fields([
+  {name: "image"},
+  {name: "coverImage"}
+]);

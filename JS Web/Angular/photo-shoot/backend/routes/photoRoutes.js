@@ -6,8 +6,8 @@ const router = require("express").Router();
 
 // /photo-shoot/api/photo
 router.post("/", isUser(), extractFile, createPhoto);
+router.get("/list", getPhotos);
 router.get("/:id", getPhoto);
-router.get("/", getPhotos);
 
 
 

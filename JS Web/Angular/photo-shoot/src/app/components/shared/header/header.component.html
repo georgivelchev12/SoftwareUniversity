@@ -76,30 +76,29 @@
             </ul>
           </li>
           <li class="dropdown_link" *ngIf="authService.getIsAuth();">
-            <a href="#" class="profile">
+            <a routerLink="/user/profile" class="profile">
               <i class="fas fa-user-circle"></i>
             </a>
             <ul class="dropdown_menu wrap_box">
-              <div *ngIf="profile">
-                <figure class="cover_figure">
-                  <img src="{{profile.imgUrl}}" alt="">
-                  <span>М</span>
-                  <a routerLink="/user/profile" class="upload_photo fas fa-camera"></a>
-                </figure>
-                <span class="name">{{profile.firstName}} {{profile.lastName}}</span>
-                <span class="email">{{profile.email}}</span>
+              <figure class="cover_figure">
+                <img *ngIf="profile?.imgUrl" src="{{profile?.imgUrl}}">
+                <span>{{profile?.email | slice:0:1 | uppercase }}</span>
+                <a routerLink="/user/profile" class="upload_photo fas fa-camera"></a>
+              </figure>
+              <span class="name">{{profile?.firstName}} {{profile?.lastName}}</span>
+              <span class="email">{{profile?.email }}</span>
 
-                <a routerLink="/user/profile" class="btn">View profile</a>
-                <a routerLink="/" class="btn btn_light" (click)="logout()">Logout</a>
-                <div class="separator"></div>
-                <ul class="language_dropdown">
-                  <a href="javascript:void(0)" data-toggler="lang_menu" title="bg" class="current">Gallery</a>
-                  <ul id="lang_menu" class="toggle_data">
-                    <li><a href="#">My photos</a></li>
-                    <li><a href="#">Fav. photos</a></li>
-                  </ul>
+              <a routerLink="/user/profile" class="btn">View profile</a>
+              <a routerLink="/" class="btn btn_light" (click)="logout()">Logout</a>
+              <div class="separator"></div>
+              <ul class="language_dropdown">
+                <a href="javascript:void(0)" data-toggler="lang_menu" title="bg" class="current">Account</a>
+                <ul id="lang_menu" class="toggle_data">
+                  <li><a routerLink="/user/profile">Edit profile</a></li>
+                  <li><a routerLink="/user/profile">My photos</a></li>
+                  <li><a routerLink="/user/profile">Fav. photos</a></li>
                 </ul>
-              </div>
+              </ul>
             </ul>
           </li>
           <li class="list_item" *ngIf="!authService.getIsAuth();">

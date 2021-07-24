@@ -34,6 +34,10 @@ export class PhotoService {
     return this.http.post(`${BACKEND_URL}/`, photoData)
   }
 
+  getPhotos(myPhotos = '', itemsPerPage, currentPage){
+    const queryParams = `?pagesize=${itemsPerPage}&page=${currentPage}&${myPhotos}`;
+    return this.http.get<{message: string, photos: [] , count: number}>(`${BACKEND_URL}/list${queryParams}`)
+  }
 
   getCategories(){
     return this.http.get<{ message: string; categories: [] }>(`${environment.apiUrl}/categories`)

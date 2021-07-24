@@ -49,6 +49,9 @@ async function loginUser(req, res, next) {
 
 async function editUser(req, res) {
   const user = await getUserById(req.user._id);
+
+
+  const userImages = getImagePath(req); 
   const newUserData = {
     hashedPassword: user.hashedPassword,
     email: req.body.email,
@@ -56,12 +59,13 @@ async function editUser(req, res) {
     lastName: req.body.lastName,
     info: req.body.info,
     phone: req.body.phone,
-    imgUrl: getImagePath(req) || user.imgUrl,
+    imgUrl: userImages.image || user.imgUrl,
+    coverImgUrl: userImages.coverImage || user.coverImgUrl,
     photos: filterEmptyArr(user.photos),
   };
   Object.assign(user, newUserData);
   await user.save();
-  res.status(200).json({ message: "Edit success!" });
+  res.status(200).json({ message: "Edit success!", user });
 }
 async function myProfile(req, res) {
   try {

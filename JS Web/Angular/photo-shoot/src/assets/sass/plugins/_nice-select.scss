@@ -7,8 +7,8 @@ $gray_lighter: #f6f6f6 !default;
 // Style the dropdown
 .nice-select {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  box-sizing: border-box;
   clear: both;
+  box-sizing: border-box;
   cursor: pointer;
   display: block;
   font-weight: normal;
@@ -21,8 +21,12 @@ $gray_lighter: #f6f6f6 !default;
   transition: all 0.2s ease-in-out;
   user-select: none;
   white-space: nowrap;
-  border-bottom: 1px solid $middle-gray;
   width: auto;
+  border: 1px solid #939393;
+  border-radius: 7px;
+  margin-bottom: 16px;
+  color: $dark;
+  background: $light;
   &:hover {
     //  border-color: darken($gray_light, 5%);
   }
@@ -32,8 +36,9 @@ $gray_lighter: #f6f6f6 !default;
   }
   // Arrow
   &:after {
-    content: "\e90a";
-    font-family: "as96";
+    content: "\f053";
+    font-family: $icons;
+    font-weight: 900;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,15 +57,17 @@ $gray_lighter: #f6f6f6 !default;
     // extends &:active styles
     @extend :active;
     &:after {
-      transform: translateY(-50%) rotate(0deg);
+      transform: translateY(-50%) rotate(0);
     }
     .list {
       opacity: 1;
       pointer-events: auto;
       transform: scale(1) translateY(0);
+      &.isOutBottom{
+        transform: scale(1) translateY(0);
+      }
     }
   }
-
   &.disabled {
     border-color: lighten($gray_light, 2%);
     color: $gray;
@@ -92,6 +99,7 @@ $gray_lighter: #f6f6f6 !default;
     top: 100%;
     transform-origin: 50% 0;
     transform: scale(0.75) translateY(-20px);
+    box-shadow: 0 3px 6px 0 rgba($color: $black, $alpha: 0.15);
     transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
     z-index: 9;
     left: 18px;
@@ -123,7 +131,8 @@ $gray_lighter: #f6f6f6 !default;
     &:hover,
     &.focus,
     &.selected.focus {
-      // background-color: $light_gray;
+      background: rgba($color: $secondary, $alpha: 0.2);
+      
     }
     &.selected {
       font-weight: 500;

@@ -15,6 +15,7 @@ input[type="submit"] {
   border: 1px solid $secondary;
   background: $secondary;
   border-radius: 47px;
+  border-bottom-right-radius: 0;
   transition: color 0.3s, border 0.3s, background 0.3s ease-in-out;
   font-size: 15px;
   @include breakpoint(tiny) {

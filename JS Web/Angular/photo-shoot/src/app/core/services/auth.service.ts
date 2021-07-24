@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthModel } from 'src/app/components/authentication/auth.model';
+import { DataSharingService } from './data_sharing.service';
 
 const BACKEND_URL = environment.apiUrl + '/user';
 
@@ -19,7 +20,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     //  private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private dataSharingService: DataSharingService
   ) {}
 
   // Auth functions / Start
@@ -80,22 +82,34 @@ export class AuthService {
         this.userEmail
       );
     }
+    
+    this.dataSharingService.isDataChanged.next(true);
   }
   // Auth functions / End
 
 
   editUser(user) {
     let postData;
-    console.log('before:', typeof user.imgUrl, user.imgUrl);
-    if(typeof user.imgUrl === 'object'){
+    if(typeof user.imgUrl === 'object' || typeof user.coverImgUrl === 'object'){
       postData = new FormData();
       postData.append('email', user.email)
       postData.append('firstName', user.firstName)
       postData.append('lastName', user.lastName)
       postData.append('info', user.info)
       postData.append('phone', user.phone)
-      postData.append('image', user.imgUrl, user.email)
-      console.log(user.imgUrl, user.email);
+
+      if(typeof user.imgUrl === 'object'){
+        postData.append('image', user.imgUrl, `profileImage-${user.email.split('@')[0]}`)
+      } else{
+        postData.append('image', user.imgUrl)
+      }
+
+      if(typeof user.coverImgUrl === 'object'){
+        postData.append('coverImage', user.coverImgUrl, `coverImage-${user.email.split('@')[0]}`)
+      } else{
+        postData.append('coverImage', user.coverImgUrl)
+      }
+      
     } else{
       postData = {
         ...user

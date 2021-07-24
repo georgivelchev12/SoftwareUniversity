@@ -5,26 +5,32 @@ function filterEmptyArr(arr) {
 
 // Get image file
 function getImagePath(req, forDeleteUrl = undefined) {
-  if(!req.file){
+  if(!req.files){
     return false;  
   }
+
   if (forDeleteUrl) {
     const fileName = forDeleteUrl.split("/photo-shoot/")[1];
     const imgFile = `${process.env.BACKEND_IMAGE_FOLDER || ""}${fileName}`;
     return imgFile;
   }
-  const siteUrl = req.protocol + "://" + req.get("host");
-  const fileDestination = req.file.destination.replace(
-    process.env.BACKEND_IMAGE_FOLDER,
-    ""
-  );
-  const imgFile = `${siteUrl}/photo-shoot/${fileDestination}/${req.file.filename}`;
 
-  return imgFile;
-  // Before and after replacement
-  // --------------------------
-  // http://localhost:3000/photo-shoot/backend/images/2021/07/test-1626796315740.jpg
-  // http://localhost:3000/photo-shoot/images/2021/07/test-1626796315740.jpg
+  const filesObj = Object.assign({}, req.files);
+  let fileUrls = Object.entries(filesObj).map(([fieldName, [file]]) => {
+    const siteUrl = req.protocol + "://" + req.get("host");
+    const fileDestination = file.destination.replace(process.env.BACKEND_IMAGE_FOLDER, "");
+    const imgFile = `${siteUrl}/photo-shoot/${fileDestination}/${file.filename}`;
+    // Before and after replacement
+    // --------------------------
+    // http://localhost:3000/photo-shoot/backend/images/2021/07/test-1626796315740.jpg
+    // http://localhost:3000/photo-shoot/images/2021/07/test-1626796315740.jpg
+    return {
+      [fieldName]: imgFile
+    }
+  })
+  fileUrls = Object.assign({}, ...fileUrls);
+  console.log(fileUrls)
+  return fileUrls;
 }
 
 module.exports = {

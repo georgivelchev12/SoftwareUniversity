@@ -8,6 +8,7 @@ const schema = new Schema({
   info: { type: String, required: false, default: "" },
   phone: { type: String, required: false, default: "" },
   imgUrl: { type: String, required: false, default: "" },
+  coverImgUrl: { type: String, required: false, default: "" },
   photos: [{ type: Schema.Types.ObjectId, ref: "Photo", default: [] }],
 });
 
