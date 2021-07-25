@@ -1,5 +1,5 @@
-@import '../../../../assets/sass/setup';
-@import '../../../../assets/sass/grid/mixins';
+@import "../../../../assets/sass/setup";
+@import "../../../../assets/sass/grid/mixins";
 .logo {
   display: flex;
   align-items: center;
@@ -12,7 +12,11 @@
   svg {
     transition: all 0.3s;
     margin-right: 8px;
-    @include box(50px);
+
+    @include box(40px);
+    @include breakpoint(medium) {
+      @include box(50px);
+    }
     @include breakpoint(large) {
       @include box(60px);
     }
@@ -24,7 +28,10 @@
     strong {
       color: $dark;
       margin-bottom: 3px;
-      font-size: 22px;
+      font-size: 20px;
+      @include breakpoint(medium) {
+        font-size: 22px;
+      }
       @include breakpoint(large) {
         font-size: 26px;
       }

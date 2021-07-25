@@ -1,0 +1,27 @@
+<section class="category_slider" *ngIf="isSlider">
+  <ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig" (beforeChange)="beforeChange($event)"
+    (afterChange)="afterChange($event)">
+    <div ngxSlickItem *ngFor="let category of categories">
+      <label (click)="onClick($event, category)" [class.disabled]="disableClickEvent">
+        <img src="{{ category.imgUrl }}" alt="{{category.title}}">
+        <span>{{category.title}}</span>
+      </label>
+    </div>
+  </ngx-slick-carousel>
+</section>
+
+<section class="category_list" *ngIf="!isSlider">
+  <div class="row">
+    <div class="col">
+      <h2 class="section_title text_center">
+        Категории
+      </h2>
+    </div>
+    <div class="col medium_3" *ngFor="let category of categories">
+      <a routerLink="/categories/{{category._id}}">
+        <img src="{{ category.imgUrl }}" alt="{{category.title}}">
+        <span>{{category.title}}</span>
+      </a>
+    </div>
+  </div>
+</section>

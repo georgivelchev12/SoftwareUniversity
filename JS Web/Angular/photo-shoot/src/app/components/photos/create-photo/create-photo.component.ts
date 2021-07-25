@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CategoryService } from 'src/app/core/services/category.service';
 import { PhotoService } from 'src/app/core/services/photo.service';
 import { mimeType } from './myme-type.validator';
 
@@ -25,7 +26,7 @@ export class CreatePhotoComponent implements OnInit {
   allCategories;
   selectedCategories;
 
-  constructor(public photoService: PhotoService) {}
+  constructor(public photoService: PhotoService, public categoryService: CategoryService) {}
 
   ngOnInit() {
     this.getAllCategories();
@@ -47,7 +48,7 @@ export class CreatePhotoComponent implements OnInit {
   }
 
   getAllCategories() {
-    this.photoService.getCategories().subscribe(({ categories }) => {
+    this.categoryService.getCategories().subscribe(({ categories }) => {
       this.allCategories = categories;
 
       this.allCategories.forEach((c) => {

@@ -16,7 +16,9 @@ let controller = {
     }
     }, 1000);
 
-  
+    window.addEventListener('click', function () {
+      $("select").niceSelect();
+    })
   },
   mobileCheckboxClass: function () {
     // Mobile Checkbox add class to the body
@@ -148,13 +150,21 @@ let controller = {
       $(".panels .panel." + a.attr("href").slice(1)).slideDown(); //show clicked
     });
 
-    $(".tabs_filter").change(function () {
+    $("body").on('change', '.tabs_filter', function () {
       let currclass = $(".tabs_filter .option.selected")
         .attr("data-value")
         .slice(1);
       $(".panels .panel").hide(); //hide all
       $(".panels .panel." + currclass).fadeIn(); //show clicked
-    });
+    })
+    
+    // $(".tabs_filter").change(function () {
+    //   let currclass = $(".tabs_filter .option.selected")
+    //     .attr("data-value")
+    //     .slice(1);
+    //   $(".panels .panel").hide(); //hide all
+    //   $(".panels .panel." + currclass).fadeIn(); //show clicked
+    // });
   },
 };
 

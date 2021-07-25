@@ -58,24 +58,55 @@
             <span class="default_block">Create a beautiful story</span>
           </span>
         </a>
-        <!-- Open mobile navigation -->
-        <label class="toggle_nav open" for="toggle_nav"></label>
+        <div class="right_mobile">
+          <!-- Open mobile navigation -->
+          <label class="toggle_nav open" for="toggle_nav"></label>
+          <ul>
+            <li class="dropdown_link" *ngIf="authService.getIsAuth();">
+              <a href="javascript:void(0)" class="profile">
+                <i class="fas fa-user-circle"></i>
+              </a>
+              <ul class="dropdown_menu wrap_box">
+                <figure class="cover_figure">
+                  <img *ngIf="profile?.imgUrl" src="{{profile?.imgUrl}}">
+                  <span>{{profile?.email | slice:0:1 | uppercase }}</span>
+                  <a routerLink="/user/profile" class="upload_photo fas fa-camera"></a>
+                </figure>
+                <span class="name">{{profile?.firstName}} {{profile?.lastName}}</span>
+                <span class="email">{{profile?.email }}</span>
+
+                <a routerLink="/user/profile" class="btn">View profile</a>
+                <a routerLink="/" class="btn btn_light" (click)="logout()">Logout</a>
+                <div class="separator"></div>
+                <ul class="language_dropdown">
+                  <a href="javascript:void(0)" data-toggler="lang_menu" title="bg" class="current">Account</a>
+                  <ul id="lang_menu" class="toggle_data">
+                    <li><a routerLink="/user/profile">Edit profile</a></li>
+                    <li><a routerLink="/user/profile">My photos</a></li>
+                    <li><a routerLink="/user/profile">Fav. photos</a></li>
+                  </ul>
+                </ul>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
       <nav role="navigation" class="col medium_7 nav_wrapper">
         <!-- Close mobile navigation -->
         <label class="toggle_nav close" for="toggle_nav"></label>
         <ul class="main_navi">
+
           <li class="list_item dropdown_link">
-            <a href="#" title="Link" class="dropdown_toggle_mobile has_sub">
-              Галерия <span class="dropdown_icon"></span>
+            <a routerLink="/categories" title="Link" class="dropdown_toggle_mobile has_sub">
+              Категории <span class="dropdown_icon"></span>
             </a>
             <ul class="dropdown_menu">
-              <li class="list_item"><a href="#">Item1</a></li>
-              <li class="list_item"><a href="#">Item2</a></li>
-              <li class="list_item active"><a href="#">Item3</a></li>
+              <li *ngFor="let category of categories" class="list_item"><a routerLink="/categories/{{category._id}}">{{category.title}}</a></li>
             </ul>
           </li>
-          <li class="dropdown_link" *ngIf="authService.getIsAuth();">
+
+          <!-- Account action  Start -->
+          <li class="dropdown_link profile_dropdown" *ngIf="authService.getIsAuth();">
             <a routerLink="/user/profile" class="profile">
               <i class="fas fa-user-circle"></i>
             </a>
@@ -108,11 +139,16 @@
           </li>
           <li class="list_item" *ngIf="!authService.getIsAuth();">
             <a href="#slide_form" title="Link" class="popup_toggle register">
+              <span class="btn_mobile">
+                <i class="fas fa-user-plus"></i> Register
+              </span>
               <span class="btn">
                 Get started
               </span>
             </a>
           </li>
+          <!-- Account action / END-->
+
         </ul>
       </nav>
     </div>

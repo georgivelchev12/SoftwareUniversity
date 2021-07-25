@@ -1,19 +1,34 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EditUserComponent } from './components/authentication/edit/edit.component';
+import { CategoryCreateComponent } from './components/categories/category-create/category-create.component';
+import { CategoryDetailsComponent } from './components/categories/category-details/category-details.component';
+import { CategoryListComponent } from './components/categories/category-list/category-list.component';
+import { HomeComponent } from './components/landing/home/home.component';
+import { NotFoundComponent } from './components/landing/not-found/not-found.component';
 import { CreatePhotoComponent } from './components/photos/create-photo/create-photo.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: HomeComponent,
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard]
-  // },
-  { path: 'photo/create', component: CreatePhotoComponent },
-  { path: 'user/profile', component: EditUserComponent},
+  // Landing routes
+  {
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
 
-  // { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] },
+  // Photos routes
+  { path: 'photo/create', component: CreatePhotoComponent },
+
+  // User routes
+  { path: 'user/profile', component: EditUserComponent},
+  
+  // Categories routes
+  { path: 'categories', component: CategoryListComponent },
+  { path: 'categories/create', component: CategoryCreateComponent },
+  { path: 'categories/:id', component: CategoryDetailsComponent },
+
+  // Not Found
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

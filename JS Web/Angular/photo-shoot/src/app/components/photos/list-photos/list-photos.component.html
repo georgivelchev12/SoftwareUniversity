@@ -1,4 +1,9 @@
 <div class="photo_list">
+  <div class="photo">
+    <a routerLink="/photo/create">
+      Create photo
+    </a>
+  </div>
   <div class="photo"
     *ngFor="let photo of photos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
     {{photo.title}}

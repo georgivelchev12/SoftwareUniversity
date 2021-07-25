@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './components/authentication/auth.module';
+import { CategoryModule } from './components/categories/category.module';
+import { LandingModule } from './components/landing/landing.module';
 import { PhotosModule } from './components/photos/photos.module';
 import { SharedModule } from './components/shared/shared.module';
 
@@ -17,6 +19,8 @@ import { SharedModule } from './components/shared/shared.module';
     AuthModule,
     PhotosModule,
     SharedModule,
+    LandingModule,
+    CategoryModule,
     
     // To do ... remove it from here and set it in shared module
     FormsModule,
