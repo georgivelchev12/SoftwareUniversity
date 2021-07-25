@@ -7,6 +7,8 @@ import { CategoryListComponent } from './components/categories/category-list/cat
 import { HomeComponent } from './components/landing/home/home.component';
 import { NotFoundComponent } from './components/landing/not-found/not-found.component';
 import { CreatePhotoComponent } from './components/photos/create-photo/create-photo.component';
+import { DetailsPhotoComponent } from './components/photos/details-photo/details-photo.component';
+import { EditPhotoComponent } from './components/photos/edit-photo/edit-photo.component';
 
 const routes: Routes = [
   // Landing routes
@@ -18,6 +20,8 @@ const routes: Routes = [
 
   // Photos routes
   { path: 'photo/create', component: CreatePhotoComponent },
+  { path: 'photo/details/:id', component: DetailsPhotoComponent },
+  { path: 'photo/edit/:id', component: EditPhotoComponent },
 
   // User routes
   { path: 'user/profile', component: EditUserComponent},

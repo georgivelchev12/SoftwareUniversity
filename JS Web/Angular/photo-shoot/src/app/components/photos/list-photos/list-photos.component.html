@@ -1,18 +1,40 @@
-<div class="photo_list">
-  <div class="photo">
-    <a routerLink="/photo/create">
-      Create photo
-    </a>
+<section class="photo_list">
+  <div class="row">
+    
+    <div class="col small_6 medium_4 large_3">
+      <div class="photo create_photo">
+        <a routerLink="/photo/create">
+          <i class="far fa-plus-square"></i>
+          <span>Add image</span>
+          
+        </a>
+      </div>
+    </div>
+    
+    <div class="col small_6 medium_4 large_3"
+      *ngFor="let photo of photos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
+      <div class="photo">
+
+        <div class="buttons">
+          <a routerLink="/photo/edit/{{photo._id}}" class="far fa-edit"></a>
+          <a (click)="deletePhoto(photo._id)" class="far fa-trash-alt"></a>
+          <a (click)="likePhoto(photo._id)" class="far fa-heart"></a>
+        </div>
+        <span class="owner">
+          © {{photo.author.firstName}} {{photo.author.lastName}}
+        </span>
+
+        <a routerLink="/photo/details/{{photo._id}}">
+          <figure class="image_wrap">
+            <img src="{{photo.imgUrl}}" alt="{{photo.title}}">
+          </figure>
+        </a>
+
+      </div>
+  
+    </div>
+    
   </div>
-  <div class="photo"
-    *ngFor="let photo of photos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
-    {{photo.title}}
+</section>
 
-  </div>
-</div>
-
-
-
-
-<!-- <pagination-controls (pageChange)="currentPage = $event" [maxSize]="5" previousLabel="" nextLabel=""></pagination-controls> -->
-<pagination-controls (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+<pagination-controls *ngIf="photos.length > 7" (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>

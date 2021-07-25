@@ -1,5 +1,6 @@
 const Category = require("../models/Category");
 const Photo = require("../models/Photo");
+const fs = require("fs")
 const { filterEmptyArr, getImagePath } = require("../services/globalService");
 
 async function getPhotos(req, res) {
@@ -34,7 +35,7 @@ async function getPhotos(req, res) {
       }
     });
     if (photos) {
-      let count = await Photo.count(filterOptions);
+      let count = await Photo.countDocuments(filterOptions);
       res.status(200).json({ message: "Photos fetched!", photos, count });
     }
   } catch (err) {
@@ -86,8 +87,31 @@ async function createPhoto(req, res) {
 
   res.status(200).json({ message: "You create photo successfully!" });
 }
+
+async function deletePhoto(req, res) {
+  const foundPhoto = await Photo.findOne({ _id: req.params.id });
+
+  console.log(foundPhoto, getImagePath(req, foundPhoto.imgUrl));
+  res.status(200).json({ message: "Post deleted!" });
+
+  try {
+    await deleteImage(getImagePath(req, foundPhoto.imgUrl));
+    await Photo.deleteOne({ _id: req.params.id });
+    res.status(200).json({ message: "Post deleted!" });
+  } catch (err) {
+    console.log(`Something went wrong: ${err}`);
+  }
+}
+
+async function deleteImage(path) {
+  if (fs.existsSync(path)) {
+    await fs.promises.unlink(path);
+  }
+}
+
 module.exports = {
   getPhoto,
   createPhoto,
   getPhotos,
+  deletePhoto,
 };

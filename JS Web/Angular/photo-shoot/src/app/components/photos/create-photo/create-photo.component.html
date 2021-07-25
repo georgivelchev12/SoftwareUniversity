@@ -1,41 +1,71 @@
-<form [formGroup]="form" (ngSubmit)="create()" class="contact-form">
+<form [formGroup]="form" (ngSubmit)="create()">
 
-  <div class="input_wrap">
-    <label>Title:</label>
-    <input type="text" placeholder="Enter Title" formControlName="title" />
-  </div>
-  <div class="input_wrap">
-    <label>Description:</label>
-    <input type="text" placeholder="Enter Description" formControlName="description" />
-  </div>
+  <div class="row default_center">
+    <div class="col">
+      <h1 class="section_title text_center">Create new photo</h1>
 
-  <label class="control-label d-block">Select categories</label>
-  <div formGroupName="categories">
-    <div class="form-check w-25 d-inline-block" 
-    *ngFor="let category of form.controls.categories['controls']; let i = index">
-      <input 
-        type="checkbox" 
-        class="form-check-input" 
-        id="{{allCategories[i]._id}}"
-        [formControl]="category" 
-        (change)="getSelectedCategories(category, allCategories[i].title)" 
-      > 
-      <label class="form-check-label" for="{{allCategories[i]._id}}">{{allCategories[i].title}}</label>
+      <div class="input_wrapper">
+        <input type="file" #filePicker (change)="onImagePicked($event)">
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+          <img [src]="imagePreview" [alt]="form.value.title">
+        </div>
+      </div>
     </div>
-  </div>
-
-
-
-  <div class="input_wrap">
-    <input type="file" #filePicker (change)="onImagePicked($event)">
-    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
-      <img [src]="imagePreview" [alt]="form.value.title">
+    <div class="col">
+      <div class="input_wrapper">
+        <label>Title:</label>
+        <input type="text" placeholder="Enter Title" formControlName="title" />
+      </div>
     </div>
+    <div class="col">
+      <div class="input_wrapper">
+        <label>Description:</label>
+        <textarea placeholder="Enter Description" formControlName="description" rows="5"></textarea>
+      </div>
+    </div>
+
+    <div class="col">
+        
+        <div formGroupName="categories" class="category_checkboxes row">
+          <div class="col">
+            <h3 class="section_title">Choose categories</h3>
+          </div>
+          <div class="col large_3"  *ngFor="let category of form.controls.categories['controls']; let i = index">
+             
+            <input 
+              type="checkbox" 
+              class="category_input" 
+              id="{{allCategories[i]._id}}"
+              [formControl]="category" 
+              (change)="getSelectedCategories(category, allCategories[i].title)" 
+            > 
+            <label class="category_label" for="{{allCategories[i]._id}}">
+              <img src="{{allCategories[i].imgUrl}}" alt="{{allCategories[i].title}}">
+              <div class="category_wrap">
+                <span class="custom_checkbox">
+                  <span class="icon fas fa-check"></span>
+                </span>
+                <span class="category_title">{{allCategories[i].title}}</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+    </div>
+    <div class="col medium_6 large_4">
+      <button type="submit" class="btn wide" [disabled]="!form.valid">
+        Create photo
+      </button>
+    </div>
+
   </div>
+
+
+
+
+ 
 
 
   
-  <button type="submit" class="btn" [disabled]="!form.valid">
-    Create course
-  </button>
+
 </form>

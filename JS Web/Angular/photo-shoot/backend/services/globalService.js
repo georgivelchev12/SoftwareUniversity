@@ -5,7 +5,7 @@ function filterEmptyArr(arr) {
 
 // Get image file
 function getImagePath(req, forDeleteUrl = undefined) {
-  if(!req.files){
+  if(!req.files && !forDeleteUrl){
     return false;  
   }
 

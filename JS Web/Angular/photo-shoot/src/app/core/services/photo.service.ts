@@ -38,4 +38,8 @@ export class PhotoService {
     const queryParams = `?pagesize=${itemsPerPage}&page=${currentPage}&${myPhotos}`;
     return this.http.get<{message: string, photos: [] , count: number}>(`${BACKEND_URL}/list${queryParams}`)
   }
+
+  deletePhoto(id){
+    return this.http.get<{message: string}>(`${BACKEND_URL}/delete/${id}`)
+  }
 }

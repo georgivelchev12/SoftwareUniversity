@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
 import { PhotoService } from 'src/app/core/services/photo.service';
 
@@ -11,21 +12,32 @@ export class ListPhotosComponent implements OnInit {
   @Input() myPhotos: string;
   photos;
   currentPage = 1;
-  itemsPerPage = 6;
+  itemsPerPage = 7;
   totalItems;
 
-  constructor(public photoService: PhotoService) {}
+  constructor(
+    public photoService: PhotoService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.getPhotos();
   }
+
   getPage(event) {
     this.currentPage = event;
     this.getPhotos();
   }
 
+  deletePhoto(id) {
+    this.photoService.deletePhoto(id).subscribe(({ message }) => {
+      this.toastr.success(message, 'Success!');
+      this.getPhotos();
+    });
+  }
+  likePhoto(id) {}
+
   getPhotos() {
-    console.log(    this.currentPage);
     this.photoService
       .getPhotos(this.myPhotos, this.itemsPerPage, this.currentPage)
       .subscribe(({ message, photos, count }) => {

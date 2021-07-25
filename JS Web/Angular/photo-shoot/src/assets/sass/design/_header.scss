@@ -8,7 +8,9 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid $light-gray;
   &.is_stuck {
+    box-shadow: 0 3px 4px 0 rgba($color: $black, $alpha: 0.1);
     @include position(fixed, 0 null null 0);
     .header_middle {
       height: 70px;
