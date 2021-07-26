@@ -31,11 +31,11 @@ export class PhotoService {
     photoData.append('categories', JSON.stringify(body.categories));
 
     // formData.append
-    return this.http.post(`${BACKEND_URL}/`, photoData)
+    return this.http.post<{message: string}>(`${BACKEND_URL}/`, photoData)
   }
 
-  getPhotos(myPhotos = '', itemsPerPage, currentPage){
-    const queryParams = `?pagesize=${itemsPerPage}&page=${currentPage}&${myPhotos}`;
+  getPhotos(myPhotos = '', itemsPerPage, currentPage, category){
+    const queryParams = `?pagesize=${itemsPerPage}&page=${currentPage}${myPhotos}${category}`;
     return this.http.get<{message: string, photos: [] , count: number}>(`${BACKEND_URL}/list${queryParams}`)
   }
 

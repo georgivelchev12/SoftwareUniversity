@@ -1,7 +1,8 @@
 const Category = require("../models/Category");
 const Photo = require("../models/Photo");
-const fs = require("fs")
+const fs = require("fs");
 const { filterEmptyArr, getImagePath } = require("../services/globalService");
+const User = require("../models/User");
 
 async function getPhotos(req, res) {
   const query = req.query;
@@ -9,6 +10,17 @@ async function getPhotos(req, res) {
   if (query.myPhotos) {
     filterOptions.author = req.user._id;
   }
+  if(query.category){
+    filterOptions.categories = query.category;
+  }
+
+  // else {
+  //   const userIds = [...(await User.find())].reduce((acc, curr) => {
+  //     acc.push(curr._id);
+  //     return acc;
+  //   }, []);
+  //   filterOptions.author = userIds;
+  // }
 
   const pageSize = Number(query.pagesize);
   const currentPage = Number(query.page);
@@ -44,12 +56,12 @@ async function getPhotos(req, res) {
 }
 
 async function getPhoto(req, res) {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   try {
     const photo = await Photo.findById({ _id: req.params.id })
       .populate("author")
       .lean();
-    console.log("getPhoto:", photo);
+    // console.log("getPhoto:", photo);
     if (photo) {
       res.status(200).json({ message: "Photo fetched!", photo });
     }

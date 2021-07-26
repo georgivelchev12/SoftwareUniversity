@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { PhotoService } from 'src/app/core/services/photo.service';
+import { CategoryValidator } from './category.validator';
 import { mimeType } from './myme-type.validator';
 
 @Component({
@@ -13,20 +22,29 @@ export class CreatePhotoComponent implements OnInit {
   imagePreview: string;
 
   form = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    description: new FormControl(''),
+    title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(200),
+    ]),
     image: new FormControl(null, {
       validators: [Validators.required],
       asyncValidators: [mimeType],
     }),
-    categories: new FormArray([], []),
+    categories: new FormArray([], [CategoryValidator.minLengthCategories(1)]),
   });
 
   // currentPhoto;
   allCategories;
   selectedCategories;
+  onDragover;
 
-  constructor(public photoService: PhotoService, public categoryService: CategoryService) {}
+  constructor(
+    public photoService: PhotoService,
+    public categoryService: CategoryService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getAllCategories();
@@ -42,8 +60,9 @@ export class CreatePhotoComponent implements OnInit {
       categories: this.selectedCategories,
     };
 
-    this.photoService.createPhoto(course).subscribe((data) => {
-      console.log(data);
+    this.photoService.createPhoto(course).subscribe(({message}) => {
+      this.toastr.success(message, 'Success!');
+      this.router.navigateByUrl('/user/profile')
     });
   }
 
@@ -56,11 +75,13 @@ export class CreatePhotoComponent implements OnInit {
         // let containsCategory = this.currentPhoto.categories.find((catInCourse) => catInCourse._id == c._id) || false;
         (this.form.get('categories') as FormArray).push(new FormControl(false));
       });
-      this.getSelectedCategories();
+      // this.getSelectedCategories();
     });
   }
 
   getSelectedCategories() {
+    this.form.get('categories').markAsTouched()
+
     this.selectedCategories = this.form.controls.categories['controls'].map(
       (el, i) => {
         return (
@@ -73,7 +94,9 @@ export class CreatePhotoComponent implements OnInit {
     );
 
     // Get selected categories NAMES
-    this.selectedCategories = this.selectedCategories.filter((category) => category !== false);
+    this.selectedCategories = this.selectedCategories.filter(
+      (category) => category !== false
+    );
   }
 
   onImagePicked(event: Event) {
@@ -85,5 +108,20 @@ export class CreatePhotoComponent implements OnInit {
       this.imagePreview = reader.result as string;
     };
     reader.readAsDataURL(file);
+    console.log(this.selectedCategories, this.form.get('categories'));
+  }
+
+  onRemoveImage() {
+    this.imagePreview = '';
+    this.form.patchValue({ image: null });
+    this.form.get('image').updateValueAndValidity();
+    this.onDragover = false;
+  }
+
+  dragOver(event) {
+    this.onDragover = true;
+  }
+  dragLeave(event) {
+    this.onDragover = false;
   }
 }

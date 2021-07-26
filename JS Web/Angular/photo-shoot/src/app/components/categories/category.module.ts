@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { PhotosModule } from '../photos/photos.module';
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryDetailsComponent } from './category-details/category-details.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -14,6 +15,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
     ReactiveFormsModule,
     RouterModule,
     SlickCarouselModule,
+    PhotosModule
   ],
   declarations: [
     CategoryCreateComponent,

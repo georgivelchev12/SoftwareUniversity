@@ -18,7 +18,7 @@ async function getCategory(req, res) {
   console.log(req.params.id);
   try {
     const category = await Category.findById({ _id: req.params.id }).populate('photos').lean();
-    console.log("getCategory:", category);
+    // console.log("getCategory:", category);
     if (category) {
       res.status(200).json({ message: "Category fetched!", category });
     }

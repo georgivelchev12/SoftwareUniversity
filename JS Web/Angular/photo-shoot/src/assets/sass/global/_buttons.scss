@@ -18,6 +18,10 @@ input[type="submit"] {
   border-bottom-right-radius: 0;
   transition: color 0.3s, border 0.3s, background 0.3s ease-in-out;
   font-size: 15px;
+  &:disabled{
+    pointer-events: none;
+    opacity: 0.5;
+  }
   @include breakpoint(tiny) {
     width: auto;
     display: inline-block;
@@ -49,6 +53,16 @@ input[type="submit"] {
     &:hover {
       color: $tertiary;
       border-color: $tertiary;
+      background: $light;
+    }
+  }
+  &.btn_danger {
+    color: $light;
+    border-color: #f00;
+    background: #f00;
+    &:hover {
+      color: #f00;
+      border-color: #f00;
       background: $light;
     }
   }

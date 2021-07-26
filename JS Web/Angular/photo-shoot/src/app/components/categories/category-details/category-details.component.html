@@ -1,4 +1,3 @@
-
 <section class="opening" *ngIf="category" [ngStyle]="{'background-image': 'url(' + category.imgUrl + ')'}">
   <div class="opening_inner">
     <h2 class="title text_center">{{category.title}}</h2>
@@ -6,8 +5,6 @@
   </div>
 </section>
 
-<section class="category_details">
-  <div class="row" *ngIf="category">
-    
-  </div>
+<section class="category_details" *ngIf="category">
+  <app-list-photos [category]="'&category='+ category._id +''"></app-list-photos>
 </section>

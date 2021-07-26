@@ -1,16 +1,15 @@
 <section class="photo_list">
   <div class="row">
-    
-    <div class="col small_6 medium_4 large_3">
+
+    <div class="col small_6 medium_4 large_3" *ngIf="router.url == '/user/profile'">
       <div class="photo create_photo">
         <a routerLink="/photo/create">
           <i class="far fa-plus-square"></i>
           <span>Add image</span>
-          
         </a>
       </div>
     </div>
-    
+
     <div class="col small_6 medium_4 large_3"
       *ngFor="let photo of photos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
       <div class="photo">
@@ -31,10 +30,19 @@
         </a>
 
       </div>
-  
+
     </div>
-    
+
   </div>
 </section>
 
-<pagination-controls *ngIf="photos.length > 7" (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+<div class="row" *ngIf="!photos?.length">
+  <div class="col">
+    <h2>
+      There is no photos
+    </h2>
+  </div>
+</div>
+
+<pagination-controls *ngIf="photos?.length > 7" (pageChange)="getPage($event)" previousLabel="" nextLabel="">
+</pagination-controls>

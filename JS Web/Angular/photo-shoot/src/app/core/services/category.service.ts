@@ -24,7 +24,6 @@ export class CategoryService {
     return this.http.post(`${BACKEND_URL}/`, photoData)
   }
   getCategory(id){
-    console.log(id);
     return this.http.get<{message: string, category: Object}>(`${BACKEND_URL}/${id}`)
   }
   getCategories(){

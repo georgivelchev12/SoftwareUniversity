@@ -130,7 +130,7 @@ export class AuthService {
     return this.userEmail;
   }
   getToken() {
-    console.log('getToken() => ', this.token);
+    // console.log('getToken() => ', this.token);
     return this.token;
   }
   getIsAuth() {

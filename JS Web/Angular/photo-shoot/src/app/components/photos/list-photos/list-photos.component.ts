@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
 import { PhotoService } from 'src/app/core/services/photo.service';
@@ -8,8 +9,9 @@ import { PhotoService } from 'src/app/core/services/photo.service';
   templateUrl: './list-photos.component.html',
   styleUrls: ['./list-photos.component.scss'],
 })
-export class ListPhotosComponent implements OnInit {
+export class ListPhotosComponent implements OnInit, OnChanges {
   @Input() myPhotos: string;
+  @Input() category: string;
   photos;
   currentPage = 1;
   itemsPerPage = 7;
@@ -17,10 +19,16 @@ export class ListPhotosComponent implements OnInit {
 
   constructor(
     public photoService: PhotoService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    // public activatedRoute: ActivatedRoute,
+    public router: Router
+
   ) {}
 
   ngOnInit() {
+    this.getPhotos();
+  }
+  ngOnChanges(){
     this.getPhotos();
   }
 
@@ -39,11 +47,10 @@ export class ListPhotosComponent implements OnInit {
 
   getPhotos() {
     this.photoService
-      .getPhotos(this.myPhotos, this.itemsPerPage, this.currentPage)
+      .getPhotos(this.myPhotos, this.itemsPerPage, this.currentPage, this.category)
       .subscribe(({ message, photos, count }) => {
         this.photos = photos;
         this.totalItems = count;
-        console.log(photos, count);
       });
   }
 }

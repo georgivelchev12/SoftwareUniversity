@@ -65,7 +65,9 @@ form {
         color: $light;
         .custom_checkbox {
           width: 20px;
+          min-width: 20px;
           height: 20px;
+          min-height: 20px;
           background: $light-gray;
           border: 2px solid rgba($color: $black, $alpha: 0.2);
           border-radius: 100%;
@@ -96,5 +98,61 @@ form {
   }
   .btn {
     margin-top: 20px;
+  }
+}
+
+.dropbox_outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .dropbox {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    border: 3px dashed $secondary;
+    &:before{
+        content: '\f574';
+        font-family: $icons;
+        font-weight: 900;
+        @include position(absolute, 50% null null 50%);
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        color: $secondary;
+        opacity: 0;
+        transition: all 0.3s;
+    }
+    &.active {
+      background: rgba($color: $secondary, $alpha: 0.1);
+      &:before{
+          opacity: 1;
+      }
+      span{
+          opacity: 0;
+      }
+    }
+    span {
+      text-align: center;
+      line-height: 1.3em;
+      display: block;
+      padding: 20px;
+      font-size: 18px;
+      color: $secondary;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    input {
+      cursor: pointer;
+      @include position(absolute, 0 null null 0);
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      opacity: 0;
+    }
   }
 }
