@@ -21,9 +21,9 @@ const routes: Routes = [
   },
 
   // Photos routes
-  { path: 'photo/create', component: CreatePhotoComponent },
+  { path: 'photo/create', component: CreatePhotoComponent, canActivate: [AuthGuard] },
   { path: 'photo/details/:id', component: DetailsPhotoComponent },
-  { path: 'photo/edit/:id', component: EditPhotoComponent },
+  { path: 'photo/edit/:id', component: EditPhotoComponent,  },
   { path: 'photo/list', component: ListPhotosComponent },
 
   // User routes
@@ -33,7 +33,7 @@ const routes: Routes = [
   
   // Categories routes
   { path: 'categories', component: CategoryListComponent },
-  { path: 'categories/create', component: CategoryCreateComponent },
+  { path: 'categories/create', component: CategoryCreateComponent, canActivate: [AuthGuard] },
   { path: 'categories/:id', component: CategoryDetailsComponent },
 
   // Not Found
