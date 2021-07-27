@@ -96,9 +96,21 @@
         <label class="toggle_nav close" for="toggle_nav"></label>
         <ul class="main_navi">
 
+          <li class="list_item">
+            <a routerLink="/">Home</a>
+          </li>
+          <li class="list_item dropdown_link">
+            <a routerLink="/photo/list" title="Link" class="dropdown_toggle_mobile has_sub">
+              Photos <span class="dropdown_icon"></span>
+            </a>
+            <ul class="dropdown_menu">
+              <li class="list_item"><a routerLink="/photo/list">All photos</a></li>
+              <li class="list_item"><a routerLink="/photo/create">Create photo</a></li>
+            </ul>
+          </li>
           <li class="list_item dropdown_link">
             <a routerLink="/categories" title="Link" class="dropdown_toggle_mobile has_sub">
-              Категории <span class="dropdown_icon"></span>
+              Categories <span class="dropdown_icon"></span>
             </a>
             <ul class="dropdown_menu">
               <li *ngFor="let category of categories" class="list_item"><a routerLink="/categories/{{category._id}}">{{category.title}}</a></li>
@@ -122,14 +134,14 @@
               <a routerLink="/user/profile" class="btn">View profile</a>
               <a routerLink="/" class="btn btn_light" (click)="logout()">Logout</a>
               <div class="separator"></div>
-              <ul class="language_dropdown">
+              <!-- <ul class="language_dropdown">
                 <a href="javascript:void(0)" data-toggler="lang_menu" title="bg" class="current">Account</a>
                 <ul id="lang_menu" class="toggle_data">
                   <li><a routerLink="/user/profile">Edit profile</a></li>
                   <li><a routerLink="/user/profile">My photos</a></li>
                   <li><a routerLink="/user/profile">Fav. photos</a></li>
                 </ul>
-              </ul>
+              </ul> -->
             </ul>
           </li>
           <li class="list_item" *ngIf="!authService.getIsAuth();">

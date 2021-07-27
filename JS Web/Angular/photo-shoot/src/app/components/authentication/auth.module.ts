@@ -8,11 +8,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 import { EditUserComponent } from './edit/edit.component';
 import { PhotosModule } from '../photos/photos.module';
+import { ListAuthorsComponent } from './list-authors/list-authors.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PhotosModule],
-  declarations: [AuthComponent, RegisterComponent, LoginComponent, EditUserComponent],
-  exports: [AuthComponent, RegisterComponent, LoginComponent, EditUserComponent],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PhotosModule],
+  declarations: [AuthComponent, RegisterComponent, LoginComponent, EditUserComponent, ListAuthorsComponent],
+  exports: [AuthComponent, RegisterComponent, LoginComponent, EditUserComponent, ListAuthorsComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],

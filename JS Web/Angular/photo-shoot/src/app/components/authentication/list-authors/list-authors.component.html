@@ -1,0 +1,17 @@
+<section class="list_authors" *ngIf="users">
+  <div class="row">
+    <div class="col">
+      <h3 class="section_title text_center">Authors</h3>
+    </div>
+    <div class="col medium_4 giant_3" *ngFor="let user of users | slice: 0:8">
+      <a class="user" routerLink="/user/details/{{user._id}}">
+        <img src="{{user.imgUrl}}">
+        <div class="info">
+          <span class="name">{{user.firstName}} {{user.lastName}}</span>
+          <span class="email">{{user.email}}</span>
+          <span class="photo_count" *ngIf="user.photos.length > 0">Photos uploaded: {{user.photos.length}}</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>

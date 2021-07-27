@@ -44,17 +44,16 @@
               <a href="#panel_1">My photos</a>
             </li>
             <li class="tab">
-              <a href="#panel_2">Payment Schedulue</a>
+              <a href="#panel_2">Edit profile</a>
             </li>
-            <li class="tab">
-              <a href="#panel_3">Edit profile</a>
+            <li class="tab danger">
+              <a href="javascript:void(0);" (click)="authService.logout()">Logout</a>
             </li>
           </ul>
 
           <select class="tabs_filter filter_select medium_hide">
             <option value="#panel_1">My Photos</option>
-            <option value="#panel_2">Payment Schedulue</option>
-            <option value="#panel_3">Edit profile</option>
+            <option value="#panel_2">Edit profile</option>
           </select>
 
           <div class="wrap_box panels">
@@ -62,9 +61,6 @@
               <app-list-photos [myPhotos]="'&myPhotos=true'"></app-list-photos>
             </div>
             <div class="panel panel_2" style="display:none">
-              asdasdasdsadad
-            </div>
-            <div class="panel panel_3" style="display:none">
               <div class="row default_center">
                 <div class="col medium_8">
                   <div class="row default_center">

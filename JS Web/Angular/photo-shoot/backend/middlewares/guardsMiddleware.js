@@ -12,7 +12,7 @@ function isUser() {
 function isGuest() {
   return (req, res, next) => {
     if (req.user == undefined) {
-      console.log("in guard", req.user);
+      // console.log("in guard", req.user);
       next();
     } else {
       res.status(401).json({ message: "You already logged in!" });

@@ -41,8 +41,8 @@ let controller = {
         header.classList.remove("is_stuck");
       }
       //  FOOTER ABSOLUTE
-      document.body.style.paddingBottom =
-        document.querySelector("footer").clientHeight + "px";
+      // document.body.style.paddingBottom =
+      //   document.querySelector("footer").clientHeight + "px";
       // document.body.style.minHeight =
       //   "calc(100vh - " + document.querySelector("footer").clientHeight + "px)";
     }

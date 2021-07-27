@@ -9,6 +9,8 @@ import { NotFoundComponent } from './components/landing/not-found/not-found.comp
 import { CreatePhotoComponent } from './components/photos/create-photo/create-photo.component';
 import { DetailsPhotoComponent } from './components/photos/details-photo/details-photo.component';
 import { EditPhotoComponent } from './components/photos/edit-photo/edit-photo.component';
+import { ListPhotosComponent } from './components/photos/list-photos/list-photos.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   // Landing routes
@@ -22,9 +24,12 @@ const routes: Routes = [
   { path: 'photo/create', component: CreatePhotoComponent },
   { path: 'photo/details/:id', component: DetailsPhotoComponent },
   { path: 'photo/edit/:id', component: EditPhotoComponent },
+  { path: 'photo/list', component: ListPhotosComponent },
 
   // User routes
-  { path: 'user/profile', component: EditUserComponent},
+  { path: 'user/profile', component: EditUserComponent, canActivate: [AuthGuard]},
+  // To do... create details component
+  { path: 'user/details/:id', component: EditUserComponent},
   
   // Categories routes
   { path: 'categories', component: CategoryListComponent },

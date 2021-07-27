@@ -12,6 +12,7 @@ router.post("/register", isGuest(), registerUser);
 router.post("/login", isGuest(), loginUser);
 router.put("/edit", extractFile, editUser);
 router.get("/myprofile", myProfile);
+router.get("/list", listUsers);
 
 
 module.exports = router;

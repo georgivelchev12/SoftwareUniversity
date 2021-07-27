@@ -3,6 +3,7 @@ const Photo = require("../models/Photo");
 const fs = require("fs");
 const { filterEmptyArr, getImagePath } = require("../services/globalService");
 const User = require("../models/User");
+const { getUserById } = require("../services/userService");
 
 async function getPhotos(req, res) {
   const query = req.query;
@@ -28,14 +29,14 @@ async function getPhotos(req, res) {
   try {
     let photos;
     if (pageSize && currentPage) {
-      photos = await Photo.find(filterOptions)
+      photos = await Photo.find(filterOptions).sort({date: -1})
         .skip(pageSize * (currentPage - 1))
         .limit(pageSize)
         .populate("author")
         .populate("categories")
         .lean();
     } else {
-      photos = await Photo.find(filterOptions)
+      photos = await Photo.find(filterOptions).sort({date: -1})
         .populate("author")
         .populate("categories")
         .lean();
@@ -89,6 +90,9 @@ async function createPhoto(req, res) {
       category.photos.push(photo._id);
       await category.save();
     });
+    const user = await getUserById(req.user._id);
+    user.photos.push(photo);
+    await user.save();
     await photo.save();
   } catch (err) {
     if (err.kind == "ObjectId") {

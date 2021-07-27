@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const Photo = require("../models/Photo");
 const User = require("../models/User");
 const { getImagePath, filterEmptyArr } = require("../services/globalService");
 const { getUserByEmail, getUserById } = require("../services/userService");
@@ -78,8 +79,15 @@ async function myProfile(req, res) {
 }
 
 async function listUsers(req, res, next) {
-  console.log(req.user);
-  res.status(200).json({ message: "List Users" });
+  try {
+    const users = await User.find().populate('photos');
+    users.map(u => {
+      u.hashedPassword = null;
+    })
+    res.status(200).json({ message: "List Users",  users});
+  } catch (err) {
+    console.log('listUsers error: ', err.message);
+  }
 }
 
 module.exports = {

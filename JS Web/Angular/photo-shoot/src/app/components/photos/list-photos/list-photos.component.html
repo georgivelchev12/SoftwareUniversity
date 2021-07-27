@@ -1,4 +1,4 @@
-<section class="photo_list">
+<section class="photo_list" *ngIf="router.url != '/'">
   <div class="row">
 
     <div class="col small_6 medium_4 large_3" *ngIf="router.url == '/user/profile'">
@@ -19,8 +19,11 @@
           <a (click)="deletePhoto(photo._id)" class="far fa-trash-alt"></a>
           <a (click)="likePhoto(photo._id)" class="far fa-heart"></a>
         </div>
-        <span class="owner">
+        <span class="owner" *ngIf="photo.author.firstName && photo.author.lastName">
           © {{photo.author.firstName}} {{photo.author.lastName}}
+        </span>
+        <span class="owner" *ngIf="!photo.author.firstName && !photo.author.lastName">
+          © {{photo.author.email}}
         </span>
 
         <a routerLink="/photo/details/{{photo._id}}">
@@ -33,16 +36,78 @@
 
     </div>
 
+    <div class="col">
+      <div class="row" *ngIf="!photos?.length">
+        <div class="col">
+          <h2>
+            There is no photos
+          </h2>
+        </div>
+      </div>
+
+
+      <pagination-controls (pageChange)="getPage($event)" previousLabel="" nextLabel="">
+      </pagination-controls>
+    </div>
   </div>
 </section>
 
-<div class="row" *ngIf="!photos?.length">
-  <div class="col">
-    <h2>
-      There is no photos
-    </h2>
-  </div>
-</div>
 
-<pagination-controls *ngIf="photos?.length > 7" (pageChange)="getPage($event)" previousLabel="" nextLabel="">
-</pagination-controls>
+
+<section class="photo_list in_home" *ngIf="router.url == '/' && photos">
+  <div class="row default_center">
+
+    <div class="col">
+      <h3 class="section_title text_center">
+        Recent photos
+      </h3>
+    </div>
+    <div class="col medium_5 large_6">
+      <div class="photo">
+        
+        <span class="owner" *ngIf="photos[0].author.firstName && photos[0].author.lastName">
+          © {{photos[0].author.firstName}} {{photos[0].author.lastName}}
+        </span>
+        <span class="owner" *ngIf="!photos[0].author.firstName && !photos[0].author.lastName">
+          © {{photos[0].author.email}}
+        </span>
+
+        <a routerLink="/photo/details/{{photos[0]._id}}">
+          <figure class="image_wrap">
+            <img src="{{photos[0].imgUrl}}" alt="{{photos[0].title}}">
+          </figure>
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="col medium_7 large_6">
+      <div class="row">
+        <div class="col tiny_6" *ngFor="let photo of photos | slice: 1:5, let i = index">
+          <div class="photo">
+         
+            <span class="owner" *ngIf="photo.author.firstName && photo.author.lastName">
+              © {{photo.author.firstName}} {{photo.author.lastName}}
+            </span>
+            <span class="owner" *ngIf="!photo.author.firstName && !photo.author.lastName">
+              © {{photo.author.email}}
+            </span>
+    
+            <a routerLink="/photo/details/{{photo._id}}">
+              <figure class="image_wrap">
+                <img src="{{photo.imgUrl}}" alt="{{photo.title}}">
+              </figure>
+            </a>
+    
+          </div>
+    
+        </div>
+      </div>
+    </div>
+
+    <div class="col default_flex default_center">
+      <a routerLink="/photo/list" class="btn">View all</a>
+    </div>
+  </div>
+</section>

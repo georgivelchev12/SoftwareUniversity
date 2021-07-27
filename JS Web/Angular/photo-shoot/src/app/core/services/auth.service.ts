@@ -201,9 +201,7 @@ export class AuthService {
   }
 
   getUsers() {
-    return this.http
-      .get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/list`)
-      .pipe(map((userData) => this.mapId(userData)));
+    return this.http.get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/list`)
   }
 
   disableUser(userId, body) {
