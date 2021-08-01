@@ -4,12 +4,20 @@
       <h3 class="section_title text_center">Authors</h3>
     </div>
     <div class="col medium_4 giant_3" *ngFor="let user of users | slice: 0:8">
-      <a class="user" routerLink="/user/details/{{user._id}}">
+      <a class="user" routerLink="/user/details/{{user._id}}" [ngClass]="user.isDisabled ? 'disabled' : '' ">
+        <div class="disabled_user">
+          <h4>DISABLED</h4>
+          <button class="btn btn_success" (click)="restoreProfile(user._id)">Restore</button>
+        </div>
         <img src="{{user.imgUrl}}">
         <div class="info">
           <span class="name">{{user.firstName}} {{user.lastName}}</span>
           <span class="email">{{user.email}}</span>
           <span class="photo_count" *ngIf="user.photos.length > 0">Photos uploaded: {{user.photos.length}}</span>
+        </div>
+        <div class="action_buttons" *ngIf="authService.getUserRole() == 'admin' && router.url != '/'">
+          <button class="btn btn_warning" (click)="disableProfile(user._id)">Block</button>
+          <button class="btn btn_danger" (click)="deleteProfile(user._id)">Delete</button>
         </div>
       </a>
     </div>

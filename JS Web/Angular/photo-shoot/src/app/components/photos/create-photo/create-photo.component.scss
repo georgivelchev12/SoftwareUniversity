@@ -147,6 +147,7 @@ form {
       transition: all 0.3s;
     }
     input {
+      display: block;
       cursor: pointer;
       @include position(absolute, 0 null null 0);
       width: 100%;

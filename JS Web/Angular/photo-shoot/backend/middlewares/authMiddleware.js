@@ -22,7 +22,7 @@ module.exports = () => (req, res, next) => {
     const userViewModel = {
       _id: user._id,
       email: user.email,
-      role: "admin",
+      role: user.role,
     };
 
     const token = jwt.sign(userViewModel, process.env.TOKEN_SECRET, {
@@ -33,6 +33,8 @@ module.exports = () => (req, res, next) => {
       token,
       expiresIn: 3600,
       userEmail: user.email,
+      userId: user._id,
+      role: user.role
     };
   }
 };

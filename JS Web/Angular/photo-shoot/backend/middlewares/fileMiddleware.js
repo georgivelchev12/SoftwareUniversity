@@ -24,11 +24,10 @@ const storage = multer.diskStorage({
       pathToStoreImg = `/users`
     }
 
-
     fs.mkdir(
         `${process.env.BACKEND_IMAGE_FOLDER || ""}images${pathToStoreImg}`,
         { recursive: true },
-        error => cb(error, `${process.env.BACKEND_IMAGE_FOLDER || ""}images${pathToStoreImg}`)
+        err => cb(error, `${process.env.BACKEND_IMAGE_FOLDER || ""}images${pathToStoreImg}`)
     )
 
     // fs.mkdir(

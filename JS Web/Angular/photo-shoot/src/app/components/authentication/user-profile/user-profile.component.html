@@ -1,0 +1,196 @@
+<form [formGroup]="form" (ngSubmit)="edit()" *ngIf="profile">
+
+  <div class="cover_img">
+    <div class="image-preview">
+      <img [src]="coverImagePreview || 'https://wallpaperaccess.com/full/2890220.jpg'" [alt]="form.value.title">
+    </div>
+
+    <div class="row" *ngIf="router.url == '/user/profile'">
+      <div class="col">
+        <label for="coverPick" class="btn">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <span class="btn-text">
+            <span class="text">Обнови снимката на корицата</span>
+            <span class="sub-text">минимален размер 1920х475рх</span>
+          </span>
+        </label>
+        <input id="coverPick" type="file" (change)="onCoverImagePicked($event)">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="profile_img">
+    <input id="profile_pic" type="file" (change)="onImagePicked($event)" *ngIf="router.url == '/user/profile'">
+    <div class="image-preview">
+      <label for="profile_pic" [ngClass]="router.url == '/user/profile' ? 'fas fa-camera': ''">
+        <div class="img_wrap">
+          <img
+            [src]="imagePreview || 'https://i2.wp.com/upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'"
+            [alt]="form.value.title">
+        </div>
+      </label>
+    </div>
+
+    <h1>{{profile.firstName}} {{profile.lastName}}</h1>
+  </div>
+
+
+  <section class="profile_information" *ngIf="router.url == '/user/profile'">
+    <div class="row">
+      <div class="col">
+
+        <div class="filter_tabs">
+          <ul class="tabs default_hide medium_flex">
+            <li class="tab active">
+              <a href="#panel_1">My photos</a>
+            </li>
+            <li class="tab">
+              <a href="#panel_2">Edit profile</a>
+            </li>
+            <li class="tab danger">
+              <a href="javascript:void(0);" (click)="authService.logout()">Logout</a>
+            </li>
+          </ul>
+
+          <select class="tabs_filter filter_select medium_hide">
+            <option value="#panel_1">My Photos</option>
+            <option value="#panel_2">Edit profile</option>
+          </select>
+
+          <div class="wrap_box panels">
+            <div class="panel panel_1">
+              <app-list-photos [myPhotos]="'&myPhotos=true'"></app-list-photos>
+            </div>
+            <div class="panel panel_2" style="display:none">
+              
+              <div class="row default_center">
+                <div class="col medium_8">
+                  <div class="row default_center">
+
+                    <div class="col">
+                      <div class="input_wrapper required">
+                        <label class="small_title">
+                          Email <span class="fas fa-exclamation-circle color_accent"
+                            *ngIf="!form.get('email').valid && form.get('email').touched"></span>
+                        </label>
+                        <input type="text" formControlName="email" placeholder="Email" />
+                        <div class="errors" *ngIf="!form.get('email').valid && form.get('email').touched">
+                          <span *ngIf="form.get('email').hasError('required')">Email is required</span>
+                          <span *ngIf="form.get('email').hasError('email')">Email is invalid</span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col small_6 large_4">
+                      <div class="input_wrapper required">
+                        <label class="small_title">
+                          First name <span class="fas fa-exclamation-circle color_accent"
+                            *ngIf="!form.get('firstName').valid && form.get('firstName').touched"></span>
+                        </label>
+                        <input type="text" formControlName="firstName" placeholder="First Name" />
+                        <div class="errors" *ngIf="!form.get('firstName').valid && form.get('firstName').touched">
+                          <span *ngIf="form.get('firstName').hasError('pattern')">First name must start with capital
+                            letter</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col small_6 large_4">
+                      <div class="input_wrapper required">
+                        <label class="small_title">
+                          Last name <span class="fas fa-exclamation-circle color_accent"
+                            *ngIf="!form.get('lastName').valid && form.get('lastName').touched"></span>
+                        </label>
+                        <input type="text" formControlName="lastName" placeholder="Last Name" />
+                        <div class="errors" *ngIf="!form.get('lastName').valid && form.get('lastName').touched">
+                          <span *ngIf="form.get('lastName').hasError('pattern')">Last name must start with capital
+                            letter</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col large_4">
+                      <div class="input_wrapper required">
+                        <label class="small_title">
+                          Phone number <span class="fas fa-exclamation-circle color_accent"
+                            *ngIf="!form.get('phone').valid && form.get('phone').touched"></span>
+                        </label>
+                        <input type="number" formControlName="phone" placeholder="Phone" />
+                        <div class="errors" *ngIf="!form.get('phone').valid && form.get('phone').touched">
+                          <span *ngIf="form.get('phone').hasError('pattern')">Phone number must be numbers only</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="input_wrapper required">
+                        <label class="small_title">
+                          Short information about you <span class="fas fa-exclamation-circle color_accent"
+                            *ngIf="!form.get('info').valid && form.get('info').touched"></span>
+                        </label>
+                        <textarea formControlName="info" placeholder="Short info" rows="5"></textarea>
+                        <div class="errors" *ngIf="!form.get('info').valid && form.get('info').touched">
+                          <span *ngIf="form.get('info').hasError('maxlength')">Information is too long</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col small_4">
+                      <button type="submit" class="btn wide">Edit</button>
+                    </div>
+
+
+                    <div class="col">
+                      <div class="row default_center danger_zone">
+                        <div class="col giant_6">
+                          <button type="button" (click)="deleteProfile()">Delete my profile and all images in it</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <section class="profile_information" *ngIf="router.url != '/user/profile'">
+    <div class="row">
+      <div class="col">
+
+        <div class="filter_tabs">
+          <ul class="tabs default_hide medium_flex">
+            <li class="tab active">
+              <a href="#panel_1">Photos</a>
+            </li>
+            <li class="tab">
+              <a href="#panel_2">Details</a>
+            </li>
+            <!-- <li class="tab danger">
+              <a href="javascript:void(0);" (click)="authService.logout()">Logout</a>
+            </li> -->
+          </ul>
+
+          <select class="tabs_filter filter_select medium_hide">
+            <option value="#panel_1">Photos</option>
+            <option value="#panel_2">Details</option>
+          </select>
+
+          <div class="wrap_box panels">
+            <div class="panel panel_1">
+              <app-list-photos [userPhotos]="'&userPhotos=' + profile._id"></app-list-photos>
+            </div>
+            <div class="panel panel_2" style="display:none">
+              
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

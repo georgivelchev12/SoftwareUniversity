@@ -27,14 +27,25 @@ function isOwner() {
     } else {
       res.status(401).json({ message: "You are not the owner!" });
     }
-};
+  };
 }
- 
+function isAdmin() {
+  return (req, res, next) => {
+    console.log(req.user);
+    if (req.user.role == 'admin') {
+      next();
+    } else {
+      res.status(401).json({ message: "You not have rights!" });
+    }
+  };
+}
+
 
 module.exports = {
   isGuest,
   isUser,
-  isOwner
+  isOwner,
+  isAdmin
 };
 
 // To do... is owner, etc.

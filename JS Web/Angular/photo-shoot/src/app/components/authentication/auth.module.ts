@@ -6,15 +6,15 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
-import { EditUserComponent } from './edit/edit.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PhotosModule } from '../photos/photos.module';
 import { ListAuthorsComponent } from './list-authors/list-authors.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PhotosModule],
-  declarations: [AuthComponent, RegisterComponent, LoginComponent, EditUserComponent, ListAuthorsComponent],
-  exports: [AuthComponent, RegisterComponent, LoginComponent, EditUserComponent, ListAuthorsComponent],
+  declarations: [AuthComponent, RegisterComponent, LoginComponent, UserProfileComponent, ListAuthorsComponent],
+  exports: [AuthComponent, RegisterComponent, LoginComponent, UserProfileComponent, ListAuthorsComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],

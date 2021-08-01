@@ -4,7 +4,7 @@
 <header role="banner" id="header">
   <div class="fixed_cont">
     <div class="row header_middle">
-      <div class="col medium_5 default_flex default_middle default_between">
+      <div class="col medium_4 default_flex default_middle default_between">
         <a rel="home" routerLink="/" class="logo" title="Logo">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
             x="0px" y="0px" width="242.104px" height="230px" viewBox="0 0 242.104 230"
@@ -91,7 +91,7 @@
           </ul>
         </div>
       </div>
-      <nav role="navigation" class="col medium_7 nav_wrapper">
+      <nav role="navigation" class="col medium_8 nav_wrapper">
         <!-- Close mobile navigation -->
         <label class="toggle_nav close" for="toggle_nav"></label>
         <ul class="main_navi">
@@ -134,23 +134,22 @@
               <a routerLink="/user/profile" class="btn">View profile</a>
               <a routerLink="/" class="btn btn_light" (click)="logout()">Logout</a>
               <div class="separator"></div>
-              <!-- <ul class="language_dropdown">
-                <a href="javascript:void(0)" data-toggler="lang_menu" title="bg" class="current">Account</a>
-                <ul id="lang_menu" class="toggle_data">
-                  <li><a routerLink="/user/profile">Edit profile</a></li>
-                  <li><a routerLink="/user/profile">My photos</a></li>
-                  <li><a routerLink="/user/profile">Fav. photos</a></li>
+              <div class="language_dropdown" *ngIf="authService.getUserRole() == 'admin'">
+                <a href="javascript:void(0)" data-toggler="lang-menu" title="bg" class="current">Links</a>
+                <ul id="lang-menu" class="toggle_data">
+                  <li><a routerLink="/user/profiles">Block/Delete user</a></li>
+                  <li><a routerLink="/categories/create">Create new category</a></li>
                 </ul>
-              </ul> -->
+              </div>
             </ul>
           </li>
           <li class="list_item" *ngIf="!authService.getIsAuth();">
-            <a href="#slide_form" title="Link" class="popup_toggle login">
+            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle login">
               <i class="fas fa-sign-in-alt"></i> Login
             </a>
           </li>
           <li class="list_item" *ngIf="!authService.getIsAuth();">
-            <a href="#slide_form" title="Link" class="popup_toggle register">
+            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle register">
               <span class="btn_mobile">
                 <i class="fas fa-user-plus"></i> Register
               </span>

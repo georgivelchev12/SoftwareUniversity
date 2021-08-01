@@ -1,7 +1,7 @@
 const Category = require("../models/Category");
 const Photo = require("../models/Photo");
 const fs = require("fs");
-const { filterEmptyArr, getImagePath } = require("../services/globalService");
+const { filterEmptyArr, getImagePath, deleteImage } = require("../services/globalService");
 const User = require("../models/User");
 const { getUserById } = require("../services/userService");
 
@@ -11,17 +11,12 @@ async function getPhotos(req, res) {
   if (query.myPhotos) {
     filterOptions.author = req.user._id;
   }
+  if (query.userPhotos) {
+    filterOptions.author = query.userPhotos;
+  }
   if(query.category){
     filterOptions.categories = query.category;
   }
-
-  // else {
-  //   const userIds = [...(await User.find())].reduce((acc, curr) => {
-  //     acc.push(curr._id);
-  //     return acc;
-  //   }, []);
-  //   filterOptions.author = userIds;
-  // }
 
   const pageSize = Number(query.pagesize);
   const currentPage = Number(query.page);
@@ -41,6 +36,7 @@ async function getPhotos(req, res) {
         .populate("categories")
         .lean();
     }
+
 
     photos.forEach(({ author }) => {
       if (author) {
@@ -106,24 +102,16 @@ async function createPhoto(req, res) {
 
 async function deletePhoto(req, res) {
   const foundPhoto = await Photo.findOne({ _id: req.params.id });
-
-  console.log(foundPhoto, getImagePath(req, foundPhoto.imgUrl));
-  res.status(200).json({ message: "Post deleted!" });
-
+  res.status(200).json({ message: "Photo deleted!" });
   try {
     await deleteImage(getImagePath(req, foundPhoto.imgUrl));
     await Photo.deleteOne({ _id: req.params.id });
-    res.status(200).json({ message: "Post deleted!" });
+    res.status(200).json({ message: "Photo deleted!" });
   } catch (err) {
     console.log(`Something went wrong: ${err}`);
   }
 }
 
-async function deleteImage(path) {
-  if (fs.existsSync(path)) {
-    await fs.promises.unlink(path);
-  }
-}
 
 module.exports = {
   getPhoto,

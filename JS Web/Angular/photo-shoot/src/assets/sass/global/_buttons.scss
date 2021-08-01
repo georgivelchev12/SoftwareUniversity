@@ -66,6 +66,26 @@ input[type="submit"] {
       background: $light;
     }
   }
+  &.btn_success {
+    color: $light;
+    border-color: #02c733;
+    background: #02c733;
+    &:hover {
+      color: #02c733;
+      border-color: #02c733;
+      background: $light;
+    }
+  }
+  &.btn_warning {
+    color: $light;
+    border-color: #ff9900;
+    background: #ff9900;
+    &:hover {
+      color: #ff9900;
+      border-color: #ff9900;
+      background: $light;
+    }
+  }
   &.btn_cart {
     padding-right: 50px !important;
     position: relative;

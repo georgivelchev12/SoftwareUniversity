@@ -10,15 +10,23 @@ let controller = {
     // controller.menuOutHandler();
     controller.toggleProductTabs();
 
+    // Toggle random block
+    $("body").on("click", "[data-toggler]", function (event) {
+      let attrValue = $(this).attr("data-toggler");
+      $("#" + attrValue).slideToggle();
+      $(this).toggleClass("active");
+    });
+
+    
     setTimeout(function () {
-    if ($("select").length) {
-      $("select").niceSelect();
-    }
+      if ($("select").length) {
+        $("select").niceSelect();
+      }
     }, 1000);
 
-    window.addEventListener('click', function () {
+    window.addEventListener("click", function () {
       $("select").niceSelect();
-    })
+    });
   },
   mobileCheckboxClass: function () {
     // Mobile Checkbox add class to the body
@@ -73,7 +81,7 @@ let controller = {
   },
   togglePopUps: function () {
     $("body").on("click", ".popup_toggle", function () {
-      let popup = document.querySelector(this.getAttribute("href"));
+      let popup = document.querySelector(this.getAttribute("data-toggle"));
       if (popup) {
         popup.classList.add("active_pop");
         document.body.classList.add("disable_scroll");
@@ -134,13 +142,6 @@ let controller = {
     });
   },
   toggleProductTabs: function () {
-    // Toggle random block
-    $("body").on("click", "[data-toggler]", function () {
-      let attrValue = $(this).attr("data-toggler");
-      $("#" + attrValue).slideToggle(200, "linear", function () {});
-      $(this).toggleClass("active");
-    });
-
     // Tabs filter
     $("body").on("click", ".filter_tabs .tabs .tab", function (e) {
       e.preventDefault();
@@ -150,14 +151,14 @@ let controller = {
       $(".panels .panel." + a.attr("href").slice(1)).slideDown(); //show clicked
     });
 
-    $("body").on('change', '.tabs_filter', function () {
+    $("body").on("change", ".tabs_filter", function () {
       let currclass = $(".tabs_filter .option.selected")
         .attr("data-value")
         .slice(1);
       $(".panels .panel").hide(); //hide all
       $(".panels .panel." + currclass).fadeIn(); //show clicked
-    })
-    
+    });
+
     // $(".tabs_filter").change(function () {
     //   let currclass = $(".tabs_filter .option.selected")
     //     .attr("data-value")

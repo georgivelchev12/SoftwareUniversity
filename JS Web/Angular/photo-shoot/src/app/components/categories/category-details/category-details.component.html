@@ -2,6 +2,7 @@
   <div class="opening_inner">
     <h2 class="title text_center">{{category.title}}</h2>
     <h4 class="sub_title">{{category.description}}</h4>
+    <a class="btn" routerLink="/categories/edit/{{category._id}}" *ngIf="authService.getUserRole() == 'admin'">Edit category</a>
   </div>
 </section>
 

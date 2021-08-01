@@ -10,6 +10,8 @@ const schema = new Schema({
   imgUrl: { type: String, required: false, default: "" },
   coverImgUrl: { type: String, required: false, default: "" },
   photos: [{ type: Schema.Types.ObjectId, ref: "Photo", default: [] }],
+  role: {type: String, default: 'user'},
+  isDisabled: { type: Boolean, default: false }
 });
 
 module.exports = model("User", schema);

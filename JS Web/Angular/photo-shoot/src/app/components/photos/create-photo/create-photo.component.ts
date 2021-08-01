@@ -60,9 +60,9 @@ export class CreatePhotoComponent implements OnInit {
       categories: this.selectedCategories,
     };
 
-    this.photoService.createPhoto(course).subscribe(({message}) => {
+    this.photoService.createPhoto(course).subscribe(({ message }) => {
       this.toastr.success(message, 'Success!');
-      this.router.navigateByUrl('/user/profile')
+      this.router.navigateByUrl('/user/profile');
     });
   }
 
@@ -80,7 +80,7 @@ export class CreatePhotoComponent implements OnInit {
   }
 
   getSelectedCategories() {
-    this.form.get('categories').markAsTouched()
+    this.form.get('categories').markAsTouched();
 
     this.selectedCategories = this.form.controls.categories['controls'].map(
       (el, i) => {
@@ -101,14 +101,15 @@ export class CreatePhotoComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ image: file });
-    this.form.get('image').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-    console.log(this.selectedCategories, this.form.get('categories'));
+    if (file) {
+      this.form.patchValue({ image: file });
+      this.form.get('image').updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   onRemoveImage() {

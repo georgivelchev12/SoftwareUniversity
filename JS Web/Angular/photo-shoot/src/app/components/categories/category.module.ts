@@ -6,6 +6,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { PhotosModule } from '../photos/photos.module';
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryDetailsComponent } from './category-details/category-details.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 
 @NgModule({
@@ -21,11 +22,13 @@ import { CategoryListComponent } from './category-list/category-list.component';
     CategoryCreateComponent,
     CategoryDetailsComponent,
     CategoryListComponent,
+    CategoryEditComponent
   ],
   exports: [
     CategoryCreateComponent,
     CategoryDetailsComponent,
     CategoryListComponent,
+    CategoryEditComponent
   ],
 })
 export class CategoryModule {}

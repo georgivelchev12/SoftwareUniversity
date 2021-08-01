@@ -15,9 +15,9 @@
       <div class="photo">
 
         <div class="buttons">
-          <a routerLink="/photo/edit/{{photo._id}}" class="far fa-edit"></a>
-          <a (click)="deletePhoto(photo._id)" class="far fa-trash-alt"></a>
-          <a (click)="likePhoto(photo._id)" class="far fa-heart"></a>
+          <a routerLink="/photo/edit/{{photo._id}}" *ngIf="photo.author._id == currUserId" class="far fa-edit"></a>
+          <a (click)="deletePhoto(photo._id)" *ngIf="photo.author._id == currUserId" class="far fa-trash-alt"></a>
+          <!-- <a (click)="likePhoto(photo._id)" class="far fa-heart"></a> -->
         </div>
         <span class="owner" *ngIf="photo.author.firstName && photo.author.lastName">
           © {{photo.author.firstName}} {{photo.author.lastName}}
@@ -39,15 +39,13 @@
     <div class="col">
       <div class="row" *ngIf="!photos?.length">
         <div class="col">
-          <h2>
-            There is no photos
+          <h2 style="margin: 30px 0;">
+            There is no photos yet
           </h2>
         </div>
       </div>
-
-
-      <pagination-controls (pageChange)="getPage($event)" previousLabel="" nextLabel="">
-      </pagination-controls>
+      
+      <pagination-controls (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
     </div>
   </div>
 </section>
@@ -62,6 +60,7 @@
         Recent photos
       </h3>
     </div>
+
     <div class="col medium_5 large_6">
       <div class="photo">
         

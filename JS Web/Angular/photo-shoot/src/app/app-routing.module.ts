@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EditUserComponent } from './components/authentication/edit/edit.component';
+import { ListAuthorsComponent } from './components/authentication/list-authors/list-authors.component';
+import { UserProfileComponent } from './components/authentication/user-profile/user-profile.component';
 import { CategoryCreateComponent } from './components/categories/category-create/category-create.component';
 import { CategoryDetailsComponent } from './components/categories/category-details/category-details.component';
+import { CategoryEditComponent } from './components/categories/category-edit/category-edit.component';
 import { CategoryListComponent } from './components/categories/category-list/category-list.component';
 import { HomeComponent } from './components/landing/home/home.component';
 import { NotFoundComponent } from './components/landing/not-found/not-found.component';
@@ -10,6 +12,7 @@ import { CreatePhotoComponent } from './components/photos/create-photo/create-ph
 import { DetailsPhotoComponent } from './components/photos/details-photo/details-photo.component';
 import { EditPhotoComponent } from './components/photos/edit-photo/edit-photo.component';
 import { ListPhotosComponent } from './components/photos/list-photos/list-photos.component';
+import { AdminGuard } from './core/guards/admin.guard';
 import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
@@ -22,18 +25,21 @@ const routes: Routes = [
 
   // Photos routes
   { path: 'photo/create', component: CreatePhotoComponent, canActivate: [AuthGuard] },
+  { path: 'photo/edit/:id', component: EditPhotoComponent, canActivate: [AuthGuard] },
   { path: 'photo/details/:id', component: DetailsPhotoComponent },
-  { path: 'photo/edit/:id', component: EditPhotoComponent,  },
   { path: 'photo/list', component: ListPhotosComponent },
 
   // User routes
-  { path: 'user/profile', component: EditUserComponent, canActivate: [AuthGuard]},
+  { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
+
   // To do... create details component
-  { path: 'user/details/:id', component: EditUserComponent},
+  { path: 'user/details/:id', component: UserProfileComponent},
+  { path: 'user/profiles', component: ListAuthorsComponent, canActivate: [AdminGuard]},
   
   // Categories routes
   { path: 'categories', component: CategoryListComponent },
-  { path: 'categories/create', component: CategoryCreateComponent, canActivate: [AuthGuard] },
+  { path: 'categories/create', component: CategoryCreateComponent, canActivate: [AdminGuard] },
+  { path: 'categories/edit/:id', component: CategoryEditComponent, canActivate: [AdminGuard] },
   { path: 'categories/:id', component: CategoryDetailsComponent },
 
   // Not Found
@@ -41,7 +47,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,  {scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

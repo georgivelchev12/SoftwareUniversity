@@ -77,39 +77,44 @@
       <span class="footer_title">Links</span>
       <div>
         <ul class="menu">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Photos</a></li>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Contacts</a></li>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/photo/list">Photos</a></li>
         </ul>
       </div>
     </div>
 
     <div class="col default_6 small_3 large_3 footer_col_3">
-      <span class="footer_title">Account</span>
+      <span class="footer_title">Categories</span>
       <div>
         <ul>
-          <li><a href="#">My profile</a></li>
-          <li><a href="#">My photos</a></li>
-
-          <li><a href="#">Login</a></li>
-          <li><a href="#">Register</a></li>
+          <li><a routerLink="/categories/60fd3a0097ed3e7434f9bfca">Sessions</a></li>
+          <li><a routerLink="/categories/60fd3aa197ed3e7434f9bfd6">Birthdays</a></li>
+          <li><a routerLink="/categories/60fd3a1c97ed3e7434f9bfcd">Portraits</a></li>
+          <li><a routerLink="/categories/60fd3aa197ed3e7434f9bfd6">Birthdays</a></li>
         </ul>
       </div>
+
     </div>
 
     <div class="col large_3 footer_col_5">
+      <span class="footer_title">Account</span>
+      <div>
+        <ul>
+          <li><a routerLink="/user/profile" *ngIf="isUser">My profile</a></li>
+          <li><a routerLink="/user/profile" *ngIf="isUser">My photos</a></li>
+          <li *ngIf="!isUser">
+            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle login">
+              Login
+            </a>
+          </li>
+          <li *ngIf="!isUser">
+            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle login">
+              Register
+            </a>
+          </li>
+        </ul>
+      </div>
 
-      <!-- Send email to contacts page form -->
-      <form action="contacts" method="GET">
-        <span class="footer_title">Send us an e-mail...</span>
-        <div class="subscribe">
-          <input type="email" placeholder="E-mail" name="footerEmail">
-          <button type="submit">
-            <span class="cs cs-send"></span>
-          </button>
-        </div>
-      </form>
 
       <ul class="footer_socials">
         <li><a class="fab fa-facebook-f" title="Facebook | Photoshoot" target="_blank" href="#">Facebook</a></li>

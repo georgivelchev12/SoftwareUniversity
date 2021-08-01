@@ -1,0 +1,58 @@
+<form [formGroup]="form" (ngSubmit)="edit()" *ngIf="category">
+  <div class="row default_center">
+    <div class="col medium_8">
+      <div class="row default_center">
+
+        <div class="col profile_img">
+          <input id="profile_pic" type="file" (change)="onImagePicked($event)">
+          <div class="image-preview">
+            <div class="img_wrap">
+              <img
+                [src]="imagePreview || 'https://i2.wp.com/upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'"
+                [alt]="form.value.title">
+            </div>
+            <label for="profile_pic" class="btn">Choose new category image</label>
+          </div>
+
+        </div>
+
+        <div class="col">
+          <div class="input_wrapper required">
+            <label class="small_title">
+              Title <span class="fas fa-exclamation-circle color_accent"
+                *ngIf="!form.get('title').valid && form.get('title').touched"></span>
+            </label>
+            <input type="text" formControlName="title" placeholder="Title" />
+            <div class="errors" *ngIf="!form.get('title').valid && form.get('title').touched">
+              <span *ngIf="form.get('title').hasError('required')">Title is required</span>
+              <span *ngIf="form.get('title').hasError('title')">Title is invalid</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="col">
+          <div class="input_wrapper required">
+            <label class="small_title">
+              Description <span class="fas fa-exclamation-circle color_accent"
+                *ngIf="!form.get('description').valid && form.get('description').touched"></span>
+            </label>
+            <textarea formControlName="description" placeholder="Description" rows="5"></textarea>
+            <div class="errors" *ngIf="!form.get('description').valid && form.get('description').touched">
+              <span *ngIf="form.get('description').hasError('maxlength')">Description is too long</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col small_6">
+          <button type="submit" class="btn wide">Edit</button>
+        </div>
+        <div class="col small_6">
+          <button type="button" (click)="deleteCategory()" class="btn btn_danger wide">Delete category</button>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</form>

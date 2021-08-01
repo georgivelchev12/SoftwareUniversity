@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { mimeType } from '../../photos/create-photo/myme-type.validator';
 
@@ -20,7 +22,7 @@ export class CategoryCreateComponent implements OnInit {
     }),
   });
 
-  constructor(public categoryService: CategoryService) {}
+  constructor(public categoryService: CategoryService, public router: Router, public toastr: ToastrService) {}
 
   ngOnInit() {}
 
@@ -31,7 +33,8 @@ export class CategoryCreateComponent implements OnInit {
       imgUrl: this.form.value.image,
     };
     this.categoryService.createCategory(category).subscribe((data) => {
-      console.log(data);
+      this.toastr.success(data['message'], 'Success!')
+      this.router.navigateByUrl('/categories')
     });
   }
 

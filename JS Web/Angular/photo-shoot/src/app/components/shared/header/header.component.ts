@@ -38,9 +38,11 @@ export class HeaderComponent implements OnInit {
     });
   }
   getMyProfile() {
-    this.authService.getMyProfile().subscribe((data) => {
-      this.profile = data['user'];
-    });
+    if (this.authService.getIsAuth()) {
+      this.authService.getMyProfile().subscribe((data) => {
+        this.profile = data['user'];
+      });
+    }
   }
 
   logout() {

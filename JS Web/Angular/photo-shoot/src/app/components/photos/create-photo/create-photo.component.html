@@ -7,15 +7,15 @@
           <h1 class="section_title text_center">Create new photo</h1>
     
           <div class="dropbox_outer input_wrapper">
-            <div class="dropbox" *ngIf="!imagePreview || this.form.get('image').errors?.invalidMimeType"  [ngClass]="onDragover ? 'active' : ''">
+            <div class="dropbox" *ngIf="!imagePreview || form.get('image').errors?.invalidMimeType"  [ngClass]="onDragover ? 'active' : ''">
               <span>Drag and drop an image or select "Add image"</span>
               <input type="file"id="filePicker" (change)="onImagePicked($event)" (dragover)="dragOver($event)" (dragleave)="dragLeave($event)">
             </div>
-            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && !this.form.get('image').errors?.invalidMimeType">
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && !form.get('image').errors?.invalidMimeType">
               <img [src]="imagePreview" [alt]="form.value.title">
             </div>
-            <label class="btn" for="filePicker" *ngIf="!imagePreview || this.form.get('image').errors?.invalidMimeType">Add image</label>
-            <button class="btn btn_danger" *ngIf="imagePreview !== '' && imagePreview && !this.form.get('image').errors?.invalidMimeType" (click)="onRemoveImage()">Remove image</button>
+            <label class="btn" for="filePicker" *ngIf="!imagePreview || form.get('image').errors?.invalidMimeType">Add image</label>
+            <button class="btn btn_danger" *ngIf="imagePreview !== '' && imagePreview && !form.get('image').errors?.invalidMimeType" (click)="onRemoveImage()">Remove image</button>
             <div class="errors" *ngIf="!form.get('image').valid">
               <span *ngIf="form.get('image').errors?.invalidMimeType">Image must be with format png, jpg or jpeg</span>
             </div>

@@ -11,24 +11,29 @@ import { PhotoService } from 'src/app/core/services/photo.service';
 })
 export class ListPhotosComponent implements OnInit, OnChanges {
   @Input() myPhotos: string;
+  @Input() userPhotos: string;
   @Input() category: string;
   photos;
   currentPage = 1;
-  itemsPerPage = 7;
+  itemsPerPage = 12;
   totalItems;
+  currUserId;
 
   constructor(
     public photoService: PhotoService,
     private toastr: ToastrService,
     // public activatedRoute: ActivatedRoute,
     public router: Router
-
   ) {}
 
   ngOnInit() {
+    if (this.router.url == '/user/profile') {
+      this.itemsPerPage = 7;
+    }
+    this.currUserId = localStorage.getItem('id');
     this.getPhotos();
   }
-  ngOnChanges(){
+  ngOnChanges() {
     this.getPhotos();
   }
 
@@ -38,16 +43,27 @@ export class ListPhotosComponent implements OnInit, OnChanges {
   }
 
   deletePhoto(id) {
-    this.photoService.deletePhoto(id).subscribe(({ message }) => {
-      this.toastr.success(message, 'Success!');
-      this.getPhotos();
-    });
+    this.photoService.deletePhoto(id).subscribe(
+      ({ message }) => {
+        this.toastr.success(message, 'Success!');
+        this.getPhotos();
+      },
+      (err) => {
+        this.toastr.error(err.error.message, 'Error!');
+      }
+    );
   }
   likePhoto(id) {}
 
   getPhotos() {
     this.photoService
-      .getPhotos(this.myPhotos, this.itemsPerPage, this.currentPage, this.category)
+      .getPhotos(
+        this.userPhotos,
+        this.myPhotos,
+        this.itemsPerPage,
+        this.currentPage,
+        this.category
+      )
       .subscribe(({ message, photos, count }) => {
         this.photos = photos;
         this.totalItems = count;
