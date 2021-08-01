@@ -17,15 +17,22 @@ export class ListAuthorsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getUsers();
+  }
+  getUsers() {
     this.authService.getUsers().subscribe((data) => {
       this.users = data.users;
       this.users = this.users.filter((u) => {
-        return (
-          u.imgUrl !== '' &&
-          u.firstName !== '' &&
-          u.lastName !== '' &&
-          u.email != this.authService.getUserEmail()
-        );
+        if (this.router.url == '/') {
+          return (
+            u.imgUrl !== '' &&
+            u.firstName !== '' &&
+            u.lastName !== '' &&
+            u.email != this.authService.getUserEmail() &&
+            u.isDisabled != true
+          );
+        }
+        return u.email != this.authService.getUserEmail();
       });
     });
   }
@@ -35,7 +42,7 @@ export class ListAuthorsComponent implements OnInit {
       this.authService.deleteUser(id).subscribe(
         (data) => {
           this.toastr.success(data.message, 'Success!');
-          this.router.navigateByUrl('/')
+          this.getUsers();
         },
         (err) => {
           this.toastr.error(err.error.message, 'Error!');
@@ -44,11 +51,23 @@ export class ListAuthorsComponent implements OnInit {
     }
   }
 
-  disableProfile(id){
+  disableProfile(id) {
     this.authService.disableUser(id).subscribe(
       (data) => {
         this.toastr.success(data.message, 'Success!');
-        this.router.navigateByUrl('/')
+        this.getUsers();
+      },
+      (err) => {
+        this.toastr.error(err.error.message, 'Error!');
+      }
+    );
+  }
+
+  restoreProfile(id) {
+    this.authService.restoreUser(id).subscribe(
+      (data) => {
+        this.toastr.success(data.message, 'Success!');
+        this.getUsers();
       },
       (err) => {
         this.toastr.error(err.error.message, 'Error!');

@@ -21,7 +21,7 @@ function isGuest() {
 }
 function isOwner() {
   return async (req, res, next) => {
-    const photo = await Photo.findOne({ _id: req.params.id }).populate('author');
+    const photo = await Photo.findOne({ _id: req.params.id || req.body._id }).populate('author');
     if (photo?.author._id == req.user?._id) {
         next();
     } else {

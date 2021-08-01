@@ -43,10 +43,10 @@
         <div class="filter_tabs">
           <ul class="tabs default_hide medium_flex">
             <li class="tab active">
-              <a href="#panel_1">My photos</a>
+              <a href="javascript:void(0);" data-panel="#panel_1">My photos</a>
             </li>
             <li class="tab">
-              <a href="#panel_2">Edit profile</a>
+              <a href="javascript:void(0);" data-panel="#panel_2">Edit profile</a>
             </li>
             <li class="tab danger">
               <a href="javascript:void(0);" (click)="authService.logout()">Logout</a>
@@ -83,7 +83,7 @@
 
                     </div>
                     <div class="col small_6 large_4">
-                      <div class="input_wrapper required">
+                      <div class="input_wrapper">
                         <label class="small_title">
                           First name <span class="fas fa-exclamation-circle color_accent"
                             *ngIf="!form.get('firstName').valid && form.get('firstName').touched"></span>
@@ -96,7 +96,7 @@
                       </div>
                     </div>
                     <div class="col small_6 large_4">
-                      <div class="input_wrapper required">
+                      <div class="input_wrapper">
                         <label class="small_title">
                           Last name <span class="fas fa-exclamation-circle color_accent"
                             *ngIf="!form.get('lastName').valid && form.get('lastName').touched"></span>
@@ -109,7 +109,7 @@
                       </div>
                     </div>
                     <div class="col large_4">
-                      <div class="input_wrapper required">
+                      <div class="input_wrapper">
                         <label class="small_title">
                           Phone number <span class="fas fa-exclamation-circle color_accent"
                             *ngIf="!form.get('phone').valid && form.get('phone').touched"></span>
@@ -121,7 +121,7 @@
                       </div>
                     </div>
                     <div class="col">
-                      <div class="input_wrapper required">
+                      <div class="input_wrapper">
                         <label class="small_title">
                           Short information about you <span class="fas fa-exclamation-circle color_accent"
                             *ngIf="!form.get('info').valid && form.get('info').touched"></span>

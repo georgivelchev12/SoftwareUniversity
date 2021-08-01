@@ -1,3 +1,49 @@
-<p>
-  details-photo works!
-</p>
+<div *ngIf="photo">
+
+  <section class="opening_photo">
+    <div class="row">
+      <div class="col">
+        <figure>
+          <img src="{{photo.imgUrl}}" alt="">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="photo_info">
+    <div class="row">
+      <div class="col medium_6 photo_info_inner">
+        <h1 class="section_title">{{photo.title}}</h1>
+        <p>{{photo.description}}</p>
+        <ul>
+          <li><i class="fas fa-calendar-day"></i>Published day: <strong>{{photo.date}}</strong> </li>
+          <li><i class="fas fa-th"></i>
+            Categories: 
+            <a *ngFor="let category of photo.categories"
+              routerLink="/categories/{{category._id}}">{{category.title}}</a>
+          </li>
+        </ul>
+        <div class="row" *ngIf="photo.author._id == currUserId">
+          <div class="col default_6 large_5"><button class="btn wide" routerLink="/photo/edit/{{photo._id}}">Edit</button></div>
+          <div class="col default_6 large_5"><button class="btn btn_danger wide" (click)="deletePhoto(photo._id)">Delete</button></div>
+        </div>
+      </div>
+      <div class="col medium_6">
+        <div class="author">
+          <a class="author_img" routerLink="/user/details/{{photo.author._id}}">
+            <img src="{{photo.author.imgUrl}}" alt="">
+          </a>
+          <a routerLink="/user/details/{{photo.author._id}}">
+            <span class="names">{{photo.author.firstName}} {{photo.author.lastName}}</span>
+            <span class="email">{{photo.author.email}}</span>
+          </a>
+        </div>
+        <div class="info">
+          <h4 class="section_title">Author information:</h4>
+          <p>{{photo.author.info}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

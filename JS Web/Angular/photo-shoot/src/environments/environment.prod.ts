@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: "https://api.angular.webhipsters.com/photo-shoot/api",
 };

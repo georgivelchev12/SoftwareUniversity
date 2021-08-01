@@ -25,7 +25,7 @@ export class CreatePhotoComponent implements OnInit {
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     description: new FormControl('', [
       Validators.required,
-      Validators.maxLength(200),
+      Validators.maxLength(300),
     ]),
     image: new FormControl(null, {
       validators: [Validators.required],
@@ -51,7 +51,7 @@ export class CreatePhotoComponent implements OnInit {
   }
 
   create() {
-    const course = {
+    const photo = {
       title: this.form.value.title,
       description: this.form.value.description,
       imgUrl: this.form.value.image,
@@ -60,7 +60,7 @@ export class CreatePhotoComponent implements OnInit {
       categories: this.selectedCategories,
     };
 
-    this.photoService.createPhoto(course).subscribe(({ message }) => {
+    this.photoService.createPhoto(photo).subscribe(({ message }) => {
       this.toastr.success(message, 'Success!');
       this.router.navigateByUrl('/user/profile');
     });
@@ -71,8 +71,8 @@ export class CreatePhotoComponent implements OnInit {
       this.allCategories = categories;
 
       this.allCategories.forEach((c) => {
-        // Select form checkboxes which current course has. (Init form checkboxes)
-        // let containsCategory = this.currentPhoto.categories.find((catInCourse) => catInCourse._id == c._id) || false;
+        // Select form checkboxes which current Photo has. (Init form checkboxes)
+        // let containsCategory = this.currentPhoto.categories.find((catInPhoto) => catInPhoto._id == c._id) || false;
         (this.form.get('categories') as FormArray).push(new FormControl(false));
       });
       // this.getSelectedCategories();

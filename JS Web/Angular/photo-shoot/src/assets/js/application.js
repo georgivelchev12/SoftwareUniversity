@@ -148,7 +148,7 @@ let controller = {
       $(this).addClass("active").siblings().removeClass("active");
       let a = $(this).children();
       $(".panels .panel").slideUp(); //hide all
-      $(".panels .panel." + a.attr("href").slice(1)).slideDown(); //show clicked
+      $(".panels .panel." + a.attr("data-panel").slice(1)).slideDown(); //show clicked
     });
 
     $("body").on("change", ".tabs_filter", function () {

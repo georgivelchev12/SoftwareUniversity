@@ -1,7 +1,11 @@
 const Category = require("../models/Category");
 const Photo = require("../models/Photo");
 const fs = require("fs");
-const { filterEmptyArr, getImagePath, deleteImage } = require("../services/globalService");
+const {
+  filterEmptyArr,
+  getImagePath,
+  deleteImage,
+} = require("../services/globalService");
 const User = require("../models/User");
 const { getUserById } = require("../services/userService");
 
@@ -14,7 +18,7 @@ async function getPhotos(req, res) {
   if (query.userPhotos) {
     filterOptions.author = query.userPhotos;
   }
-  if(query.category){
+  if (query.category) {
     filterOptions.categories = query.category;
   }
 
@@ -24,19 +28,20 @@ async function getPhotos(req, res) {
   try {
     let photos;
     if (pageSize && currentPage) {
-      photos = await Photo.find(filterOptions).sort({date: -1})
+      photos = await Photo.find(filterOptions)
+        .sort({ date: -1 })
         .skip(pageSize * (currentPage - 1))
         .limit(pageSize)
         .populate("author")
         .populate("categories")
         .lean();
     } else {
-      photos = await Photo.find(filterOptions).sort({date: -1})
+      photos = await Photo.find(filterOptions)
+        .sort({ date: -1 })
         .populate("author")
         .populate("categories")
         .lean();
     }
-
 
     photos.forEach(({ author }) => {
       if (author) {
@@ -57,8 +62,10 @@ async function getPhoto(req, res) {
   try {
     const photo = await Photo.findById({ _id: req.params.id })
       .populate("author")
+      .populate("categories")
       .lean();
     // console.log("getPhoto:", photo);
+    photo.author.hashedPassword = null;
     if (photo) {
       res.status(200).json({ message: "Photo fetched!", photo });
     }
@@ -75,7 +82,7 @@ async function createPhoto(req, res) {
 
     const photo = new Photo({
       title: req.body.title,
-      descriptioWn: req.body.description,
+      description: req.body.description,
       imgUrl: getImagePath(req).image,
       date: req.body.date,
       author: req.user._id,
@@ -112,10 +119,34 @@ async function deletePhoto(req, res) {
   }
 }
 
+async function editPhoto(req, res) {
+  try {
+    const photoCategories = await Category.find({
+      _id: filterEmptyArr(req.body.categories),
+    });
+    const photo = await Photo.findById(req.body._id);
+    const newPhotoData = {
+      _id: req.body._id,
+      title: req.body.title,
+      description: req.body.description,
+      imgUrl: getImagePath(req).image || photo.imgUrl,
+      categories: photoCategories,
+    };
+    Object.assign(photo, newPhotoData);
+    await photo.save();
+    res.status(200).json({ message: "You edited photo successfully!", photo });
+  } catch (err) {
+    if (err.kind == "ObjectId") {
+      throw new Error("Invalid data!");
+    }
+    throw new Error("editPhoto err:" + err.message);
+  }
+}
 
 module.exports = {
   getPhoto,
   createPhoto,
   getPhotos,
   deletePhoto,
+  editPhoto,
 };

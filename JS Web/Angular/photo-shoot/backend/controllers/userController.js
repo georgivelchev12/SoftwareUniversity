@@ -130,6 +130,7 @@ async function listUsers(req, res, next) {
 }
 
 async function deleteUser(req, res, next) {
+  console.log(req.params.id)
   if (req.params.id == req.user._id) {
     deleteAction("You deleted your account successfully");
   } else {
@@ -145,6 +146,10 @@ async function deleteUser(req, res, next) {
   async function deleteAction(message) {
     try {
       const user = await getUserById(req.params.id);
+      if (user.role == "admin") {
+        throw new Error("You can't delete an admin account!" );
+      }
+
       await deleteImage(getImagePath(req, user.imgUrl));
       await deleteImage(getImagePath(req, user.coverImgUrl));
 
@@ -198,7 +203,7 @@ async function restoreUser(req, res) {
     return;
   }
 
-  User.findOne({ _id: req.params._id }).then((foundUser) => {
+  User.findOne({ _id: req.params.id }).then((foundUser) => {
     foundUser.isDisabled = false;
     User.updateOne({ _id: req.params.id }, foundUser).then((result) => {
       res.status(200).json({ message: "You restored user successfully!" });

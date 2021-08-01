@@ -20,7 +20,7 @@ export class UserProfileComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     firstName: new FormControl('', [Validators.pattern(/[A-Z][a-z]+/)]),
     lastName: new FormControl('', [Validators.pattern(/[A-Z][a-z]+/)]),
-    info: new FormControl('', [Validators.maxLength(100)]),
+    info: new FormControl('', [Validators.maxLength(300)]),
     phone: new FormControl('', [Validators.pattern(/^[0-9]*$/)]),
     image: new FormControl('', {
       asyncValidators: [mimeType],

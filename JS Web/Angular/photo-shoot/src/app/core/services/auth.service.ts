@@ -55,15 +55,6 @@ export class AuthService {
       );
   }
 
-  logout() {
-    this.token = null;
-    this.isAuthenticated = false;
-    this.clearAuthData();
-    clearTimeout(this.tokenTimer);
-    this.router.navigateByUrl('/');
-    this.toastr.info('Logged out!', 'Info');
-  }
-
   loginAction(data) {
     if (data.token) {
       this.token = data.token;
@@ -92,7 +83,113 @@ export class AuthService {
     this.dataSharingService.isDataChanged.next(true);
     this.router.navigateByUrl('/');
   }
+
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.clearAuthData();
+    clearTimeout(this.tokenTimer);
+    this.router.navigateByUrl('/');
+    this.toastr.info('Logged out!', 'Info');
+  }
+
+  getUserRole() {
+    return this.userRole;
+  }
+  getUserEmail() {
+    return this.userEmail;
+  }
+  getToken() {
+    return this.token;
+  }
+  getIsAuth() {
+    return this.isAuthenticated;
+  }
+
+  // Called on app edit
+  autoAuthUser() {
+    const authInfo = this.getAuthData();
+    if (!authInfo) {
+      return;
+    }
+    const now = new Date();
+    const expiresIn = authInfo.expirationDate.getTime() - now.getTime();
+    if (expiresIn > 0) {
+      this.token = authInfo.token;
+      this.userRole = authInfo.userRole;
+      this.userEmail = authInfo.userEmail;
+      this.isAuthenticated = true;
+      this.tokenTimer = setTimeout(() => {
+        this.logout();
+      }, expiresIn);
+    }
+  }
   // Auth functions / End
+
+
+  // Local storage / Start
+  private saveAuthData(
+    token: string,
+    expirationDate: Date,
+    userRole: string,
+    userEmail: string,
+    userId: string) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('expiration', expirationDate.toISOString());
+    localStorage.setItem('role', userRole);
+    localStorage.setItem('email', userEmail);
+    localStorage.setItem('id', userId);
+  }
+  private clearAuthData() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+    localStorage.removeItem('role');
+    localStorage.removeItem('email');
+    localStorage.removeItem('id');
+  }
+  private getAuthData() {
+    const token = localStorage.getItem('token');
+    const expirationDate = localStorage.getItem('expiration');
+    const userRole = localStorage.getItem('role');
+    const userEmail = localStorage.getItem('email');
+    const userId = localStorage.getItem('id');
+
+    if (!token || !expirationDate || !userRole || !userEmail || !userId) {
+      return;
+    }
+    return {
+      token,
+      expirationDate: new Date(expirationDate),
+      userRole,
+      userEmail,
+      userId,
+    };
+  }
+  // Local storage / End
+
+
+
+
+  getUsers() {
+    return this.http.get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/list`);
+  }
+
+  getUser(id) {
+    return this.http.get<{ message: string; user: Object }>(`${BACKEND_URL}/details/${id}`);
+  }
+
+  disableUser(userId) {
+    return this.http.put<{ message: string }>(`${BACKEND_URL}/disable/${userId}`, {});
+  }
+
+  restoreUser(userId) {
+    return this.http.put<{ message: string }>(`${BACKEND_URL}/restore/${userId}`, {});
+  }
+
+  deleteUser(userId) {
+    return this.http.delete<{ message: string }>(`${BACKEND_URL}/delete/${userId}`);
+  }
+
 
   editUser(user) {
     let postData;
@@ -135,133 +232,5 @@ export class AuthService {
   }
   getMyProfile() {
     return this.http.get(`${BACKEND_URL}/myprofile`);
-  }
-
-  // Login / Logout functions
-  getUserRole() {
-    return this.userRole;
-  }
-  getUserEmail() {
-    return this.userEmail;
-  }
-  getToken() {
-    // console.log('getToken() => ', this.token);
-    return this.token;
-  }
-  getIsAuth() {
-    return this.isAuthenticated;
-  }
-
-  autoAuthUser() {
-    const authInfo = this.getAuthData();
-    if (!authInfo) {
-      return;
-    }
-    const now = new Date();
-    const expiresIn = authInfo.expirationDate.getTime() - now.getTime();
-    if (expiresIn > 0) {
-      this.token = authInfo.token;
-      this.userRole = authInfo.userRole;
-      this.userEmail = authInfo.userEmail;
-      this.isAuthenticated = true;
-      this.tokenTimer = setTimeout(() => {
-        this.logout();
-      }, expiresIn);
-    }
-  }
-
-  // localStorage functions
-  private saveAuthData(
-    token: string,
-    expirationDate: Date,
-    userRole: string,
-    userEmail: string,
-    userId: string
-  ) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('expiration', expirationDate.toISOString());
-    localStorage.setItem('role', userRole);
-    localStorage.setItem('email', userEmail);
-    localStorage.setItem('id', userId);
-  }
-  private clearAuthData() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiration');
-    localStorage.removeItem('role');
-    localStorage.removeItem('email');
-    localStorage.removeItem('id');
-  }
-  private getAuthData() {
-    const token = localStorage.getItem('token');
-    const expirationDate = localStorage.getItem('expiration');
-    const userRole = localStorage.getItem('role');
-    const userEmail = localStorage.getItem('email');
-    const userId = localStorage.getItem('id');
-
-    if (!token || !expirationDate || !userRole || !userEmail || !userId) {
-      return;
-    }
-    return {
-      token,
-      expirationDate: new Date(expirationDate),
-      userRole,
-      userEmail,
-      userId,
-    };
-  }
-
-  // Login / Logout functions / END
-
-  myProfile() {
-    return this.http
-      .get<{ message: string; users: Array<Object> }>(
-        `${BACKEND_URL}/my-profile`
-      )
-      .pipe(map((userData) => this.mapId(userData)));
-  }
-
-  getUsers() {
-    return this.http.get<{ message: string; users: Array<Object> }>(
-      `${BACKEND_URL}/list`
-    );
-  }
-  getUser(id) {
-    return this.http.get<{ message: string; user: Object }>(
-      `${BACKEND_URL}/details/${id}`
-    );
-  }
-
-  disableUser(userId) {
-    return this.http.put<{ message: string }>(
-      `${BACKEND_URL}/disable/${userId}`,
-      {}
-    );
-  }
-
-  restoreUser(userId) {
-    return this.http.put<{ message: string }>(`${BACKEND_URL}/restore/${userId}`, {});
-  }
-
-  deleteUser(userId) {
-    return this.http.delete<{ message: string }>(`${BACKEND_URL}/delete/${userId}`);
-  }
-
-  changeNames(model) {
-    // Send only form model, because we store current user id in our req as userId - see ./backend/middleware/check-auth.js
-    return this.http.put<{ message: string }>(
-      `${BACKEND_URL}/my-profile/change-names`,
-      model
-    );
-  }
-
-  mapId(userData) {
-    return userData.users.map((user) => {
-      return {
-        // Spread operator to make copy of user key:value instead of typing it all
-        ...user,
-        // Modify _id to be id in our local object
-        id: user['_id'],
-      };
-    });
   }
 }
