@@ -2,9 +2,9 @@
 ----------
 
 Live site: [angular.webhipsters.com/photo-shoot](https://angular.webhipsters.com/photo-shoot)
-**Тo access all the features you need to log in through an admin account:**
-Email: **admin@admin.com**
-Password: **123asd**
+  **Тo access all the features you need to log in through an admin account:**
+  Email: **admin@admin.com**
+  Password: **123asd**
 
 Now you can create/edit/delete categories, photos and users!
 
