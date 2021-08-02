@@ -39,7 +39,7 @@
     <div class="col">
       <div class="row" *ngIf="!photos?.length">
         <div class="col">
-          <h2 style="margin: 30px 0;">
+          <h2 style="margin: 200px 0;">
             There is no photos yet
           </h2>
         </div>
@@ -52,7 +52,7 @@
 
 
 
-<section class="photo_list in_home" *ngIf="router.url == '/' && photos">
+<section class="photo_list in_home" *ngIf="router.url == '/' && photos.length">
   <div class="row default_center">
 
     <div class="col">

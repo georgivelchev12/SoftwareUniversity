@@ -10,7 +10,7 @@ import { AuthModel } from '../auth.model';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  user: AuthModel;
+  user;
 
   // To do... add validators
   form = new FormGroup({
@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
     this.user = {
       email: this.form.value.email,
       password: this.form.value.password,
+      rePassword: this.form.value.rePassword,
     };
     this.authService.register(this.user);
   }

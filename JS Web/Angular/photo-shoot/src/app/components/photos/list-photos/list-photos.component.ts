@@ -13,7 +13,7 @@ export class ListPhotosComponent implements OnInit, OnChanges {
   @Input() myPhotos: string;
   @Input() userPhotos: string;
   @Input() category: string;
-  photos;
+  photos = [];
   currentPage = 1;
   itemsPerPage = 12;
   totalItems;

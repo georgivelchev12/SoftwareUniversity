@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService){}
+  constructor(private authService: AuthService, private router: Router){}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -16,8 +16,7 @@ export class AuthGuard implements CanActivate {
       if(this.authService.getIsAuth()){
         return true;
       }
-      this.toastr.error('You must login to see this page', 'Error!')
-      this.router.navigate(['/'])
+      this.router.navigate(['/user/login'])
       return false;
   }
   

@@ -15,6 +15,7 @@ async function registerUser(req, res, next) {
     if (existing) {
       throw new Error("User with this email already exsists");
     }
+    console.log(req.body)
     if(req.body.password != req.body.rePassword){
       throw new Error("Passwords missmatch!");
     }
@@ -45,7 +46,7 @@ async function loginUser(req, res, next) {
     const user = await getUserByEmail(req.body.email);
     if (!user) {
       // to do res.json
-      throw new Error("Wrong username or password");
+      throw new Error("User with this email not exist");
     } else {
       const isMatch = await bcrypt.compare(
         req.body.password,

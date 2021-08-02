@@ -78,14 +78,13 @@
                 <a routerLink="/user/profile" class="btn">View profile</a>
                 <a routerLink="/" class="btn btn_light" (click)="logout()">Logout</a>
                 <div class="separator"></div>
-                <ul class="language_dropdown">
-                  <a href="javascript:void(0)" data-toggler="lang_menu" title="bg" class="current">Account</a>
-                  <ul id="lang_menu" class="toggle_data">
-                    <li><a routerLink="/user/profile">Edit profile</a></li>
-                    <li><a routerLink="/user/profile">My photos</a></li>
-                    <li><a routerLink="/user/profile">Fav. photos</a></li>
+                <div class="language_dropdown" *ngIf="authService.getUserRole() == 'admin'">
+                  <a href="javascript:void(0)" data-toggler="lang-menu" title="bg" class="current active">Links</a>
+                  <ul id="lang-menu" class="toggle_data">
+                    <li><a routerLink="/user/profiles">Block/Delete user</a></li>
+                    <li><a routerLink="/categories/create">Create new category</a></li>
                   </ul>
-                </ul>
+                </div>
               </ul>
             </li>
           </ul>
@@ -108,7 +107,7 @@
               <li class="list_item"><a routerLink="/photo/create">Create photo</a></li>
             </ul>
           </li>
-          <li class="list_item dropdown_link">
+          <li class="list_item dropdown_link" *ngIf="categories.length">
             <a routerLink="/categories" title="Link" class="dropdown_toggle_mobile has_sub">
               Categories <span class="dropdown_icon"></span>
             </a>
@@ -135,8 +134,8 @@
               <a routerLink="/" class="btn btn_light" (click)="logout()">Logout</a>
               <div class="separator"></div>
               <div class="language_dropdown" *ngIf="authService.getUserRole() == 'admin'">
-                <a href="javascript:void(0)" data-toggler="lang-menu" title="bg" class="current">Links</a>
-                <ul id="lang-menu" class="toggle_data">
+                <a href="javascript:void(0)" data-toggler="links_menu" title="bg" class="current active">Links</a>
+                <ul id="links_menu" class="toggle_data">
                   <li><a routerLink="/user/profiles">Block/Delete user</a></li>
                   <li><a routerLink="/categories/create">Create new category</a></li>
                 </ul>
@@ -144,12 +143,12 @@
             </ul>
           </li>
           <li class="list_item" *ngIf="!authService.getIsAuth();">
-            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle login">
+            <a routerLink="/user/login" title="Link" class="login">
               <i class="fas fa-sign-in-alt"></i> Login
             </a>
           </li>
           <li class="list_item" *ngIf="!authService.getIsAuth();">
-            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle register">
+            <a routerLink="/user/register" title="Link" class="register">
               <span class="btn_mobile">
                 <i class="fas fa-user-plus"></i> Register
               </span>

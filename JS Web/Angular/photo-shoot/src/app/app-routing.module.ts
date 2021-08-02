@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthComponent } from './components/authentication/auth.component';
 import { ListAuthorsComponent } from './components/authentication/list-authors/list-authors.component';
 import { UserProfileComponent } from './components/authentication/user-profile/user-profile.component';
 import { CategoryCreateComponent } from './components/categories/category-create/category-create.component';
@@ -31,6 +32,8 @@ const routes: Routes = [
 
   // User routes
   { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
+  { path: 'user/register', component: AuthComponent},
+  { path: 'user/login', component: AuthComponent},
 
   // To do... create details component
   { path: 'user/details/:id', component: UserProfileComponent},

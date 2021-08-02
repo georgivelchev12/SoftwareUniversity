@@ -12,7 +12,7 @@ import { DataSharingService } from 'src/app/core/services/data_sharing.service';
 export class HeaderComponent implements OnInit {
   profile;
   location;
-  categories;
+  categories = [];
 
   constructor(
     public authService: AuthService,

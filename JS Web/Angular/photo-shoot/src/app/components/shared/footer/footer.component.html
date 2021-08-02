@@ -87,10 +87,9 @@
       <span class="footer_title">Categories</span>
       <div>
         <ul>
-          <li><a routerLink="/categories/60fd3a0097ed3e7434f9bfca">Sessions</a></li>
-          <li><a routerLink="/categories/60fd3aa197ed3e7434f9bfd6">Birthdays</a></li>
-          <li><a routerLink="/categories/60fd3a1c97ed3e7434f9bfcd">Portraits</a></li>
-          <li><a routerLink="/categories/60fd3aa197ed3e7434f9bfd6">Birthdays</a></li>
+          <li *ngFor="let category of categories | slice: 0:4">
+            <a routerLink="/categories/{{category._id}}">{{category.title}}</a>
+          </li>
         </ul>
       </div>
 
@@ -103,12 +102,12 @@
           <li><a routerLink="/user/profile" *ngIf="isUser">My profile</a></li>
           <li><a routerLink="/user/profile" *ngIf="isUser">My photos</a></li>
           <li *ngIf="!isUser">
-            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle login">
+            <a routerLink="/user/login" title="Link" class="login">
               Login
             </a>
           </li>
           <li *ngIf="!isUser">
-            <a href="javascript:void(0);" data-toggle="#slide_form" title="Link" class="popup_toggle login">
+            <a routerLink="/user/register" title="Link" class="login">
               Register
             </a>
           </li>

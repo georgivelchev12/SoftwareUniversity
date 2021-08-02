@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CategoryService } from 'src/app/core/services/category.service';
 import { DataSharingService } from 'src/app/core/services/data_sharing.service';
 
 @Component({
@@ -10,9 +11,11 @@ import { DataSharingService } from 'src/app/core/services/data_sharing.service';
 })
 export class FooterComponent implements OnInit {
   isUser;
+  categories = [];
   constructor(
     public router: Router,
     public authService: AuthService,
+    public categoryService: CategoryService,
     public dataSharingService: DataSharingService
   ) {}
 
@@ -24,6 +27,9 @@ export class FooterComponent implements OnInit {
         this.isUser = this.authService.getIsAuth();
       }
     });
+    this.categoryService.getCategories().subscribe(data => {
+      this.categories = data.categories;
+    })
     
   }
 }

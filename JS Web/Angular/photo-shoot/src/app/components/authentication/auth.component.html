@@ -1,29 +1,26 @@
-<div id="slide_form" class="popup_wrap calculator_popup">
-  <!-- click anywhere to close -->
-  <div class="close_popup close_btn"></div>
-  <div class="popup_cont">
-    <div class="slide_form" id="slide_form" [class]="toggleSlideForm ? 'active' : ''">
-      <a href="javascript:void(0)" class="close_btn close_x fas fa-times"></a>
-      <div class="form-container sign-up-container">
-        <app-register></app-register>
-      </div>
-      <div class="form-container sign-in-container">
-        <app-login></app-login>
-      </div>
-      <div class="overlay-container">
-        <div class="overlay">
-          <div class="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
-            <p>
-              To keep connected with us please login with your personal info
-            </p>
-            <button class="ghost" id="signIn" (click)="toggleSlideForm = false">Sign In</button>
-          </div>
-          <div class="overlay-panel overlay-right">
-            <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start journey with us</p>
-            <button class="ghost" id="signUp" (click)="toggleSlideForm = true">Sign Up</button>
-          </div>
+<div class="slide_form_wrapper">
+  <div class="slide_form" id="slide_form"
+    [class]="toggleSlideForm ? 'active' : ''">
+    <!-- <a href="javascript:void(0)" class="close_btn close_x fas fa-times"></a> -->
+    <div class="form-container sign-up-container">
+      <app-register></app-register>
+    </div>
+    <div class="form-container sign-in-container">
+      <app-login></app-login>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>
+            To keep connected with us please login with your personal info
+          </p>
+          <button class="ghost" id="signIn" (click)="toggleSlideForm = false">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hello, Friend!</h1>
+          <p>Enter your personal details and start journey with us</p>
+          <button class="ghost" id="signUp" (click)="toggleSlideForm = true">Sign Up</button>
         </div>
       </div>
     </div>

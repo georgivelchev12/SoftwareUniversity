@@ -22,7 +22,9 @@ function isGuest() {
 function isOwner() {
   return async (req, res, next) => {
     const photo = await Photo.findOne({ _id: req.params.id || req.body._id }).populate('author');
-    if (photo?.author._id == req.user?._id) {
+    let photoId = photo ? photo.author._id : undefined; 
+    let userId = req.user ? req.user._id : undefined; 
+    if (photoId == userId) {
         next();
     } else {
       res.status(401).json({ message: "You are not the owner!" });

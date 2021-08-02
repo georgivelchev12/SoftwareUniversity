@@ -2,10 +2,6 @@
 <app-header></app-header>
 
 <main>
-  
-    <!-- Hide app-auth if there is logged user -->
-    <app-auth *ngIf="!authService.getIsAuth()"></app-auth>
-
     <router-outlet></router-outlet>
 </main>
 

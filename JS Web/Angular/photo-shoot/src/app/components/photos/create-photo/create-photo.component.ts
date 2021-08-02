@@ -68,6 +68,11 @@ export class CreatePhotoComponent implements OnInit {
 
   getAllCategories() {
     this.categoryService.getCategories().subscribe(({ categories }) => {
+      if(categories.length == 0){
+        this.router.navigateByUrl('/categories/create');
+        this.toastr.warning('You need to create categories first!');
+        return;
+      }
       this.allCategories = categories;
 
       this.allCategories.forEach((c) => {

@@ -167,9 +167,6 @@ export class AuthService {
   }
   // Local storage / End
 
-
-
-
   getUsers() {
     return this.http.get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/list`);
   }
@@ -189,7 +186,6 @@ export class AuthService {
   deleteUser(userId) {
     return this.http.delete<{ message: string }>(`${BACKEND_URL}/delete/${userId}`);
   }
-
 
   editUser(user) {
     let postData;
@@ -230,6 +226,7 @@ export class AuthService {
     }
     return this.http.put(`${BACKEND_URL}/edit`, postData);
   }
+
   getMyProfile() {
     return this.http.get(`${BACKEND_URL}/myprofile`);
   }

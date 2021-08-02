@@ -1,4 +1,4 @@
-<section class="list_authors" *ngIf="users">
+<section class="list_authors" *ngIf="users.length">
   <div class="row">
     <div class="col">
       <h3 class="section_title text_center">Authors</h3>
@@ -25,3 +25,11 @@
     </div>
   </div>
 </section>
+
+<div class="row" *ngIf="!users.length && router.url != '/'">
+  <div class="col">
+    <h2 class="section_title" style="margin: 200px 0">
+      There is no users yet!
+    </h2>
+  </div>
+</div>

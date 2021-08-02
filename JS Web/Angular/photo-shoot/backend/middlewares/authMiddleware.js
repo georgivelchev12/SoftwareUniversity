@@ -7,7 +7,7 @@ module.exports = () => (req, res, next) => {
   };
 
   try {
-    const tokenFromHeaders = req.headers.authorization?.split(" ")[1];
+    const tokenFromHeaders = req.headers.authorization ? req.headers.authorization.split(" ")[1] : undefined;
     if (tokenFromHeaders !== undefined) {
       const userData = jwt.verify(tokenFromHeaders, process.env.TOKEN_SECRET);
       req.user = userData;

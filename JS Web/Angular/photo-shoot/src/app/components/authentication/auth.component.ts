@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -8,7 +9,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class AuthComponent implements OnInit {
   toggleSlideForm: boolean = false;
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.router.url == '/user/register'){
+      this.toggleSlideForm = true
+    }
+  }
 }

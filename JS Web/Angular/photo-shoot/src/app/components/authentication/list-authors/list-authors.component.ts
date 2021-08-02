@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./list-authors.component.scss'],
 })
 export class ListAuthorsComponent implements OnInit {
-  users;
+  users = [];
   constructor(
     public authService: AuthService,
     public router: Router,

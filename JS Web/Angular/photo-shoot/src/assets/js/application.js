@@ -107,8 +107,16 @@ let controller = {
   //   });
   // },
   navbarDropdownHandler: function () {
+    if (window.innerWidth <= 768) {
+
+      $(".list_item").click(function(event){
+        if(!event.target.classList.contains('dropdown_icon')){
+          $('#toggle_nav').prop('checked', false);
+        }
+      })
+    }
     //dropdown in nav menu
-    $(".dropdown_toggle_mobile .dropdown_icon").click(function () {
+    $("body").on("click", '.dropdown_toggle_mobile .dropdown_icon', function () {
       if (window.innerWidth <= 768) {
         $(this).parent().toggleClass("active_dropdown");
         $(this).parent().next().slideToggle();

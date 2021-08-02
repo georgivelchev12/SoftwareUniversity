@@ -1,8 +1,13 @@
 @import "../../../assets/sass/_setup.scss";
 ::ng-deep,
 :host {
+  .slide_form_wrapper{
+    background: $dark;
+    padding: 100px 0;
+  }
   .slide_form {
-    margin: 0 0 40px;
+    box-shadow: 0 3px 6px 0 rgba($color: $black, $alpha: 0.15);
+    margin: 0px auto;
     border-radius: 10px;
     background: $light;
     border: 2px solid $light;
@@ -14,6 +19,7 @@
     z-index: 1;
     // PopUp close button
     .close_x {
+      display: none;
       font-size: 25px;
       margin: 0;
       z-index: 111;
