@@ -1,6 +1,5 @@
 const Category = require("../models/Category");
-const Photo = require("../models/Photo");
-const { filterEmptyArr, getImagePath, deleteImage } = require("../services/globalService");
+const { getImagePath, deleteImage } = require("../services/globalService");
 
 async function getCategories(req, res) {
   try {
@@ -19,7 +18,6 @@ async function getCategory(req, res) {
     const category = await Category.findById({ _id: req.params.id })
       .populate("photos")
       .lean();
-    // console.log("getCategory:", category);
     if (category) {
       res.status(200).json({ message: "Category fetched!", category });
     }
@@ -59,9 +57,7 @@ async function editCategory(req, res) {
     };
     Object.assign(category, newCategoryData);
     await category.save();
-    res
-      .status(200)
-      .json({ message: "You edited category successfully!", category });
+    res.status(200).json({ message: "You edited category successfully!", category });
   } catch (err) {
     if (err.kind == "ObjectId") {
       throw new Error("Invalid data!");
@@ -81,6 +77,7 @@ async function deleteCategory(req, res) {
     console.log(`Something went wrong: ${err}`);
   }
 }
+
 module.exports = {
   getCategory,
   createCategory,

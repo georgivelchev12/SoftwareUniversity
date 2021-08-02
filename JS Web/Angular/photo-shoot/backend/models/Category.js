@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const schema = new Schema({
+    // To do .. add validation
   title: { type: String, required: true },
   description: { type: String, required: true },
   imgUrl: { type: String, required: false },

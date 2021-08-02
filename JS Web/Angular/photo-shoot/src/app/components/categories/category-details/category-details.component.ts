@@ -22,7 +22,6 @@ export class CategoryDetailsComponent implements OnInit {
         .getCategory(this.route.snapshot.params.id)
         .subscribe((data) => {
           this.category = data.category;
-          // console.log(this.category);
         });
     });
   }

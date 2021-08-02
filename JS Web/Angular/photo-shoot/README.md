@@ -1,27 +1,28 @@
-# PhotoForum
+# Photo Shoot
+----------
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
+Live site: [angular.webhipsters.com/photo-shoot](https://angular.webhipsters.com/photo-shoot)
+**Тo access all the features you need to log in through an admin account:**
+Email: **admin@admin.com**
+Password: **123asd**
 
-## Development server
+Now you can create/edit/delete categories, photos and users!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Local setup
 
-## Code scaffolding
+1. Run `npm install` to download all required packages
+2. Make sure you have installed nodemon - `npm install -g nodemon`
+Default configuration is in **nodemon.json** file
+3. Start Node JS server by using this command: `nodemon ./backend/app.js`
+    **You should see these two lines** 
+    ```
+    Listening on port 3000!
+    Connected to database!
+    ```
+4. Run `ng serve --open` to open angular app in browser
+5.  **That's it!**
+## Fill up with information
+1. Start by making registration with admin@admin.com email to access all function features.
+2. Create few categories, because they are required for creating new photos
+3. Create photos
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

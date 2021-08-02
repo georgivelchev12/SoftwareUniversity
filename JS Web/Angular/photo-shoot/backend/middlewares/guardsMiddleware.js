@@ -12,7 +12,6 @@ function isUser() {
 function isGuest() {
   return (req, res, next) => {
     if (req.user == undefined) {
-      // console.log("in guard", req.user);
       next();
     } else {
       res.status(401).json({ message: "You already logged in!" });
@@ -33,7 +32,6 @@ function isOwner() {
 }
 function isAdmin() {
   return (req, res, next) => {
-    console.log(req.user);
     if (req.user.role == 'admin') {
       next();
     } else {

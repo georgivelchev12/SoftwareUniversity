@@ -45,7 +45,6 @@ async function loginUser(req, res, next) {
   try {
     const user = await getUserByEmail(req.body.email);
     if (!user) {
-      // to do res.json
       throw new Error("User with this email not exist");
     } else {
       const isMatch = await bcrypt.compare(
@@ -56,7 +55,6 @@ async function loginUser(req, res, next) {
         throw new Error("You are currently banned and cant login in site");
       }
       if (!isMatch) {
-        // to do res.json
         throw new Error("Wrong username or password");
       } else {
         res.status(200).json({
@@ -131,7 +129,6 @@ async function listUsers(req, res, next) {
 }
 
 async function deleteUser(req, res, next) {
-  console.log(req.params.id)
   if (req.params.id == req.user._id) {
     deleteAction("You deleted your account successfully");
   } else {
@@ -168,7 +165,6 @@ async function deleteUser(req, res, next) {
 }
 
 async function disableUser(req, res) {
-  // req.role comes from check-auth.js file
   if (req.user.role != "admin") {
     res.status(401).json({
       message: "You are not authenticated to disable users profiles!",
@@ -196,7 +192,6 @@ async function disableUser(req, res) {
 }
 
 async function restoreUser(req, res) {
-  // req.role comes from check-auth.js file
   if (req.user.role != "admin") {
     res.status(401).json({
       message: "You are not authenticated to restore users profiles!",

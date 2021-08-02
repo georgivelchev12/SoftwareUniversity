@@ -7,7 +7,6 @@ let controller = {
     controller.navbarDropdownHandler();
     // controller.slidersInit();
 
-    // controller.menuOutHandler();
     controller.toggleProductTabs();
 
     // Toggle random block
@@ -95,17 +94,6 @@ let controller = {
       }
     });
   },
-  // slidersInit: function () {
-  //   //sliders
-  //   $(".about_company_slider").slick({
-  //     slidesToShow: 1,
-  //     slidesToScroll: 1,
-  //     dots: false,
-  //     infinite: true,
-  //     prevArrow: '<div class="prev-btn as as-chevron"></div>',
-  //     nextArrow: '<div class="next-btn as as-chevron"></div>',
-  //   });
-  // },
   navbarDropdownHandler: function () {
     if (window.innerWidth <= 768) {
 
@@ -123,30 +111,6 @@ let controller = {
         //it prevents a href
         return false;
       }
-    });
-  },
-  menuOutHandler: function () {
-    function isMenuOut(element) {
-      element.each(function () {
-        let elm = $(this);
-        let off = elm.offset();
-        let l = off.left;
-        let w = elm.width();
-        let docW = $("body").width();
-        let isEntirelyVisible = l + w <= docW;
-
-        if (!isEntirelyVisible || l < 0) {
-          $(this).addClass("isOut");
-        } else {
-          // "if" prevents toggling class on resize
-          if (!$(this).hasClass("isOut")) $(this).removeClass("isOut");
-        }
-      });
-    }
-
-    isMenuOut($(".calc_icon"));
-    window.addEventListener("resize", function () {
-      isMenuOut($(".calc_icon"));
     });
   },
   toggleProductTabs: function () {

@@ -15,7 +15,6 @@ export class CategoryService {
   ) {}
 
   createCategory(body) {
-    console.log(body);
     let photoData = new FormData();
     photoData.append('title', body.title);
     photoData.append('description', body.description);

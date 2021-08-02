@@ -23,13 +23,10 @@ import { SharedModule } from './components/shared/shared.module';
     SharedModule,
     LandingModule,
     CategoryModule,
-    
-    // To do ... remove it from here and set it in shared module
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-
-    BrowserAnimationsModule, // required animations module
+    BrowserAnimationsModule, // required animations module for toastr
     ToastrModule.forRoot(),
   ],
   providers: [],

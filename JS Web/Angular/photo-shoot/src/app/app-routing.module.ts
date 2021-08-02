@@ -34,8 +34,6 @@ const routes: Routes = [
   { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user/register', component: AuthComponent},
   { path: 'user/login', component: AuthComponent},
-
-  // To do... create details component
   { path: 'user/details/:id', component: UserProfileComponent},
   { path: 'user/profiles', component: ListAuthorsComponent, canActivate: [AdminGuard]},
   

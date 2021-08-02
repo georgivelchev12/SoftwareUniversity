@@ -1,12 +1,10 @@
 const Category = require("../models/Category");
 const Photo = require("../models/Photo");
-const fs = require("fs");
 const {
   filterEmptyArr,
   getImagePath,
   deleteImage,
 } = require("../services/globalService");
-const User = require("../models/User");
 const { getUserById } = require("../services/userService");
 
 async function getPhotos(req, res) {
@@ -58,13 +56,11 @@ async function getPhotos(req, res) {
 }
 
 async function getPhoto(req, res) {
-  // console.log(req.params.id);
   try {
     const photo = await Photo.findById({ _id: req.params.id })
       .populate("author")
       .populate("categories")
       .lean();
-    // console.log("getPhoto:", photo);
     photo.author.hashedPassword = null;
     if (photo) {
       res.status(200).json({ message: "Photo fetched!", photo });
