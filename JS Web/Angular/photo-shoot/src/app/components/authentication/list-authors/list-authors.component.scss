@@ -55,7 +55,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
     width: 100%;
     transition: all 0.3s;
     padding: 10px 5px;
@@ -67,6 +66,7 @@
       }
     }
     img {
+      object-fit: cover;
       @include box(80px);
       border-radius: 100%;
       margin-right: 10px;

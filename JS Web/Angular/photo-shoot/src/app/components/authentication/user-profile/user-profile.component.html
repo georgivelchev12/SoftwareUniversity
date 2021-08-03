@@ -165,10 +165,10 @@
         <div class="filter_tabs">
           <ul class="tabs default_hide medium_flex">
             <li class="tab active">
-              <a href="#panel_1">Photos</a>
+              <a href="javascript:void(0);" data-panel="#panel_1">Photos</a>
             </li>
             <li class="tab">
-              <a href="#panel_2">Details</a>
+              <a href="javascript:void(0);" data-panel="#panel_2">Details</a>
             </li>
             <!-- <li class="tab danger">
               <a href="javascript:void(0);" (click)="authService.logout()">Logout</a>
@@ -186,7 +186,30 @@
             </div>
             <div class="panel panel_2" style="display:none">
               
-              
+              <div class="row details">
+                <div class="col medium_6">
+                  <h4 class="section_title">
+                    Author information:
+                  </h4>
+                  <p>
+                    {{profile.info}}
+                  </p>
+                </div>
+                <div class="col medium_6">
+                  <h4 class="section_title">
+                    Email:
+                  </h4>
+                  <p>
+                    {{profile.email}}
+                  </p>
+                  <h4 class="section_title">
+                    Phone number:
+                  </h4>
+                  <p>
+                    {{profile.phone}}
+                  </p>
+                </div>
+              </div>
 
             </div>
           </div>

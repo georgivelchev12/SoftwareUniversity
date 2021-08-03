@@ -9,6 +9,10 @@ Password: **123asd**
 
 Now you can create/edit/delete categories, photos and users!
 
+**Here is an ordinary account user** </br>
+Email: **user@user.com** </br>
+Password: **123asd**
+
 ## Local setup
 
 1. Run `npm install` to download all required packages

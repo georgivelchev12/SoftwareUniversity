@@ -1,12 +1,13 @@
 let controller = {
   init: function () {
+    setTimeout(() => {
+      
     controller.mobileCheckboxClass();
     controller.fixedNavigation();
     controller.fancyScrollLinks();
     controller.togglePopUps();
     controller.navbarDropdownHandler();
     // controller.slidersInit();
-
     controller.toggleProductTabs();
 
     // Toggle random block
@@ -15,17 +16,17 @@ let controller = {
       $("#" + attrValue).slideToggle();
       $(this).toggleClass("active");
     });
-
     
-    setTimeout(function () {
-      if ($("select").length) {
-        $("select").niceSelect();
-      }
+    if ($("select").length) {
+      $("select").niceSelect();
+    }
+
     }, 1000);
 
     window.addEventListener("click", function () {
       $("select").niceSelect();
     });
+
   },
   mobileCheckboxClass: function () {
     // Mobile Checkbox add class to the body
@@ -97,7 +98,7 @@ let controller = {
   navbarDropdownHandler: function () {
     if (window.innerWidth <= 768) {
 
-      $(".list_item").click(function(event){
+      $(".list_item a").click(function(event){
         if(!event.target.classList.contains('dropdown_icon')){
           $('#toggle_nav').prop('checked', false);
         }
@@ -116,7 +117,6 @@ let controller = {
   toggleProductTabs: function () {
     // Tabs filter
     $("body").on("click", ".filter_tabs .tabs .tab", function (e) {
-      e.preventDefault();
       $(this).addClass("active").siblings().removeClass("active");
       let a = $(this).children();
       $(".panels .panel").slideUp(); //hide all

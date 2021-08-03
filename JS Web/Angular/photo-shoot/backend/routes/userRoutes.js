@@ -24,7 +24,7 @@ router.get("/details/:id", getUserProfile);
 router.get("/list", listUsers);
 router.put("/edit", isUser(), extractFile, editUser);
 
-router.delete("/delete/:id", deleteUser);
+router.get("/delete/:id", deleteUser);
 router.put("/disable/:id", isAdmin(), disableUser);
 router.put("/restore/:id", isAdmin(), restoreUser);
 

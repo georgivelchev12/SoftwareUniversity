@@ -184,7 +184,7 @@ export class AuthService {
   }
 
   deleteUser(userId) {
-    return this.http.delete<{ message: string }>(`${BACKEND_URL}/delete/${userId}`);
+    return this.http.get<{ message: string }>(`${BACKEND_URL}/delete/${userId}`);
   }
 
   editUser(user) {
