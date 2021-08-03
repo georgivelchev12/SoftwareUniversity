@@ -1,5 +1,4 @@
 # Photo Shoot
-----------
 
 Live site: [angular.webhipsters.com/photo-shoot](https://angular.webhipsters.com/photo-shoot) </br>
 

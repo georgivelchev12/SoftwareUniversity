@@ -44,7 +44,7 @@
         </div>
 
         <div class="col small_6">
-          <button type="submit" class="btn wide">Edit</button>
+          <button type="submit" class="btn wide" [disabled]="!form.valid">Edit</button>
         </div>
         <div class="col small_6">
           <button type="button" (click)="deleteCategory()" class="btn btn_danger wide">Delete category</button>

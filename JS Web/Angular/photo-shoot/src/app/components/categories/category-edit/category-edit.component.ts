@@ -15,7 +15,7 @@ export class CategoryEditComponent implements OnInit {
   category;
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.maxLength(100)]),
+    description: new FormControl('', [Validators.maxLength(300)]),
     image: new FormControl('', {
       asyncValidators: [mimeType],
     }),
