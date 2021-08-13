@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { UserModel } from '../models/user.model';
 
 @Component({
   selector: 'app-list-authors',
@@ -9,7 +11,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./list-authors.component.scss'],
 })
 export class ListAuthorsComponent implements OnInit {
-  users = [];
+  users: Array<UserModel> = [];
   constructor(
     public authService: AuthService,
     public router: Router,
@@ -19,11 +21,13 @@ export class ListAuthorsComponent implements OnInit {
   ngOnInit() {
     this.getUsers();
   }
+  
   getUsers() {
     this.authService.getUsers().subscribe((data) => {
       this.users = data.users;
       this.users = this.users.filter((u) => {
         if (this.router.url == '/') {
+          // Showing only users with full information
           return (
             u.imgUrl !== '' &&
             u.firstName !== '' &&
@@ -37,41 +41,19 @@ export class ListAuthorsComponent implements OnInit {
     });
   }
 
-  deleteProfile(id) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.authService.deleteUser(id).subscribe(
-        (data) => {
-          this.toastr.success(data.message, 'Success!');
-          this.getUsers();
-        },
-        (err) => {
-          this.toastr.error(err.error.message, 'Error!');
-        }
-      );
+  profileAction(query){
+    if(query.includes('delete') && !confirm('Are you sure you want to delete this user?')){
+      return;
     }
-  }
-
-  disableProfile(id) {
-    this.authService.disableUser(id).subscribe(
-      (data) => {
+    this.authService.editUser({}, query).subscribe(
+      data => {
         this.toastr.success(data.message, 'Success!');
         this.getUsers();
       },
-      (err) => {
+      err => {
         this.toastr.error(err.error.message, 'Error!');
       }
     );
   }
-
-  restoreProfile(id) {
-    this.authService.restoreUser(id).subscribe(
-      (data) => {
-        this.toastr.success(data.message, 'Success!');
-        this.getUsers();
-      },
-      (err) => {
-        this.toastr.error(err.error.message, 'Error!');
-      }
-    );
-  }
+  
 }

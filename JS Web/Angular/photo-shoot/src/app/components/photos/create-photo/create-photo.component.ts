@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/core/services/category.service';
+import { FuncsService } from 'src/app/core/services/funcs.service';
 import { PhotoService } from 'src/app/core/services/photo.service';
 import { CategoryValidator } from './category.validator';
 import { mimeType } from './myme-type.validator';
@@ -22,16 +23,13 @@ export class CreatePhotoComponent implements OnInit {
   imagePreview: string;
 
   form = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    description: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(300),
-    ]),
+    title: new FormControl('', [ Validators.required, Validators.maxLength(50) ]),
+    description: new FormControl('', [ Validators.required, Validators.maxLength(300) ]),
     image: new FormControl(null, {
       validators: [Validators.required],
       asyncValidators: [mimeType],
     }),
-    categories: new FormArray([], [CategoryValidator.minLengthCategories(1)]),
+    categories: new FormArray([], [ CategoryValidator.minLengthCategories(1) ]),
   });
 
   // currentPhoto;
@@ -43,7 +41,8 @@ export class CreatePhotoComponent implements OnInit {
     public photoService: PhotoService,
     public categoryService: CategoryService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private funcsService: FuncsService
   ) {}
 
   ngOnInit() {
@@ -105,16 +104,7 @@ export class CreatePhotoComponent implements OnInit {
   }
 
   onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    if (file) {
-      this.form.patchValue({ image: file });
-      this.form.get('image').updateValueAndValidity();
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
+    this.funcsService.onImagePickedAction(event, this, 'image');
   }
 
   onRemoveImage() {

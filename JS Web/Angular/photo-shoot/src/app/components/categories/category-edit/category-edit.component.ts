@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/core/services/category.service';
+import { FuncsService } from 'src/app/core/services/funcs.service';
 import { mimeType } from '../../photos/create-photo/myme-type.validator';
 
 @Component({
@@ -24,7 +25,8 @@ export class CategoryEditComponent implements OnInit {
     public categoryService: CategoryService,
     public router: Router,
     public route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private funcsService: FuncsService
   ) {}
 
   ngOnInit() {
@@ -45,10 +47,7 @@ export class CategoryEditComponent implements OnInit {
       _id: this.category._id,
       title: this.form.value.title,
       description: this.form.value.description,
-      imgUrl:
-        this.form.value.image != ''
-          ? this.form.value.image
-          : this.category.imgUrl,
+      imgUrl: this.form.value.image != '' ? this.form.value.image : this.category.imgUrl,
     };
 
     this.categoryService.editCategory(this.category).subscribe((data) => {
@@ -65,21 +64,6 @@ export class CategoryEditComponent implements OnInit {
   }
 
   onImagePicked(event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    if (file) {
-      this.form.patchValue({ image: file });
-      this.form.get('image').updateValueAndValidity();
-      const reader = new FileReader();
-      reader.onload = () => {
-        if ((reader.result as string) == 'data:') {
-          this.toastr.error('Invalid image type!', 'Error');
-          return;
-        }
-        this.imagePreview = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      this.toastr.error('You should select image', 'Error');
-    }
+    this.funcsService.onImagePickedAction(event, this, 'image');
   }
 }

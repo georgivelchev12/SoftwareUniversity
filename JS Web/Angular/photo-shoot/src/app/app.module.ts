@@ -12,7 +12,11 @@ import { CategoryModule } from './components/categories/category.module';
 import { LandingModule } from './components/landing/landing.module';
 import { PhotosModule } from './components/photos/photos.module';
 import { SharedModule } from './components/shared/shared.module';
-
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './+store';
+import { EffectsModule } from '@ngrx/effects';
+import { GlobalEffects } from './+store/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,6 +32,11 @@ import { SharedModule } from './components/shared/shared.module';
     HttpClientModule,
     BrowserAnimationsModule, // required animations module for toastr
     ToastrModule.forRoot(),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([
+      GlobalEffects
+    ]),
+    StoreDevtoolsModule.instrument({})
   ],
   providers: [],
   bootstrap: [AppComponent],

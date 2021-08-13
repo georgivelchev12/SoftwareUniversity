@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/core/services/category.service';
+import { FuncsService } from 'src/app/core/services/funcs.service';
 import { mimeType } from '../../photos/create-photo/myme-type.validator';
 
 @Component({
@@ -22,7 +23,12 @@ export class CategoryCreateComponent implements OnInit {
     }),
   });
 
-  constructor(public categoryService: CategoryService, public router: Router, public toastr: ToastrService) {}
+  constructor(
+    public categoryService: CategoryService,
+    public router: Router,
+    public toastr: ToastrService,
+    private funcsService: FuncsService
+  ) {}
 
   ngOnInit() {}
 
@@ -33,19 +39,12 @@ export class CategoryCreateComponent implements OnInit {
       imgUrl: this.form.value.image,
     };
     this.categoryService.createCategory(category).subscribe((data) => {
-      this.toastr.success(data['message'], 'Success!')
-      this.router.navigateByUrl('/categories')
+      this.toastr.success(data['message'], 'Success!');
+      this.router.navigateByUrl('/categories');
     });
   }
 
   onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ image: file });
-    this.form.get('image').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+    this.funcsService.onImagePickedAction(event, this, 'image');
   }
 }

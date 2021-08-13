@@ -1,8 +1,16 @@
 <form [formGroup]="form" (ngSubmit)="login()">
   <h1>Sign In</h1>
+  <div class="errors" *ngIf="!form.get('email').valid && form.get('email').touched">
+    <span *ngIf="form.get('email').hasError('required')">Email is required</span>
+    <span *ngIf="form.get('email').hasError('email')">Email is invalid</span>
+  </div>
   <input type="email" formControlName="email" placeholder="Email" />
+  <div class="errors" *ngIf="!form.get('password').valid && form.get('password').touched">
+    <span *ngIf="form.get('password').hasError('required')">Password is required</span>
+    <span *ngIf="form.get('password').hasError('minlength')">Password must be at least 3 symbols</span>
+  </div>
   <input type="password" formControlName="password" placeholder="Password" />
-  <button type="submit">Sign In</button>
+  <button type="submit" [disabled]="!form.valid">Sign In</button>
   <div class="social-container">
     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>

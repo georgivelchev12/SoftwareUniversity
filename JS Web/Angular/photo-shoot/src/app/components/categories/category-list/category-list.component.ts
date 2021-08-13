@@ -8,6 +8,7 @@ import { CategoryService } from 'src/app/core/services/category.service';
   styleUrls: ['./category-list.component.scss'],
 })
 export class CategoryListComponent implements OnInit {
+  
   @Input() isSlider;
   slideConfig = {
     slidesToShow: 2,

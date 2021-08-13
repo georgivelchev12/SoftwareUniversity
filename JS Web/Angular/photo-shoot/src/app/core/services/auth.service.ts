@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-// import { ToastrService } from 'ngx-toastr';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AuthModel } from 'src/app/components/authentication/auth.model';
 import { DataSharingService } from './data_sharing.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoginActionModel } from 'src/app/components/authentication/models/loginAction.model';
+import { UserModel } from 'src/app/components/authentication/models/user.model';
 
 const BACKEND_URL = environment.apiUrl + '/user';
 
@@ -17,7 +16,6 @@ export class AuthService {
   tokenTimer: NodeJS.Timer;
   userRole: string;
   userEmail: string;
-
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -25,37 +23,23 @@ export class AuthService {
     private dataSharingService: DataSharingService
   ) {}
 
+  
   // Auth functions / Start
-  register(user: AuthModel) {
-    return this.http.post(`${BACKEND_URL}/register`, user).subscribe(
-      (data) => {
-        this.loginAction(data);
-      },
-      (err) => {
-        this.toastr.error(err.error.message, 'Error!')
-      }
+  register(user) {
+    return this.http.post<LoginActionModel>(`${BACKEND_URL}/register`, user).subscribe(
+      (data) => this.loginAction(data),
+      (err) => this.toastr.error(err.error.message, 'Error!')
     );
   }
 
-  login(user: AuthModel) {
-    return this.http
-      .post<{
-        token: string;
-        expiresIn: number;
-        currentUserRole: string;
-        userEmail: string;
-      }>(`${BACKEND_URL}/login`, user)
-      .subscribe(
-        (data) => {
-          this.loginAction(data);
-        },
-        (err) => {
-          this.toastr.error(err.error.message, 'Error!')
-        }
-      );
+  login(user) {
+    return this.http.post<LoginActionModel>(`${BACKEND_URL}/login`, user).subscribe(
+      (data) => this.loginAction(data),
+      (err) => this.toastr.error(err.error.message, 'Error!')
+    );
   }
 
-  loginAction(data) {
+  loginAction(data: LoginActionModel) {
     if (data.token) {
       this.token = data.token;
       const expiresInDuration = data.expiresIn;
@@ -82,6 +66,7 @@ export class AuthService {
 
     this.dataSharingService.isDataChanged.next(true);
     this.router.navigateByUrl('/');
+    this.toastr.success(data.message, 'Success!')
   }
 
   logout() {
@@ -91,19 +76,6 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
     this.router.navigateByUrl('/');
     this.toastr.info('Logged out!', 'Info');
-  }
-
-  getUserRole() {
-    return this.userRole;
-  }
-  getUserEmail() {
-    return this.userEmail;
-  }
-  getToken() {
-    return this.token;
-  }
-  getIsAuth() {
-    return this.isAuthenticated;
   }
 
   // Called on app edit
@@ -126,14 +98,14 @@ export class AuthService {
   }
   // Auth functions / End
 
-
   // Local storage / Start
   private saveAuthData(
     token: string,
     expirationDate: Date,
     userRole: string,
     userEmail: string,
-    userId: string) {
+    userId: string
+  ) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('role', userRole);
@@ -168,31 +140,17 @@ export class AuthService {
   // Local storage / End
 
   getUsers() {
-    return this.http.get<{ message: string; users: Array<Object> }>(`${BACKEND_URL}/list`);
+    return this.http.get<{ message: string; users: Array<UserModel> }>(`${BACKEND_URL}/list`);
   }
 
   getUser(id) {
-    return this.http.get<{ message: string; user: Object }>(`${BACKEND_URL}/details/${id}`);
+    return this.http.get<{ message: string; user: UserModel }>(`${BACKEND_URL}/details/${id}`);
   }
 
-  disableUser(userId) {
-    return this.http.put<{ message: string }>(`${BACKEND_URL}/disable/${userId}`, {});
-  }
-
-  restoreUser(userId) {
-    return this.http.put<{ message: string }>(`${BACKEND_URL}/restore/${userId}`, {});
-  }
-
-  deleteUser(userId) {
-    return this.http.get<{ message: string }>(`${BACKEND_URL}/delete/${userId}`);
-  }
-
-  editUser(user) {
+  // Edit, Disalbe, Restore, Delete using query params
+  editUser(user, queryParams = '') {
     let postData;
-    if (
-      typeof user.imgUrl === 'object' ||
-      typeof user.coverImgUrl === 'object'
-    ) {
+    if ( typeof user.imgUrl === 'object' || typeof user.coverImgUrl === 'object' ) {
       postData = new FormData();
       postData.append('email', user.email);
       postData.append('firstName', user.firstName);
@@ -201,33 +159,39 @@ export class AuthService {
       postData.append('phone', user.phone);
 
       if (typeof user.imgUrl === 'object') {
-        postData.append(
-          'image',
-          user.imgUrl,
-          `profileImage-${user.email.split('@')[0]}`
-        );
+        postData.append( 'image', user.imgUrl, `profileImage-${user.email.split('@')[0]}` );
       } else {
         postData.append('image', user.imgUrl);
       }
 
       if (typeof user.coverImgUrl === 'object') {
-        postData.append(
-          'coverImage',
-          user.coverImgUrl,
-          `coverImage-${user.email.split('@')[0]}`
-        );
+        postData.append( 'coverImage', user.coverImgUrl, `coverImage-${user.email.split('@')[0]}` );
       } else {
         postData.append('coverImage', user.coverImgUrl);
       }
+
     } else {
-      postData = {
-        ...user,
-      };
+      postData = { ...user };
     }
-    return this.http.put(`${BACKEND_URL}/edit`, postData);
+    return this.http.put<{ message: string, user: UserModel }>(`${BACKEND_URL}/edit${queryParams}`, postData);
   }
 
   getMyProfile() {
-    return this.http.get(`${BACKEND_URL}/myprofile`);
+    return this.http.get<{ message: string; user: UserModel }>(`${BACKEND_URL}/myprofile`);
   }
+
+  // Get variables values
+  getUserRole() {
+    return this.userRole;
+  }
+  getUserEmail() {
+    return this.userEmail;
+  }
+  getToken() {
+    return this.token;
+  }
+  getIsAuth() {
+    return this.isAuthenticated;
+  }
+
 }

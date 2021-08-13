@@ -7,8 +7,8 @@ const router = require("express").Router();
 // /photo-shoot/api/photo
 router.post("/", isUser(), extractFile, createPhoto);
 router.get("/list", getPhotos);
-router.get("/delete/:id", isOwner(), deletePhoto);
-router.put("/edit", isOwner(), editPhoto);
+router.get("/delete/:id", isUser(), isOwner(), deletePhoto);
+router.put("/edit", isUser(), extractFile, isOwner(), editPhoto);
 router.get("/:id", getPhoto);
 
 

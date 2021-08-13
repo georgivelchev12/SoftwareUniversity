@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { AuthModel } from '../auth.model';
+import { RegisterModel } from '../models/register.model';
 
 @Component({
   selector: 'app-register',
@@ -10,13 +10,15 @@ import { AuthModel } from '../auth.model';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  user;
+  user: RegisterModel;
 
-  // To do... add validators
   form = new FormGroup({
-    email: new FormControl('', []),
-    password: new FormControl('', []),
-    rePassword: new FormControl('', []),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      // Validators.pattern('(?=.*[A-Z])(?=.*[0-9]).*'), // at least one capital letter and one number
+    ]),
+    rePassword: new FormControl('', [Validators.required]),
   });
 
   constructor(public authService: AuthService, public router: Router) {}

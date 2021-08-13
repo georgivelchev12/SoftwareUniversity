@@ -13,7 +13,8 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if(this.authService.getUserRole()){
+      
+      if(this.authService.getUserRole() == 'admin'){
         return true;
       }
       this.toastr.error('You do not have rights!', 'Error!')

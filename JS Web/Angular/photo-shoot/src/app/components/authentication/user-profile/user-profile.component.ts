@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DataSharingService } from 'src/app/core/services/data_sharing.service';
+import { FuncsService } from 'src/app/core/services/funcs.service';
 import { mimeType } from '../../photos/create-photo/myme-type.validator';
+import { UserModel } from '../models/user.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,7 +16,7 @@ import { mimeType } from '../../photos/create-photo/myme-type.validator';
 export class UserProfileComponent implements OnInit {
   imagePreview;
   coverImagePreview;
-  profile;
+  profile: UserModel;
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -35,12 +37,12 @@ export class UserProfileComponent implements OnInit {
     public router: Router,
     private dataSharingService: DataSharingService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private funcsService: FuncsService
   ) {}
 
   ngOnInit() {
-    if(this.router.url == '/user/profile'){
-
+    if (this.router.url == '/user/profile') {
       this.authService.getMyProfile().subscribe((data) => {
         this.profile = data['user'];
         this.imagePreview = this.profile.imgUrl;
@@ -52,88 +54,51 @@ export class UserProfileComponent implements OnInit {
           coverImage: '',
         });
       });
-
     } else {
-        this.authService.getUser(this.route.snapshot.params.id).subscribe((data) => {
-        this.profile = data['user'];
-        this.imagePreview = this.profile.imgUrl;
-        this.coverImagePreview = this.profile.coverImgUrl;
-      });
+      this.authService
+        .getUser(this.route.snapshot.params.id)
+        .subscribe((data) => {
+          this.profile = data.user;
+          this.imagePreview = this.profile.imgUrl;
+          this.coverImagePreview = this.profile.coverImgUrl;
+        });
     }
   }
 
-  edit() {
-    this.profile = {
+  editProfile() {
+    const newProfileData = {
       email: this.form.value.email,
       firstName: this.form.value.firstName,
       lastName: this.form.value.lastName,
       info: this.form.value.info,
       phone: this.form.value.phone,
-      imgUrl:
-        this.form.value.image != ''
-          ? this.form.value.image
-          : this.profile.imgUrl,
-      coverImgUrl:
-        this.form.value.coverImage != ''
-          ? this.form.value.coverImage
-          : this.profile.coverImgUrl,
+      imgUrl: this.form.value.image != '' ? this.form.value.image : this.profile.imgUrl,
+      coverImgUrl: this.form.value.coverImage != '' ? this.form.value.coverImage : this.profile.coverImgUrl,
     };
 
-    this.authService.editUser(this.profile).subscribe((data) => {
+    this.authService.editUser(newProfileData).subscribe((data) => {
       this.dataSharingService.isDataChanged.next(true);
-      this.toastr.success('You edited your profile successfully', 'Success!')
+      this.toastr.success('You edited your profile successfully', 'Success!');
     });
   }
 
   onImagePicked(event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    if (file) {
-      this.form.patchValue({ image: file });
-      this.form.get('image').updateValueAndValidity();
-      const reader = new FileReader();
-      reader.onload = () => {
-        if ((reader.result as string) == 'data:') {
-          this.toastr.error('Invalid image type!', 'Error');
-          return;
-        }
-        this.imagePreview = reader.result as string;
-        this.edit();
-      };
-      reader.readAsDataURL(file);
-    } else {
-      this.toastr.error('You should select image', 'Error');
-    }
+    this.funcsService.onImagePickedAction(event, this, 'image');
   }
 
   onCoverImagePicked(event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    if (file) {
-      this.form.patchValue({ coverImage: file });
-      this.form.get('coverImage').updateValueAndValidity();
-      const reader = new FileReader();
-      reader.onload = () => {
-        if ((reader.result as string) == 'data:') {
-          this.toastr.error('Invalid image type!', 'Error');
-          return;
-        }
-        this.coverImagePreview = reader.result as string;
-        this.edit();
-      };
-      reader.readAsDataURL(file);
-    } else {
-      this.toastr.error('You should select image', 'Error');
-    }
+    this.funcsService.onImagePickedAction(event, this, 'coverImage');
   }
 
-  deleteProfile() {
+  profileAction(query = `?delete=${this.profile._id}`) {
     let currentUserEmail = this.authService.getUserEmail();
     let doubleCheckText =
       this.profile.email == currentUserEmail
-        ? 'Are you sure you want to delete your profile? You can\'t undo this action!'
+        ? "Are you sure you want to delete your profile? You can't undo this action!"
         : `Are you sure you want to delete ${this.profile.firstName} ${this.profile.lastName}'s profile?`;
 
     if (confirm(doubleCheckText)) {
-      this.authService.deleteUser(this.profile._id).subscribe(
+      this.authService.editUser({}, query).subscribe(
         (data) => {
           this.toastr.success(data.message, 'Success!');
           if (this.profile.email == currentUserEmail) {

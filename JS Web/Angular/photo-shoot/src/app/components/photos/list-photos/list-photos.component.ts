@@ -1,7 +1,10 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
+import { deletePhoto, loadPhotos } from 'src/app/+store/actions';
+import { selectGlobalPhotos } from 'src/app/+store/selectors';
 import { PhotoService } from 'src/app/core/services/photo.service';
 
 @Component({
@@ -19,14 +22,22 @@ export class ListPhotosComponent implements OnInit, OnChanges {
   totalItems;
   currUserId;
 
+  photos$ = this.store.select(selectGlobalPhotos);
+
   constructor(
     public photoService: PhotoService,
     private toastr: ToastrService,
     // public activatedRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private store: Store<any>
   ) {}
-
+  
   ngOnInit() {
+    this.store.dispatch(loadPhotos())
+    // this.photos$.subscribe(data => {
+    //   console.log(data);
+    // })
+    
     if (this.router.url == '/user/profile') {
       this.itemsPerPage = 7;
     }
@@ -43,6 +54,8 @@ export class ListPhotosComponent implements OnInit, OnChanges {
   }
 
   deletePhoto(id) {
+    this.store.dispatch(deletePhoto({ id }));
+    
     this.photoService.deletePhoto(id).subscribe(
       ({ message }) => {
         this.toastr.success(message, 'Success!');

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { loadPhotos } from './+store/actions';
+import { selectGlobalPhotos } from './+store/selectors';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
@@ -8,8 +11,16 @@ import { AuthService } from './core/services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'photo-shoot';
-  constructor(public authService: AuthService) {}
+
+  // photos$ = this.store.select(selectGlobalPhotos)
+
+  constructor(
+    public authService: AuthService, 
+    // private store: Store<any>
+  ) {}
   ngOnInit() {
     this.authService.autoAuthUser();
+    // this.store.dispatch(loadPhotos())
+    
   }
 }

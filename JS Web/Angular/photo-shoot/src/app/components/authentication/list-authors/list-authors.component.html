@@ -7,10 +7,10 @@
       <div class="user" [ngClass]="user.isDisabled ? 'disabled' : '' ">
         <div class="disabled_user" *ngIf="authService.getUserRole() == 'admin' && router.url != '/' && user.isDisabled">
           <h4>DISABLED</h4>
-          <button class="btn btn_success" (click)="restoreProfile(user._id)">Restore</button>
+          <button class="btn btn_success" (click)="profileAction('?restore=' + user._id)">Restore</button>
         </div>
         <a routerLink="/user/details/{{user._id}}">
-          <img src="{{user.imgUrl ? user.imgUrl : 'https://i2.wp.com/upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'}}">
+          <img src="{{user.imgUrl || 'https://i2.wp.com/upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'}}">
           <div class="info">
             <span class="name">{{user.firstName}} {{user.lastName}}</span>
             <span class="email">{{user.email}}</span>
@@ -18,8 +18,8 @@
           </div>
         </a>
         <div class="action_buttons" *ngIf="authService.getUserRole() == 'admin' && router.url != '/'">
-          <button class="btn btn_warning" (click)="disableProfile(user._id)">Block</button>
-          <button class="btn btn_danger" (click)="deleteProfile(user._id)">Delete</button>
+          <button class="btn btn_warning" (click)="profileAction('?disable=' + user._id)">Block</button>
+          <button class="btn btn_danger" (click)="profileAction('?delete=' + user._id)">Delete</button>
         </div>
       </div>
     </div>

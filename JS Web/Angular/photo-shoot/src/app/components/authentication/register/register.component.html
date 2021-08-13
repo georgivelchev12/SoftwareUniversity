@@ -1,9 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="register()">
   <h1>Create Account</h1>
+  <div class="errors" *ngIf="!form.get('email').valid && form.get('email').touched">
+    <span *ngIf="form.get('email').hasError('required')">Email is required</span>
+    <span *ngIf="form.get('email').hasError('email')">Email is invalid</span>
+  </div>
   <input type="email" formControlName="email" placeholder="Email" />
   <input type="password" formControlName="password" placeholder="Password" />
   <input type="password" formControlName="rePassword" placeholder="Repeat password" />
-  <button type="submit">Sign Up</button>
+  <button type="submit" [disabled]="!form.valid">Sign Up</button>
   <div class="social-container">
     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>

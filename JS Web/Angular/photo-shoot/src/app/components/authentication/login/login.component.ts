@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { LoginModel } from '../models/login.model';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +10,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  user;
+  user: LoginModel;
 
-  // To do... add validators
   form = new FormGroup({
-    email: new FormControl('', []),
-    password: new FormControl('', []),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
 
   constructor(public authService: AuthService, public router: Router) {}

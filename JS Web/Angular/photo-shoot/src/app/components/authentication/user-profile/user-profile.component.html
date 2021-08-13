@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="edit()" *ngIf="profile">
+<form [formGroup]="form" (ngSubmit)="editProfile()" *ngIf="profile">
 
   <div class="cover_img">
     <div class="image-preview">
@@ -140,7 +140,7 @@
                     <div class="col">
                       <div class="row default_center danger_zone">
                         <div class="col giant_6">
-                          <button type="button" (click)="deleteProfile()">Delete my profile and all images in it</button>
+                          <button type="button" (click)="profileAction()">Delete my profile and all images in it</button>
                         </div>
                       </div>
                     </div>

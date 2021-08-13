@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/core/services/category.service';
+import { FuncsService } from 'src/app/core/services/funcs.service';
 import { PhotoService } from 'src/app/core/services/photo.service';
 import { CategoryValidator } from '../create-photo/category.validator';
 import { mimeType } from '../create-photo/myme-type.validator';
@@ -40,7 +41,8 @@ export class EditPhotoComponent implements OnInit {
     public categoryService: CategoryService,
     private toastr: ToastrService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private funcsService: FuncsService
   ) {}
 
   ngOnInit() {
@@ -67,6 +69,7 @@ export class EditPhotoComponent implements OnInit {
     };
     this.photoService.editPhoto(photo).subscribe((data) => {
       this.toastr.success(data['message'], 'Success!');
+      this.router.navigateByUrl(`/photo/details/${photo._id}`)
     });
   }
 
@@ -106,16 +109,7 @@ export class EditPhotoComponent implements OnInit {
   }
 
   onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    if (file) {
-      this.form.patchValue({ image: file });
-      this.form.get('image').updateValueAndValidity();
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
+    this.funcsService.onImagePickedAction(event, this, 'image');
   }
 
   onRemoveImage() {

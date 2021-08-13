@@ -21,7 +21,6 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     this.isUser = this.authService.getIsAuth();
-
     this.dataSharingService.isDataChanged.subscribe((isChanged) => {
       if (isChanged) {
         this.isUser = this.authService.getIsAuth();
@@ -30,6 +29,5 @@ export class FooterComponent implements OnInit {
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data.categories;
     })
-    
   }
 }
