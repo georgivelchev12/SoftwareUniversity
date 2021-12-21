@@ -1,0 +1,26 @@
+<h1>Browser</h1>
+<form action="/phones/" method="GET" class="search_form">
+  <div class="input_wrapper">
+    <input type="text" class="search" name="search" placeholder="Search by first name, last name or phone number"
+      value="{{search}}">
+  </div>
+  <div class="input_wrapper">
+    <select name="countryCode" id="countryCode">
+      <option value="0" >Filter by country code</option>
+      {{#each countryCodes}}
+      <option value="{{phone_code}}" {{current}}>
+        [{{country_name}}] +{{phone_code}}
+      </option>
+      {{/each}}
+    </select>
+  </div>
+  <input type="submit" value="search">
+</form>
+
+<div class="phone_list">
+  {{#each phones}}
+  {{>phone}}
+  {{else}}
+  <span class="no_phones">No phones found.</span>
+  {{/each}}
+</div>

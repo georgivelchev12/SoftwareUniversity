@@ -1,0 +1,34 @@
+<h1>Create</h1>
+<div class="form">
+  <form action="/phones/create" method="POST" class="create_phone">
+    {{!-- {{#if error}}
+      <p style="color: red;">{{{error}}}</p>
+    {{/if}} --}}
+    
+    <div class="input_wrapper">
+      <label for="firstName">First name: </label>
+      <input type="text" id="firstName" name="firstName" value="{{firstName}}">
+    </div>
+
+    <div class="input_wrapper">
+      <label for="lastName">Last name: </label>
+      <input type="text" id="lastName" name="lastName" value="{{lastName}}">
+    </div>
+
+    <div class="input_wrapper">
+      <label for="countryCode">Country code: </label>
+        <select name="countryCode" id="countryCode">
+          {{#each countryCodes}}
+          <option value="{{phone_code}}" {{current}}>[{{country_name}}] +{{phone_code}}</option>
+          {{/each}}
+        </select>
+    </div>
+
+    <div class="input_wrapper">
+      <label for="phone">Phone number: </label>
+      <input type="tel" id="phone" name="phone" value="{{phone}}">
+    </div>
+
+    <input type="submit" value="Create">
+  </form>
+</div>

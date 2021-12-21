@@ -1,0 +1,370 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+header ul {
+  margin: 0;
+}
+
+img {
+  height: 200px;
+  width: auto;
+}
+
+img.logo {
+  width: 80px;
+  height: 80px;
+  padding: 1em;
+  float: left;
+}
+
+header {
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  background-color: #607588;
+}
+
+header ul li {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+header ul li a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  margin: 0 1em;
+}
+
+header ul li a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+body {
+  padding: 10px;
+}
+div.container {
+  display: block;
+  max-width: 800px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+}
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+div.cube {
+  display: inline-block;
+  border: 1px solid #2b415433;
+  background: white;
+  width: 23%;
+  vertical-align: top;
+}
+
+div.cube:hover p.name {
+  background: #607588;
+  color: white;
+}
+
+p.name {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding: 10px;
+  border-bottom: 1px solid #2b415433;
+}
+
+button,
+main a.btn {
+  border: none;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  width: 35%;
+  margin: 12px;
+  border-radius: 4px;
+  background: #607588;
+  color: white;
+}
+
+.details a.btn {
+  width: 28%;
+}
+
+button:hover {
+  background-color: #0b2133;
+  color: white;
+  cursor: pointer;
+}
+
+a.btn:hover {
+  text-decoration: underline;
+}
+
+div.details {
+  display: block;
+  margin: auto;
+  width: 50%;
+  background-color: #f3f3f2;
+  padding: 1em;
+}
+
+div.about {
+  display: block;
+  margin: auto;
+  background-color: #f3f3f2;
+  padding: 3em;
+}
+
+div.about a {
+  text-decoration: none;
+  color: #0b2133;
+  font-weight: bold;
+}
+
+form .input_wrapper {
+}
+
+form label {
+  background: #607588;
+  color: white;
+  padding: 8px 12px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 12px 20px 12px 12px;
+  border-radius: 0 4px 4px 4px;
+  margin: 8px 0 2em;
+  height: 41px;
+}
+
+input.difficulty {
+  width: 20%;
+}
+
+input.search {
+  width: 50%;
+}
+
+input[type="submit"] {
+  background-color: #545775;
+  border: none;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  width: 50%;
+  margin: 5px 5px 5px 25%;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+input[type="submit"]:hover {
+  background-color: #718f94;
+  cursor: pointer;
+}
+
+div.form {
+  padding: 20px;
+}
+
+span.error {
+  animation: fadeOut 1s forwards;
+  animation-delay: 10s;
+  background: #ef5542;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: normal;
+  position: relative;
+  float: right;
+  margin-top: 20px;
+  overflow: hidden;
+  display: block;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+img#sadFaceImg {
+  display: block;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+.accessories .accessory {
+  display: inline-block;
+  background-color: #f3f3f2;
+  width: 20%;
+  padding: 1%;
+  margin: 1%;
+}
+
+.accessories,
+.italic {
+  text-align: center;
+  font-style: italic;
+}
+
+footer {
+  background: #607588;
+  padding: 1em;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+}
+
+/*Animations & Transitions
+*/
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.cube-description {
+  display: none;
+  padding: 10px;
+}
+
+.no_phones {
+  text-align: center;
+  display: block;
+  margin: 20px 0;
+}
+.no_phones a {
+  color: #00849b;
+}
+.no_phones a:hover {
+  color: #2000d3;
+}
+.phone_list {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.phone_list .phone_item {
+  border: 1px solid #dbdbdb;
+  background: #fff;
+  border-radius: 8px;
+  width: 200px;
+  margin: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+.phone_list h3 {
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #dbdbdb;
+  background: #dbdbdb;
+}
+.phone_list small {
+  font-size: 12px;
+  display: block;
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+.phone_list .phone {
+  padding: 10px;
+}
+.phone_list .num {
+  color: #00849b;
+}
+.phone_list .num:hover {
+  color: #545775;
+}
+
+.create_phone {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.create_phone p {
+  flex-basis: 100%;
+  max-width: 100%;
+  padding: 0 10px;
+}
+.create_phone .input_wrapper {
+  flex-basis: calc(50% - 20px);
+  max-width: calc(50% - 20px);
+  padding: 0 10px;
+}
+.create_phone .input_wrapper label {
+  display: inline-block;
+}
+.create_phone .input_wrapper input,
+.create_phone .input_wrapper select {
+  margin-top: 0;
+}
+
+.search_form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.search_form .input_wrapper {
+  padding: 0 10px;
+  flex-basis: calc(35% - 20px);
+}
+.search_form .input_wrapper:first-child {
+  flex-basis: calc(65% - 20px);
+}
+.search_form .input_wrapper input,
+.search_form .input_wrapper select {
+  width: 100%;
+}
+
+.search_form input[type="submit"] {
+  margin: 0 0 20px;
+  width: 400px;
+}
