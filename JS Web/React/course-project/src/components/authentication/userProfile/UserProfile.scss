@@ -1,0 +1,133 @@
+@import "../../../assets/sass/setup";
+@import "../../../assets/sass/grid/mixins";
+
+#profile_form {
+  input[type="file"] {
+    display: none;
+  }
+  .cover_img {
+    position: relative;
+    .image-preview {
+      width: 100%;
+      height: 48vh;
+      min-height: 300px;
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .row {
+      height: 100%;
+      @include position(absolute, 0 null null 50%);
+      transform: translateX(-50%);
+    }
+    .btn {
+      max-width: calc(290px - 20px);
+      width: calc(100% - 20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      line-height: 1.05em;
+      @include position(absolute, 30px 10px null null);
+      @include breakpoint(medium) {
+        @include position(absolute, auto auto 30px 30px);
+      }
+      i {
+        margin-right: 10px;
+      }
+      span {
+        display: block;
+        font-size: 10px;
+        &.text {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .profile_img {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .image-preview {
+      display: block;
+      margin: -70px 0 20px;
+      label {
+        display: block;
+        cursor: pointer;
+        position: relative;
+        &:before {
+          background: $light;
+          @include position(absolute, null 5px 2px null);
+          font-size: 15px;
+          width: 35px;
+          height: 35px;
+          box-shadow: 0 3px 6px 0 rgb(0 0 0 / 16%);
+          border-radius: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s;
+        }
+        &:hover {
+          &:before {
+            background: $secondary;
+            color: $light;
+          }
+        }
+      }
+      .img_wrap {
+        box-shadow: 0 3px 10px 2px rgba($color: $black, $alpha: 0.15);
+        width: 140px;
+        height: 140px;
+        border-radius: 100%;
+        border: 4px solid $light;
+        background: $light;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center center;
+        }
+      }
+    }
+    h1 {
+      font-size: 26px;
+    }
+  }
+
+  .profile_information {
+    padding: 40px 0;
+  }
+
+  .danger_zone {
+    margin-top: 30px;
+    text-align: center;
+    padding: 50px 0;
+    background: rgba($color: #f00, $alpha: 0.1);
+    button {
+      background: rgb(175, 20, 20);
+      border-color: rgb(175, 20, 20);
+      color: $light;
+      &:hover {
+        background: $light;
+        color: rgb(175, 20, 20);
+      }
+    }
+  }
+
+  .details {
+    .section_title {
+      font-size: 18px;
+      margin-top: 10px;
+      margin-bottom: 0;
+      padding: 0;
+    }
+  }
+}

@@ -1,0 +1,159 @@
+@import "/src/assets/sass/setup";
+@import "/src/assets/sass/grid/mixins";
+
+#footer {
+  background: url("https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80")
+    no-repeat center center/cover;
+  color: #bfbfbf;
+  z-index: 1;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.3;
+  position: relative;
+  // @include position(absolute, null null 0 0);
+
+  padding: 30px 0;
+  @include breakpoint(medium) {
+    padding: 60px 0 50px;
+  }
+  &:before {
+    content: "";
+    background: rgba($color: $black, $alpha: 0.65);
+    @include position(absolute, 0 null null 0);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  .logo .logo_inner strong {
+    color: $light;
+  }
+
+  .footer_title {
+    display: block;
+    font-weight: 600;
+    color: $secondary;
+    margin-bottom: 20px;
+    margin-top: 40px;
+  }
+  ul {
+    li {
+      padding: 7px 0;
+      @include breakpoint(medium) {
+        padding: 10px 0;
+      }
+      a {
+        color: #bfbfbf;
+        &:hover {
+          color: $secondary;
+        }
+      }
+    }
+  }
+  .col {
+    &.footer_col_5 {
+      @include breakpoint(giant) {
+        display: block;
+      }
+      form {
+        flex-basis: 40%;
+        .subscribe {
+          position: relative;
+          input {
+            color: $light;
+            padding-right: 40px;
+            background: transparent;
+            margin-bottom: 0;
+            border: none;
+            border-bottom: 1px solid $secondary;
+            border-radius: 0;
+          }
+          button {
+            border: none;
+            background: transparent;
+            color: $secondary;
+            @include position(absolute, 0 0 null null);
+            @include box(40px, 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+              color: $light;
+            }
+          }
+        }
+      }
+      .footer_socials {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-left: 40px;
+        padding: 40px 0 0;
+        @include breakpoint(medium) {
+          padding: 50px 0 30px;
+        }
+        @include breakpoint(large) {
+          padding: 50px 0 30px;
+        }
+        @include breakpoint(giant) {
+          padding: 50px 0 30px;
+        }
+        li {
+          padding: 0;
+          margin-right: 10px;
+          &:last-child {
+            margin-right: 0;
+          }
+          &.facebook a:before {
+            content: "\e918";
+          }
+          &.linkedin a:before {
+            content: "\e904";
+          }
+          &.twitter a:before {
+            content: "\e939";
+          }
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @include box(35px);
+            border-radius: 100%;
+            background: $light;
+            color: $main;
+            font-size: 0;
+            &:hover {
+              background: $secondary;
+              color: $light;
+            }
+            &:before {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+    &.footer_col_1 {
+      .footer_contact {
+        margin-top: 40px;
+        color: #bfbfbf;
+        li {
+          position: relative;
+          padding-left: 24px;
+          i {
+            @include position(absolute, 9px null null 0);
+            font-size: 16px;
+            @include breakpoint(medium) {
+              top: 12px;
+            }
+          }
+          a {
+            color: #bfbfbf;
+            &:hover {
+              color: $secondary;
+            }
+          }
+        }
+      }
+    }
+  }
+}

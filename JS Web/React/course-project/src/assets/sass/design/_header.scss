@@ -1,0 +1,43 @@
+/***** Header *****/
+header {
+  @include position(fixed, 0 null null 0);
+  background-color: $light;
+  transition: all 0.3s;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid $light-gray;
+  &.is_stuck {
+    box-shadow: 0 3px 4px 0 rgba($color: $black, $alpha: 0.1);
+    @include position(fixed, 0 null null 0);
+    .header_middle {
+      height: 70px;
+    }
+  }
+  .fixed_cont {
+    width: 100%;
+  }
+  .header_middle {
+    transition: all 0.3s;
+    height: 80px;
+    .header_logo {
+      display: flex;
+      align-items: center;
+      max-width: 376px;
+      font-size: 17px;
+      font-weight: bold;
+      color: $main;
+      @include breakpoint(medium) {
+        font-size: 18px;
+      }
+      @include breakpoint(large) {
+        font-size: 23px;
+      }
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+}

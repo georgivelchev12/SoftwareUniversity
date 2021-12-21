@@ -1,0 +1,7 @@
+{
+  "env": {
+    "DB_CONNECTION_STRING": "mongodb://localhost:27017/photo-shoot",
+    "TOKEN_SECRET": "this_secret_is_very_secure",
+    "BACKEND_IMAGE_FOLDER": "backend/"
+  }
+}

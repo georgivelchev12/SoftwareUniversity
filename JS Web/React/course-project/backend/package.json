@@ -1,0 +1,18 @@
+{
+  "name": "photo-shoot",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "clean": "^4.0.2",
+    "core-util-is": "^1.0.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.2",
+    "multer": "^1.4.2",
+    "tslib": "^2.0.0"
+  }
+}

@@ -1,0 +1,24 @@
+@import 'assets/sass/setup';
+
+@import 'assets/sass/grid/reset';
+@import 'assets/sass/grid/mixins';
+@import 'assets/sass/grid/fonts';
+@import 'assets/sass/grid/responsive';
+
+@import 'assets/sass/plugins/slider'; 
+@import 'assets/sass/plugins/nice-select';  
+@import 'assets/sass/plugins/datepicker';  
+// @import 'assets/sass/plugins/animate';  
+// @import 'assets/sass/plugins/toastr';  
+
+@import 'assets/sass/global/globals';
+@import 'assets/sass/global/typography';
+@import 'assets/sass/global/buttons';
+@import 'assets/sass/global/forms';
+@import 'assets/sass/global/navigation';
+@import 'assets/sass/global/popups';
+@import 'assets/sass/global/icons';
+
+@import 'assets/sass/design/header';
+@import 'assets/sass/design/footer';
+@import 'assets/sass/design/page';

@@ -1,0 +1,166 @@
+/***** Buttons and links *****/
+.btn,
+button,
+input[type="submit"] {
+  width: 100%;
+  display: block;
+  min-height: 40px;
+  text-align: center;
+  font-weight: 500;
+  line-height: 23px;
+  cursor: pointer;
+  padding: 7px 20px;
+  // margin-bottom: 16px;
+  color: $light;
+  border: 1px solid $secondary;
+  background: $secondary;
+  border-radius: 47px;
+  border-bottom-right-radius: 0;
+  transition: color 0.3s, border 0.3s, background 0.3s ease-in-out;
+  font-size: 15px;
+  &:disabled{
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  @include breakpoint(tiny) {
+    width: auto;
+    display: inline-block;
+    &.wide {
+      width: 100%;
+      display: block;
+    }
+  }
+  &:hover {
+    color: $secondary;
+    border-color: $secondary;
+    background: $light;
+  }
+
+  &.btn_light {
+    color: $dark;
+    border-color: $dark;
+    background: $light;
+    &:hover {
+      color: $light;
+      border-color: $dark;
+      background: $dark;
+    }
+  }
+  &.btn_tertiary {
+    color: $light;
+    border-color: $tertiary;
+    background: $tertiary;
+    &:hover {
+      color: $tertiary;
+      border-color: $tertiary;
+      background: $light;
+    }
+  }
+  &.btn_danger {
+    color: $light;
+    border-color: #f00;
+    background: #f00;
+    &:hover {
+      color: #f00;
+      border-color: #f00;
+      background: $light;
+    }
+  }
+  &.btn_success {
+    color: $light;
+    border-color: #02c733;
+    background: #02c733;
+    &:hover {
+      color: #02c733;
+      border-color: #02c733;
+      background: $light;
+    }
+  }
+  &.btn_warning {
+    color: $light;
+    border-color: #ff9900;
+    background: #ff9900;
+    &:hover {
+      color: #ff9900;
+      border-color: #ff9900;
+      background: $light;
+    }
+  }
+  &.btn_cart {
+    padding-right: 50px !important;
+    position: relative;
+    background: $light;
+    color: $secondary;
+    &:after {
+      content: "\e907";
+      font-family: $icons;
+      @include box(40px, calc(100% + 2px));
+      @include position(absolute, 50% -2px null null);
+      transform: translateY(-50%);
+      transition: color 0.3s, border 0.3s, background 0.3s ease-in-out;
+
+      border: 1px solid $secondary;
+      background: $secondary;
+      color: $light;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+    &:hover {
+      color: $light;
+      border-color: $secondary;
+      background: $secondary;
+      // &:after {
+      //   background: $light;
+      //   color: $secondary;
+      // }
+    }
+  }
+}
+
+.wrap_box_btn {
+  @include box(25px);
+  @include position(absolute, null null -13px 50%);
+  transform: translateX(-50%) rotate(-90deg);
+  transition: transform 0.4s;
+  background: $tertiary;
+  color: $light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  border-radius: 100%;
+  &.active {
+    transform: translateX(-50%) rotate(90deg);
+  }
+  &:before {
+    color: $light !important;
+  }
+}
+
+.show_more_filters {
+  font-weight: 600;
+  padding-left: 30px;
+  padding-right: 25px;
+  position: relative;
+  display: inline-block;
+  &:before {
+    @include position(absolute, -2px null null 0);
+    font-size: 20px;
+    color: inherit !important;
+  }
+
+  span:before {
+    color: inherit;
+    @include position(absolute, 0px 0 null null);
+    margin-bottom: -2px;
+    transform: rotate(-90deg);
+    transition: transform 0.4s;
+  }
+  &.active span:before {
+    transform: rotate(90deg);
+  }
+}

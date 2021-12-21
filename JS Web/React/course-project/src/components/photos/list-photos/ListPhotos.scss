@@ -1,0 +1,111 @@
+@import "/src/assets/sass/setup";
+@import "/src/assets/sass/grid/mixins";
+
+.photo_list {
+  // padding: 30px 0;
+  .photo {
+    position: relative;
+    margin: 10px 0;
+    &.create_photo {
+      height: 100%;
+      min-height: 240px;
+      a {
+        width: 100%;
+        height: calc(100% - 20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-size: 40px;
+        background: $light-gray;
+        border: 2px solid rgba($color: $black, $alpha: 0.1);
+        span {
+          display: block;
+          margin-top: 20px;
+          font-size: 15px;
+        }
+      }
+    }
+    &:hover {
+      .buttons {
+        opacity: 1;
+        top: 10px;
+      }
+    }
+    .buttons {
+      transition: all 0.3s;
+      opacity: 0;
+      @include position(absolute, 0px null null 10px);
+      a {
+        background: rgba($color: $black, $alpha: 0.7);
+        padding: 8px;
+        color: $light;
+        margin: 0 5px;
+        position: relative;
+        &:hover {
+          background: $secondary;
+        }
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    .owner {
+      @include position(absolute, null 0 0 null);
+      font-size: 12px;
+      height: 40px;
+      width: 100%;
+      padding: 0 10px;
+      background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 0));
+      color: $light;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .image_wrap {
+      height: 240px;
+      width: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+
+
+  &.in_home{
+    padding: 50px 0 80px;
+    .section_title{
+      // color: $light;
+    }
+    .medium_5 {
+      .photo a figure{
+        height: 100%;
+
+      }
+    }
+    .photo{
+      height: calc(100% - 20px);
+      transition: all 0.3s ease-in;
+      &:hover{
+        transform: scale(1.02);
+      }
+      a{
+        display: block;
+        height: 100%;
+        figure{
+        }
+      }
+    }
+    .btn{
+      margin-top: 20px;
+      max-width: 100%;
+      width: 300px;
+    }
+  }
+}

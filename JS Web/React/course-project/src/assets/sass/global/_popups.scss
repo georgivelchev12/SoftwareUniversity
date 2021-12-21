@@ -1,0 +1,86 @@
+/***** Popup *****/
+.popup_wrap {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  visibility: hidden;
+  pointer-events: none;
+  @include position(fixed, 0 null null 0);
+  transition: opacity 0.3s, visibility 0.3s ease-in-out;
+  overflow-y: scroll;
+  .close_popup {
+    width: 100%;
+    height: 100%;
+    @include position(fixed, 0 null null 0);
+    pointer-events: auto;
+    background: rgba($color: $main, $alpha: 0.8);
+  }
+  &.active_pop {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+  .popup_cont {
+    width: 742px;
+    max-width: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    // background-color: $light;
+    // border-radius: 8px;
+    // box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+    display: block;
+    transform: translate(-50%, -0%);
+    @include position(absolute, 40px null null 50%);
+    margin-bottom: 40px;
+    @include breakpoint(medium) {
+      @media(min-height: 768px){
+        @include position(absolute, 50% null null 50%);
+        transform: translate(-50%, -50%);
+        margin-bottom: 0;
+      }
+    }
+  
+    
+    .close_x {
+      color: $main;
+      padding: 3px;
+      display: block;
+      font-size: 25px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.3s, color 0.3s ease-in-out;
+      z-index: 10;
+      @include position(absolute, 0 0 null null);
+      &:hover {
+        // background-color: $secondary;
+      }
+    }
+    .popup_header {
+      padding: 30px 20px 20px;
+      font-size: 20px;
+      font-weight: 600;
+      color: $secondary;
+    }
+    .popup_footer {
+      width: 100%;
+      display: flex;
+      padding: 10px 15px;
+      align-items: center;
+      justify-content: flex-end;
+      border-top: 1px solid $gray;
+      button,
+      .btn {
+        padding: 8px 10px;
+        @extend .wide;
+        max-width: 100px;
+        margin-bottom: 0;
+        margin: 0 5px;
+      }
+    }
+    .popup_ct {
+      padding: 20px;
+    }
+  }
+}
+

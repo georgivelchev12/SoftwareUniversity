@@ -1,0 +1,91 @@
+@import "../../../assets/sass/setup";
+@import "../../../assets/sass/grid/mixins";
+
+.list_authors {
+  padding: 60px 0;
+  .user {
+    margin-bottom: 20px;
+    &.disabled {
+      overflow: hidden;
+      position: relative;
+      border-radius: 10px;
+      &:hover {
+        box-shadow: none;
+      }
+      a{
+        pointer-events: none;
+      }
+      h4 {
+        color: #f00;
+      }
+      .disabled_user {
+        z-index: 2;
+        @include position(absolute, 0 null null 0);
+        @include box(100%);
+        background: rgba($color: $black, $alpha: 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .btn {
+          margin-top: 10px;
+        }
+      }
+    }
+    .action_buttons {
+      flex-basis: 100%;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      button {
+        min-height: 28px;
+        padding: 5px 10px;
+        font-size: 14px;
+        width: calc(50% - 8px);
+        &:first-child {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+  .user a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: all 0.3s;
+    padding: 10px 5px;
+    border-radius: 10px;
+    &:hover {
+      box-shadow: 0 3px 4px 0 rgba($color: $black, $alpha: 0.15);
+      .info .name {
+        color: $accent;
+      }
+    }
+    img {
+      object-fit: cover;
+      @include box(80px);
+      border-radius: 100%;
+      margin-right: 10px;
+      border: 1px solid rgba($color: $gray, $alpha: 0.2);
+    }
+    .info {
+      span {
+        display: block;
+        margin-bottom: 8px;
+        color: $dark;
+        font-size: 14px;
+        &.name {
+          font-weight: 600;
+          color: $secondary;
+          font-size: 16px;
+          transition: all 0.3s;
+        }
+      }
+    }
+  
+  }
+}

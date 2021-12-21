@@ -1,0 +1,156 @@
+/***************************
+******* Grid Styles *******
+*************************/
+
+// Grid classes
+@mixin grid-classes($breakpoint) {
+  //grid
+  $col-width: 0;
+  .row,.col {
+    &.#{$breakpoint}_start {
+      justify-content: flex-start;
+    }
+    &.#{$breakpoint}_center {
+      justify-content: center;
+    }
+    &.#{$breakpoint}_end {
+      justify-content: flex-end;
+    }
+    &.#{$breakpoint}_stretch {
+      align-items: stretch;
+    }
+    &.#{$breakpoint}_top {
+      align-items: flex-start;
+    }
+    &.#{$breakpoint}_middle {
+      align-items: center;
+    }
+    &.#{$breakpoint}_bottom {
+      align-items: flex-end;
+    }
+    &.#{$breakpoint}_between {
+      justify-content: space-between;
+    }
+    &.#{$breakpoint}_around {
+      justify-content: space-around;
+    }
+    &.#{$breakpoint}_reverse {
+      flex-direction: row-reverse;
+    }
+    &.#{$breakpoint}_forward {
+      flex-direction: row;
+    }
+  }
+  .col {
+    &.#{$breakpoint}_prefix_0 {
+      margin-left: 0;
+    }
+    &.#{$breakpoint}_suffix_0 {
+      margin-right: 0;
+    }
+    &.#{$breakpoint}_unset {
+      order: 0;
+    }
+    &.#{$breakpoint}_first {
+      order: -1;
+    }
+    &.#{$breakpoint}_last {
+      order: 1;
+    }
+    @for $i from 1 through $column-count {
+      $col-width: 100% / ($column-count / $i);
+      &.#{$breakpoint}_#{$i} {
+        max-width: $col-width;
+        flex-basis: $col-width;
+      }
+      &.#{$breakpoint}_prefix_#{$i} {
+        margin-left: $col-width;
+      }
+      &.#{$breakpoint}_suffix_#{$i} {
+        margin-right: $col-width;
+      }
+    }
+  }
+  //global
+  .#{$breakpoint}_hide {
+    display: none !important;
+  }
+  .#{$breakpoint}_block {
+    display: block !important;
+  }
+  .#{$breakpoint}_inline_block {
+    display: inline-block !important;
+  }
+  .#{$breakpoint}_flex {
+    display: flex !important;
+  }
+}
+
+// Row base styles
+.row {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $row-width;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  @each $point, $width in $breakpoints {
+    @if $width < $row-width {
+      @include breakpoint($point) {
+        max-width: $width - 20px;
+      }
+    }
+    @if $width == $row-width {
+      @include breakpoint($point) {
+        max-width: $row-width;
+      }
+    }
+  }
+  &.full {
+    max-width: none;
+  }
+}
+// Nested row
+.row .row {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: -$col-gap;
+  width: calc(100% + #{$col-gap * 2});
+  max-width: calc(100% + #{$col-gap * 2});
+
+}
+
+// Col Base styles
+.col {
+  float: left;
+  width: 100%;
+  flex-grow: 1;
+  flex: 0 0 auto;
+  max-width: 100%;
+  flex-basis: 100%;
+  padding-left: $col-gap;
+  padding-right: $col-gap;
+  &.no_gut {
+    padding: 0 !important;
+    .row {
+      margin-left: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+// Default columns
+@include grid-classes(default);
+
+// Generate column class
+@each $point, $width in $breakpoints {
+  @include breakpoint($point) {
+    @include grid-classes($point);
+  }
+}

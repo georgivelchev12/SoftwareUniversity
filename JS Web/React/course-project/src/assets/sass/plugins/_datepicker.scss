@@ -1,0 +1,35 @@
+.datepickers-container {
+  .datepicker--nav {
+    display: none;
+  }
+  .datepicker--days-names {
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 5px;
+  }
+  .datepicker--day-name {
+    color: $main;
+  }
+  .-weekend- {
+    color: $dark;
+    font-weight: bold;
+  }
+  .-current- {
+    background: transparent;
+    color: $main !important;
+    position: relative;
+    &:hover {
+      &::before {
+        background: transparent;
+      }
+    }
+    &:before {
+      content: "";
+      @include position(absolute, 50% null null 50%);
+      transform: translate(-50%, -50%);
+      border-radius: 100%;
+      background: $secondary;
+      @include box(80%);
+      z-index: -1;
+    }
+  }
+}

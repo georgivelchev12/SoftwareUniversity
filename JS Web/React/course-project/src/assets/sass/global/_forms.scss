@@ -1,0 +1,99 @@
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"] {
+  width: 100%;
+  color: $main;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  height: 40px;
+  padding: 7px 14px;
+  background: $light;
+  line-height: 1.3em;
+  position: relative;
+  font-family: $main-font;
+  border-radius: 6px;
+  border: 1px solid $middle-gray;
+  transition: background 0.3s, border 0.3s ease-in-out;
+  // margin-bottom: 16px;
+  &:focus {
+    border-color: $secondary;
+    outline: none;
+  }
+  &:disabled {
+    background-color: $gray;
+  }
+}
+textarea {
+  height: auto;
+  // margin-bottom: 16px;
+}
+
+
+
+.input_wrapper {
+  display: block;
+  padding: 10px 0 0;
+  margin-bottom: 16px;
+  // input:not([type="checkbox"]) {
+  //   margin-bottom: 16px;
+  // }
+  label:not(.btn) {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.4;
+    min-height: 25px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px 8px;
+    span {
+      margin-left: 3px;
+      font-size: 16px;
+    }
+  }
+  &.care {
+  }
+  &.edit {
+    label {
+      justify-content: space-between;
+    }
+  }
+  &.required {
+    label {
+      &:after {
+        content: "*";
+        vertical-align: text-top;
+        display: inline-block;
+        margin-top: -3px;
+        margin-left: 2px;
+        color: #f00;
+      }
+    }
+  }
+  &.datepicker_outer {
+    position: relative;
+    &:after {
+      content: "\e905";
+      font-family: $icons;
+      color: $dark;
+      @include position(absolute, null 10px 20px null);
+      font-size: 20px;
+    }
+  }
+  .action_btns {
+    display: inline-block;
+  }
+}
+.errors{
+  padding: 4px 8px 0;
+  color: #f00;
+  font-size: 13px;
+  line-height: 1.3em;
+  span{
+    display: block;
+  }
+}
