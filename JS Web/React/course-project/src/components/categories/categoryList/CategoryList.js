@@ -47,7 +47,7 @@ function CategoryList({ isSlider }) {
           <Slider {...settings}>
               {
                 categories.map(category => 
-                  <div>
+                  <div key={category._id}>
                     {redirect && <Navigate to={'/categories/' + category._id || ""} />}
                     <label onClick={() => setRedirect(true)} key={category._id || ""}>
                       <img src={category.imgUrl} alt={category.title} />

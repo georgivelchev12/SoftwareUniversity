@@ -58,6 +58,7 @@ export class CreatePhotoComponent implements OnInit {
       author: null,
       categories: this.selectedCategories,
     };
+    console.log('this.selectedCategories', this.selectedCategories);
 
     this.photoService.createPhoto(photo).subscribe(({ message }) => {
       this.toastr.success(message, 'Success!');

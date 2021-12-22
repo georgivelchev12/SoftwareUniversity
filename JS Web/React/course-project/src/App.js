@@ -29,6 +29,10 @@ import Home from "./components/landing/home/Home";
 import CategoryDetails from "./components/categories/categoryDetails/CategoryDetails";
 import CategoryCreate from "./components/categories/categoryCreate/CategoryCreate";
 import CategoryEdit from "./components/categories/categoryEdit/CategoryEdit";
+import NotFound from "./components/landing/notFound/NotFound";
+import DetailsPhotos from "./components/photos/details-photo/DetailsPhotos";
+import CreatePhoto from "./components/photos/create-photo/CreatePhoto";
+import EditPhoto from "./components/photos/edit-photo/EditPhoto";
 
 function photoService() {
   // getPhotos("", "", 12, 1, "").then((res) => {
@@ -84,18 +88,25 @@ function App() {
         <ScrollToTop />
         <Header />
         <Routes>
-          <Route path="/" exact element={<Home/> }/>
+          <Route path="/" element={<Home /> }/>
           <Route path="/user/login" element={<NonAuthenticatedRoute><Auth toggleSlide={false} /></NonAuthenticatedRoute>} />
           <Route path="/user/register" element={<NonAuthenticatedRoute><Auth toggleSlide={true} /></NonAuthenticatedRoute>} />
-          <Route path="/user/profile" element={<AuthenticatedRoute><UserProfile/></AuthenticatedRoute>} />
-          <Route path="/user/details/:id" element={<UserProfile/>} />
-          <Route path="/user/profiles" element={<AdminRoute><ListAuthors/></AdminRoute>} />
+          <Route path="/user/profile" element={<AuthenticatedRoute><UserProfile /></AuthenticatedRoute>} />
+          <Route path="/user/details/:id" element={<UserProfile />} />
+          <Route path="/user/profiles" element={<AdminRoute><ListAuthors /></AdminRoute>} />
 
+          <Route path="/categories" element={<CategoryList />} />
+          <Route path="/categories/:id" element={<CategoryDetails />} />
+          <Route path="/categories/create" element={<AdminRoute><CategoryCreate /></AdminRoute>} />
+          <Route path="/categories/edit/:id" element={<AdminRoute><CategoryEdit /></AdminRoute>} />
 
-          <Route path="/categories" element={<CategoryList/>} />
-          <Route path="/categories/:id" element={<CategoryDetails/>} />
-          <Route path="/categories/create" element={<AdminRoute><CategoryCreate/></AdminRoute>} />
-          <Route path="/categories/edit/:id" element={<AdminRoute><CategoryEdit/></AdminRoute>} />
+          <Route path="/photo/list" element={<ListPhotos />} />
+          <Route path="/photo/details/:id" element={<DetailsPhotos />} />
+          <Route path="/photo/edit/:id" element={<EditPhoto />} />
+          <Route path="/photo/create" element={<CreatePhoto />} />
+
+          <Route path="*" element={<NotFound />} />
+
         </Routes>
         <Footer />
       </Router>

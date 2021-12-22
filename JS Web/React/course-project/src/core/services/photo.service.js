@@ -3,7 +3,6 @@ import fetcher from "../auth.interceptor";
 
 const BACKEND_URL = environment.apiUrl + '/photo';
 
-
 export async function getPhotos(userPhotos = '', myPhotos = '', itemsPerPage, currentPage, category = ''){
   const queryParams = `?pagesize=${itemsPerPage}&page=${currentPage}${myPhotos}${category}${userPhotos}`;
   return (await fetcher(`${BACKEND_URL}/list${queryParams}`)).json();
@@ -32,10 +31,10 @@ export async function createPhoto(body) {
   })).json();
 }
 
-
 export async function editPhoto(photo){
   let photoData;
-  if (typeof photo.imgUrl === 'object') {
+  let hasImage = typeof photo.imgUrl === 'object';
+  if (hasImage) {
     photoData = new FormData();
     photoData.append('_id', photo._id);
     photoData.append('title', photo.title);
@@ -43,12 +42,14 @@ export async function editPhoto(photo){
     photoData.append('image', photo.imgUrl, photo.title);
     photoData.append('categories', JSON.stringify(photo.categories));
   } else {
-    photoData = {
+    photoData = JSON.stringify({
       ...photo,
-    };
+    })
   }
-  return await fetcher(`${BACKEND_URL}/edit`, {
-    method: 'PUT',
-    body: photoData
-  });
+
+  return (await fetcher(`${BACKEND_URL}/edit`, {
+    method: "PUT",
+    headers: hasImage ? {} : { "content-type": "application/json" },
+    body: photoData,
+  })).json()
 }
