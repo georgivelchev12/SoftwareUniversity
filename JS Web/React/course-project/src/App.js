@@ -9,7 +9,7 @@ import {
 } from "./core/services/photo.service";
 
 import React, { useContext, useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, BrowserRouter } from "react-router-dom";
 import Auth from "./components/authentication/Auth";
 import authService, {
   autoAuthUser,
@@ -84,32 +84,33 @@ function App() {
     <UserContext.Provider value={{...user, logIn, logOut}}>
     <ToastContainer />
     <main role="main">
-      <Router>
-        <ScrollToTop />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home /> }/>
-          <Route path="/user/login" element={<NonAuthenticatedRoute><Auth toggleSlide={false} /></NonAuthenticatedRoute>} />
-          <Route path="/user/register" element={<NonAuthenticatedRoute><Auth toggleSlide={true} /></NonAuthenticatedRoute>} />
-          <Route path="/user/profile" element={<AuthenticatedRoute><UserProfile /></AuthenticatedRoute>} />
-          <Route path="/user/details/:id" element={<UserProfile />} />
-          <Route path="/user/profiles" element={<AdminRoute><ListAuthors /></AdminRoute>} />
+    <Router basename="/photo-shoot">
+      <ScrollToTop />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home /> }/>
+        <Route path="/user/login" element={<NonAuthenticatedRoute><Auth toggleSlide={false} /></NonAuthenticatedRoute>} />
+        <Route path="/user/register" element={<NonAuthenticatedRoute><Auth toggleSlide={true} /></NonAuthenticatedRoute>} />
+        <Route path="/user/profile" element={<AuthenticatedRoute><UserProfile /></AuthenticatedRoute>} />
+        <Route path="/user/details/:id" element={<UserProfile />} />
+        <Route path="/user/profiles" element={<AdminRoute><ListAuthors /></AdminRoute>} />
 
-          <Route path="/categories" element={<CategoryList />} />
-          <Route path="/categories/:id" element={<CategoryDetails />} />
-          <Route path="/categories/create" element={<AdminRoute><CategoryCreate /></AdminRoute>} />
-          <Route path="/categories/edit/:id" element={<AdminRoute><CategoryEdit /></AdminRoute>} />
+        <Route path="/categories" element={<CategoryList />} />
+        <Route path="/categories/:id" element={<CategoryDetails />} />
+        <Route path="/categories/create" element={<AdminRoute><CategoryCreate /></AdminRoute>} />
+        <Route path="/categories/edit/:id" element={<AdminRoute><CategoryEdit /></AdminRoute>} />
 
-          <Route path="/photo/list" element={<ListPhotos />} />
-          <Route path="/photo/details/:id" element={<DetailsPhotos />} />
-          <Route path="/photo/edit/:id" element={<EditPhoto />} />
-          <Route path="/photo/create" element={<CreatePhoto />} />
+        <Route path="/photo/list" element={<ListPhotos />} />
+        <Route path="/photo/details/:id" element={<DetailsPhotos />} />
+        <Route path="/photo/edit/:id" element={<EditPhoto />} />
+        <Route path="/photo/create" element={<CreatePhoto />} />
 
-          <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
 
-        </Routes>
-        <Footer />
-      </Router>
+      </Routes>
+      <Footer />
+    </Router>
+
     </main>
     </UserContext.Provider>
   );

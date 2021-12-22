@@ -9,11 +9,9 @@ function Footer() {
   const context = useContext(UserContext);
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    if(context.isAuthenticated){
-      getCategories().then(data => {
-        setCategories(data.categories)
-      });
-    }
+    getCategories().then(data => {
+      setCategories(data.categories)
+    });
   }, [context])
 
   return (

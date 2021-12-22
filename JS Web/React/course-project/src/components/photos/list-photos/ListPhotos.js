@@ -10,7 +10,7 @@ function ListPhotos({ myPhotos, userPhotos, category }) {
   const [totalItems, setTotalItems] = useState(0);
   useEffect(() => {
     console.log(userPhotos);
-    photoService.getPhotos(userPhotos, myPhotos, 12, 1, category).then((result) => {
+    photoService.getPhotos(userPhotos, myPhotos, 100, 1, category).then((result) => {
       console.log('result photos0', result);
       setPhotos(result.photos);
       setTotalItems(result.count)

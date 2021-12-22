@@ -1,5 +1,7 @@
 # Photo Shoot
 
+Live site: [dev.webhipsters.com/photo-shoot/](https://dev.webhipsters.com/photo-shoot/) </br>
+
 **Тo access all the features you need to log in through an admin account:** </br>
 Email: **admin@admin.com** </br>
 Password: **123asd**
