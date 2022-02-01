@@ -101,7 +101,6 @@
 
 
           <!-- <app-list-product [category]="'&category='+ category._id +''"></app-list-product> -->
-          {{paramCategoryID}}
           <app-list-product (categories)="onUpdate($event)" [categoryId]="paramCategoryID ? '&categoryId=' + paramCategoryID : ''"></app-list-product>
 
         </section>

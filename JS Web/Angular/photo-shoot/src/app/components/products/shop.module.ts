@@ -11,7 +11,6 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ProductCategoryCreateComponent } from './product-category-create/product-category-create.component';
 import { ProductCategoryEditComponent } from './product-category-edit/product-category-edit.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
   imports: [
@@ -21,7 +20,6 @@ import { NgxEditorModule } from 'ngx-editor';
     ReactiveFormsModule,
     SlickCarouselModule,
     NgxPaginationModule,
-    NgxEditorModule
   ],
   declarations: [
     CreateProductComponent,
