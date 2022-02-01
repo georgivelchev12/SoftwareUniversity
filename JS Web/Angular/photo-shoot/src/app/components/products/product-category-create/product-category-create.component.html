@@ -1,0 +1,54 @@
+<form [formGroup]="form" (ngSubmit)="create()">
+  <div class="row default_center">
+    <div class="col medium_6">
+      <div class="row default_center default_bottom">
+        <div class="col">
+          <h1 class="section_title text_center">Create photo category</h1>
+        </div>
+        <div class="col">
+          <div class="input_wrapper">
+            <label>Title:</label>
+            <input type="text" placeholder="Enter Title" formControlName="title" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="input_wrapper">
+            <label>Description:</label>
+            <textarea placeholder="Enter Description" formControlName="description" rows="10"></textarea>
+          </div>
+        </div>
+        <div class="col" *ngIf="categories">
+          <div class="input_wrapper">
+            <label>Parent category:</label>
+            <select class="default_select" formControlName="parentId">
+              <option value="" selected>No parent category</option>
+              <option *ngFor="let category of categories" value="{{category._id}}">{{category.title}}</option>
+            </select>
+          </div>
+        </div>
+    
+        <div class="col">
+          <div class="input_wrapper">
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+              <img [src]="imagePreview" [alt]="form.value.title">
+            </div>
+            <label for="categoryImage" class="btn">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <span class="btn-text">
+                <span class="text">Upload category image</span>
+              </span>
+            </label>
+          
+            <input id="categoryImage" type="file" (change)="onImagePicked($event)">
+          </div>
+        </div>
+        <div class="col default_flex default_center">
+          <button type="submit" class="btn" [disabled]="!form.valid">
+            Create new category
+          </button>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+</form>

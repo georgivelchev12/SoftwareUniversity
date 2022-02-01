@@ -6,15 +6,11 @@ const BACKEND_URL = environment.apiUrl + '/photo';
 
 @Injectable({ providedIn: 'root' })
 export class PhotoService {
-  token: string;
-  isAuthenticated: boolean;
-  tokenTimer: NodeJS.Timer;
-  userRole: string;
-  userEmail: string;
 
   constructor(private http: HttpClient) {}
 
   createPhoto(body) {
+    console.log(JSON.stringify(body.categories));
     let photoData = new FormData();
     photoData.append('title', body.title);
     photoData.append('description', body.description);

@@ -97,3 +97,187 @@ textarea {
     display: block;
   }
 }
+
+.custom_quantity {
+  .input_wrapper {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dbdbdb;
+    background: $light;
+    border-radius: 6px;
+    width: 100%;
+    height: 40px;
+    max-width: 100px;
+    @include breakpoint(large) {
+      max-width: none;
+    }
+    .error-message {
+      @include position(absolute, 80% null null null);
+      width: 270px;
+      max-width: 300px;
+    }
+  }
+  input[type="number"],
+  .input-number {
+    margin: 0;
+    width: 100%;
+    max-width: 45px;
+    font-size: 16px;
+    padding: 7px 3px;
+    text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  .qt_change {
+    color: #9f9f9f;
+    font-size: 20px;
+    padding: 7px 3px;
+    font-weight: 600;
+    &.qt_minus {
+      padding-left: 10px;
+    }
+    &.qt_plus {
+      padding-right: 10px;
+    }
+  }
+  input {
+    background: transparent !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border: none;
+    margin: 0;
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+
+  // modify theme default
+  &.qty {
+    display: inline-block;
+    width: 100px;
+    .bootstrap-touchspin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      border: 1px solid #dbdbdb !important;
+      background: $light !important;
+      border-radius: 6px !important;
+      width: 100% !important;
+      max-width: 100px !important;
+      margin: 0 !important;
+      margin-left: auto !important;
+      @include breakpoint(medium) {
+        margin: 0 !important;
+      }
+      .btn-touchspin {
+        @include position(absolute, 0 null null 0);
+        height: 100%;
+        width: 30px;
+        margin: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 7px 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+          margin: 0;
+          color: #9f9f9f;
+          font-size: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: $main-font;
+          font-style: normal;
+          font-weight: 600;
+        }
+        &.bootstrap-touchspin-up {
+          @include position(absolute, 0 0 null auto);
+          i {
+            &:after {
+              content: "+";
+            }
+          }
+        }
+        &.bootstrap-touchspin-down {
+          i {
+            &:after {
+              content: "-";
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dropbox_outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .dropbox {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    border: 3px dashed $secondary;
+    &:before{
+        content: '\f574';
+        font-family: $icons;
+        font-weight: 900;
+        @include position(absolute, 50% null null 50%);
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        color: $secondary;
+        opacity: 0;
+        transition: all 0.3s;
+    }
+    &.active {
+      background: rgba($color: $secondary, $alpha: 0.1);
+      &:before{
+          opacity: 1;
+      }
+      span{
+          opacity: 0;
+      }
+    }
+    span {
+      text-align: center;
+      line-height: 1.3em;
+      display: block;
+      padding: 20px;
+      font-size: 18px;
+      color: $secondary;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    input {
+      display: block;
+      cursor: pointer;
+      @include position(absolute, 0 null null 0);
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      opacity: 0;
+    }
+  }
+}

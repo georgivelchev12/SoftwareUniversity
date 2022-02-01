@@ -225,7 +225,7 @@ function EditPhoto() {
             </div>
             <div className="col medium_6 large_4">
               <button type="submit" className="btn wide" disabled={false}>
-                Create photo
+                Edit photo
               </button>
             </div>
         

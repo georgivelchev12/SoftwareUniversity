@@ -4,12 +4,12 @@ button,
 input[type="submit"] {
   width: 100%;
   display: block;
-  min-height: 40px;
+  // min-height: 40px;
   text-align: center;
   font-weight: 500;
-  line-height: 23px;
+  // line-height: 23px;
   cursor: pointer;
-  padding: 7px 20px;
+  padding: 10px 20px;
   // margin-bottom: 16px;
   color: $light;
   border: 1px solid $secondary;
@@ -86,6 +86,15 @@ input[type="submit"] {
       background: $light;
     }
   }
+  &.btn_outline{
+    color: $secondary;
+    border-color: $secondary;
+    background: $light;
+    &:hover{
+      color: $light;
+      background: $secondary;
+    }
+  }
   &.btn_cart {
     padding-right: 50px !important;
     position: relative;
@@ -118,6 +127,9 @@ input[type="submit"] {
       //   color: $secondary;
       // }
     }
+  }
+  &.wide{
+    width: 100%;
   }
 }
 

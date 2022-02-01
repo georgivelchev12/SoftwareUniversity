@@ -10,12 +10,9 @@ function DetailsPhotos() {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    
-    console.log(id);
     getPhoto(id).then((data) => {
       setPhoto(data.photo)
     });
-
   }, []);
 
   

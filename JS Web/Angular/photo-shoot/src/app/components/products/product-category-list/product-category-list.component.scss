@@ -1,0 +1,425 @@
+@import "../../../../assets/sass/setup";
+@import "../../../../assets/sass/grid/mixins";
+
+::ng-deep,
+:host {
+  .page-index .categories .single_category {
+    @include breakpoint_reverse(tiny) {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+    @media (max-width: 340px) {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+  .categories {
+    @include breakpoint(medium) {
+      padding: 30px 0 0;
+    }
+    .single_category {
+      @include breakpoint(giant) {
+        max-width: 14.2%;
+        flex-basis: 14.2%;
+      }
+      a {
+        color: $dark;
+        display: block;
+        text-align: center;
+        padding: 5px 0 10px;
+        @include breakpoint(medium) {
+          padding: 15px 10px;
+        }
+        &:hover {
+          color: $secondary;
+          .category_icon {
+            box-shadow: 0 0 10px 0 rgba($color: $black, $alpha: 0.1);
+          }
+        }
+        .category_icon {
+          background: $light;
+          border: 1px solid #e6e6e6;
+          transition: box-shadow 0.3s;
+
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+
+          border-radius: 16px;
+          font-size: 40px;
+          padding: 10px;
+
+          @include breakpoint(small) {
+            justify-content: center;
+            margin: 0 auto 20px;
+            border-radius: 100%;
+            padding: 0;
+            font-size: 45px;
+            @include box(100px);
+          }
+          &:before {
+            @include breakpoint_reverse(small) {
+              @include box(40px);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 30px;
+            }
+          }
+          &:after {
+            content: attr(data-attr);
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 10px;
+            text-align: left;
+            @include breakpoint(small) {
+              content: none;
+            }
+          }
+
+          // Icon for every category
+
+          // Избрани
+          &.category_686:before {
+            content: "\e905";
+          }
+          // Комплекти
+          &.category_497:before {
+            content: "\e904";
+          }
+          // Грижа за бебета
+          &.category_413:before {
+            content: "\e903";
+          }
+          // Осветление
+          &.category_408:before {
+            content: "\e90f";
+          }
+          // Климатизация
+          &.category_407:before {
+            content: "\e908";
+          }
+          // Измервателни уреди
+          &.category_406:before {
+            content: "\e910";
+          }
+          // Growbox / Палатки
+          &.category_426:before {
+            content: "\e90a";
+          }
+          // Почви и субстрати
+          &.category_502:before {
+            content: "\e912";
+          }
+          // Саксии и тарелки
+          &.category_501:before {
+            content: "\e911";
+          }
+          // Хидропонни и Аеропонни
+          &.category_658:before {
+            content: "\e90c";
+          }
+          // Напояване
+          &.category_503:before {
+            content: "\e90e";
+          }
+          // Торове и Добавки
+          &.category_410:before {
+            content: "\e913";
+          }
+          // Тримери и аксесоари
+          &.category_412:before {
+            content: "\e901";
+          }
+          // Hemp & Health
+          &.category_:before {
+            content: "\e90b";
+          }
+          // Инструменти
+          &.category_409:before {
+            content: "\e919";
+          }
+        }
+        strong {
+          display: none;
+          @include breakpoint(small) {
+            display: block;
+          }
+        }
+      }
+    }
+    // Used in category page
+    &.style_1 {
+      .single_category {
+        position: relative;
+        @include breakpoint(giant) {
+          flex-basis: 16.666%;
+          max-width: 16.666%;
+        }
+        a {
+          position: relative;
+          padding: 15px 0;
+          figure {
+            margin: 0 auto 15px;
+            padding: 0;
+            border-radius: 100%;
+            @include box(100px);
+            overflow: hidden;
+            border: 1px solid #e6e6e6;
+            transition: all 0.3s;
+          }
+          &:hover {
+            figure {
+              box-shadow: 0 0 10px 0 rgba($color: $black, $alpha: 0.1);
+            }
+          }
+          strong {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  // https://dev.softart.bg/greenplanet/2-kategorii
+  // https://dev.softart.bg/greenplanet/brands
+  // https://dev.softart.bg/greenplanet/supplier
+  .category_page,
+  .page-supplier,
+  .page-manufacturer,
+  .page-search {
+    background: #f5f5f5;
+
+    padding: 30px 0 50px;
+    #left-column {
+      #search_filters_wrapper {
+        position: sticky;
+        top: 95px;
+      }
+      @include breakpoint_reverse(medium) {
+        width: 320px;
+        z-index: 10;
+        @include position(fixed, 0 null null -320px);
+        transition: left 0.3s;
+        padding: 0;
+        &.open {
+          left: 0;
+          .close_left_col {
+            opacity: 1;
+            pointer-events: auto;
+          }
+        }
+        .close_left_col {
+          z-index: -2;
+          content: "";
+          opacity: 0;
+          pointer-events: none;
+          background: rgba($black, 0.8);
+          transition: opacity 0.6s ease-in-out;
+          @include box(100%);
+          @include position(fixed, null null 0 0);
+        }
+        .filter_sidebar {
+          border-radius: 0;
+          box-shadow: 0;
+          border: none;
+          overflow: scroll;
+          height: 100vh;
+        }
+      }
+    }
+    .categories {
+      padding: 0;
+    }
+    .section_title {
+      padding-top: 0;
+      margin-bottom: -20px;
+    }
+    .facet {
+      margin-bottom: 30px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .filter_by {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      strong {
+        display: flex;
+        align-items: center;
+        &:before {
+          margin-right: 5px;
+          font-size: 18px;
+        }
+      }
+      a {
+        @include box(25px);
+        border: 1px solid $black;
+        background-color: $black;
+        color: $light;
+        font-size: 16px;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: all 0.3s;
+        cursor: pointer;
+        line-height: 26px;
+        &:hover {
+        background-color: $secondary;
+        border-color: $secondary;
+        }
+      }
+    }
+    button,
+    .btn {
+      margin-bottom: 0;
+      margin-top: 15px;
+      width: 100%;
+      white-space: normal;
+    }
+    .filter_title {
+      display: block;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 18px 0 5px;
+    }
+    .filter_price {
+      .ui-slider {
+        margin-top: 15px;
+        height: 12.8px !important;
+        cursor: pointer;
+        background: #e1fafa;
+        border-radius: 25px;
+        border: none;
+
+        .ui-widget-header {
+          border-radius: 25px;
+          background: rgb(92, 139, 23) !important;
+          background: linear-gradient(
+            90deg,
+            rgba(92, 139, 23, 1) 0%,
+            rgba(125, 177, 34, 1) 100%
+          ) !important;
+        }
+        .ui-slider-handle {
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          border: 2px solid $light !important;
+          height: 22px !important;
+          width: 22px !important;
+          border-radius: 100% !important;
+          background: #7cb305 !important;
+          margin-left: -10px !important;
+        }
+      }
+      .price_range_txt {
+        margin-top: 10px;
+        display: inline-block;
+        padding: 5px 10px;
+        border-bottom: 1px solid #d9d9d9;
+        color: $secondary;
+        font-size: 15px;
+        font-weight: 500;
+      }
+    }
+    .filter_sidebar {
+      box-shadow: 2px 2px 8px 0 rgb(0 0 0 / 20%);
+      border-radius: 8px;
+      border: 1px solid #dbdbdb;
+      margin-bottom: 1.563rem;
+      background: #fff;
+      padding: 1.563rem 1.25rem;
+
+      border: 1px solid #d9d9d9;
+      background: $light;
+      border-radius: 10px;
+      padding: 15px 10px 25px;
+      @include breakpoint(medium) {
+        padding: 15px 15px 25px;
+      }
+    }
+    .back_btn{
+      display: block;
+      position: relative;
+      padding: 10px 0 10px 26px;
+      color: $dark;
+      font-weight: 500;
+      margin: 16px 0 12px;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      
+      &:hover {
+        color: $secondary;
+        i {
+          left: 0px;
+        }
+      }
+      i {
+        @include position(absolute, 10px null null 4px);
+        transition: all 0.3s;
+      }
+    }
+    .checkbox_ul {
+      li {
+        input {
+          @include position(absolute, 16px null null 0);
+        }
+
+        label,
+        label a,
+        a {
+          position: relative;
+          padding: 15px 0 15px 12px;
+          border-bottom: 0.5px solid #d9d9d9;
+          margin-bottom: 5px;
+          display: flex;
+          justify-content: space-between;
+          width: 100% !important;
+          transition: all 0.3s;
+          color: $dark;
+
+          &:hover {
+            color: $secondary;
+            border-bottom: 1px solid #b4b4b4;
+            i {
+              left: 3px;
+            }
+          }
+          i {
+            @include position(absolute, 14px null null 0);
+            font-size: 18px;
+            transition: all 0.3s;
+          }
+          .filter_name {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+          }
+          span {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+    .shop_section {
+      padding: 0;
+    }
+    .change_view {
+      a {
+        &:hover,
+        &.active {
+          color: $secondary;
+        }
+      }
+    }
+    #products .page-not-found {
+      margin-bottom: 40px;
+      margin-top: 24px;
+    }
+  }
+}

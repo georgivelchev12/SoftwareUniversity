@@ -10,6 +10,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PhotosModule } from '../photos/photos.module';
 import { ListAuthorsComponent } from './list-authors/list-authors.component';
 import { RouterModule } from '@angular/router';
+import { CartInterceptor } from 'src/app/core/interceptors/cart.interceptor';
 
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PhotosModule],
@@ -17,6 +18,7 @@ import { RouterModule } from '@angular/router';
   exports: [AuthComponent, RegisterComponent, LoginComponent, UserProfileComponent, ListAuthorsComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CartInterceptor, multi: true },
   ],
 })
 export class AuthModule {}

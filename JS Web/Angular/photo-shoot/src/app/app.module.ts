@@ -17,6 +17,7 @@ import { reducers } from './+store';
 import { EffectsModule } from '@ngrx/effects';
 import { GlobalEffects } from './+store/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ShopModule } from './components/products/shop.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -27,6 +28,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     SharedModule,
     LandingModule,
     CategoryModule,
+    ShopModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

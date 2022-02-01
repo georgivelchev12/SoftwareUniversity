@@ -50,7 +50,7 @@ body {
     clear: both;
   }
 }
-.text_center{
+.text_center {
   text-align: center;
 }
 .crossed {
@@ -59,7 +59,9 @@ body {
 .underline {
   text-decoration: underline;
 }
-
+.text-center {
+  text-align: center;
+}
 // Images
 figure {
   display: inline-block;
@@ -152,7 +154,33 @@ ul.default_list {
     }
   }
 }
-
+.styled_ul,
+.product_more_info ul,
+.category_page .categories ul,
+.product_main_content .description ul {
+  display: block;
+  margin-bottom: 16px;
+  li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 6px;
+    line-height: 1.33em;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      background-color: $secondary;
+      @include position(absolute, 5px null null 0);
+    }
+  }
+}
+ul.unstyled_ul {
+  list-style: none;
+}
 .cover_figure {
   width: 100%;
   height: 100%;
@@ -229,7 +257,7 @@ ul.default_list {
           transition: all 0.3s;
         }
       }
-      &.danger a{
+      &.danger a {
         background: rgba($color: #c91b1b, $alpha: 0.06);
         color: #c91b1b;
         &:before {
@@ -261,7 +289,9 @@ ul.default_list {
   }
 }
 
-.ngx-pagination .pagination-previous a::before, .ngx-pagination .pagination-previous.disabled::before,
-.ngx-pagination .pagination-next a::after, .ngx-pagination .pagination-next.disabled::after{
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before,
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after {
   margin: 0 !important;
 }

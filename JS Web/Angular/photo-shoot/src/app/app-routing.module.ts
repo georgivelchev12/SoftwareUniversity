@@ -13,6 +13,12 @@ import { CreatePhotoComponent } from './components/photos/create-photo/create-ph
 import { DetailsPhotoComponent } from './components/photos/details-photo/details-photo.component';
 import { EditPhotoComponent } from './components/photos/edit-photo/edit-photo.component';
 import { ListPhotosComponent } from './components/photos/list-photos/list-photos.component';
+import { CreateProductComponent } from './components/products/create-product/create-product.component';
+import { DetailsProductComponent } from './components/products/details-product/details-product.component';
+import { EditProductComponent } from './components/products/edit-product/edit-product.component';
+import { ProductCategoryCreateComponent } from './components/products/product-category-create/product-category-create.component';
+import { ProductCategoryEditComponent } from './components/products/product-category-edit/product-category-edit.component';
+import { ProductCategoryListComponent } from './components/products/product-category-list/product-category-list.component';
 import { AdminGuard } from './core/guards/admin.guard';
 import { AuthGuard } from './core/guards/auth.guard';
 
@@ -24,24 +30,35 @@ const routes: Routes = [
     pathMatch: 'full',
   },
 
-  // Photos routes
-  { path: 'photo/create', component: CreatePhotoComponent, canActivate: [AuthGuard] },
-  { path: 'photo/edit/:id', component: EditPhotoComponent, canActivate: [AuthGuard] },
-  { path: 'photo/details/:id', component: DetailsPhotoComponent },
-  { path: 'photo/list', component: ListPhotosComponent },
-
   // User routes
   { path: 'user/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user/register', component: AuthComponent},
   { path: 'user/login', component: AuthComponent},
   { path: 'user/details/:id', component: UserProfileComponent},
   { path: 'user/profiles', component: ListAuthorsComponent, canActivate: [AdminGuard]},
+
+  // Photos routes
+  { path: 'photo/create', component: CreatePhotoComponent, canActivate: [AuthGuard] },
+  { path: 'photo/edit/:id', component: EditPhotoComponent, canActivate: [AuthGuard] },
+  { path: 'photo/details/:id', component: DetailsPhotoComponent },
+  { path: 'photo/list', component: ListPhotosComponent },
   
-  // Categories routes
+  // Photo Categories routes
   { path: 'categories', component: CategoryListComponent },
   { path: 'categories/create', component: CategoryCreateComponent, canActivate: [AdminGuard] },
   { path: 'categories/edit/:id', component: CategoryEditComponent, canActivate: [AdminGuard] },
   { path: 'categories/:id', component: CategoryDetailsComponent },
+  
+  // Product routes
+  { path: 'product/create', component: CreateProductComponent, canActivate: [AdminGuard]  }, 
+  { path: 'product/edit/:id', component: EditProductComponent, canActivate: [AdminGuard] },
+  { path: 'product/:id', component: DetailsProductComponent },
+
+  // Product Categories routes
+  { path: 'product-categories', component: ProductCategoryListComponent }, // Lists categories, details for current category + products
+  { path: 'product-categories/create', component: ProductCategoryCreateComponent, canActivate: [AdminGuard] },
+  { path: 'product-categories/edit/:id', component: ProductCategoryEditComponent, canActivate: [AdminGuard] },
+
 
   // Not Found
   { path: '**', component: NotFoundComponent },

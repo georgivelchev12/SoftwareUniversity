@@ -1,0 +1,148 @@
+<section class="main_product" *ngIf="product">
+  <div class="row default_center">
+    <div class="col default_center medium_6 product_main_img">
+
+      <div class="slick product_slider slick-initialized slick-slider">
+        <div class="slick-list draggable">
+          <div class="slick-track">
+            <img src="{{product.imgUrl}}" class="js-qv-product-cover slick-slide slick-current slick-active">
+          </div>
+        </div>
+      </div>
+
+      <ul class="product-flags" *ngIf="product.oldPrice">
+        <li class="product-flag discount">-{{(100 - (product.price / product.oldPrice * 100)).toFixed(0)}}%</li>
+      </ul>
+
+    </div>
+
+    <div class="col medium_6 product_main_content">
+
+      <h1 class="product_title">{{product.title}}</h1>
+      <div class="separator"></div>
+      <div class="description" [innerHTML]="product.shortDescription"></div>
+
+      <div class="product-prices price_block main_price">
+        <span class="price_title">Price:</span>
+        <span class="old_price" *ngIf="product.oldPrice">
+          <span class="num">${{product.oldPrice.toFixed(2)}}</span>
+        </span>
+        <span class="price">
+          <span class="num">${{product.price.toFixed(2)}}</span>
+        </span>
+        <div class="product-price h5 has-discount" *ngIf="product.oldPrice">
+          <div class="current-price">
+            <span class="discount discount-percentage">Save -{{(100 - (product.price / product.oldPrice *
+              100)).toFixed(0)}}%</span>
+          </div>
+        </div>
+        <div class="tax-shipping-delivery-label">tax incl.</div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="product-actions">
+
+        <form>
+
+          <div class="product-add-to-cart">
+            <span class="control-label">Quantity</span>
+
+            <div class="wrap">
+
+              <div class="qty custom_quantity">
+                <div class="input-group bootstrap-touchspin"><span class="input-group-addon bootstrap-touchspin-prefix"
+                    style="display: none;"></span><input type="number" name="qty" id="" value="1"
+                    class="input-group quantity_wanted form-control" min="1" aria-label="Количество"
+                    style="display: block;"><span class="input-group-addon bootstrap-touchspin-postfix"
+                    style="display: none;"></span><span class="input-group-btn-vertical"><button
+                      class="btn btn-touchspin js-touchspin bootstrap-touchspin-up" type="button"><i
+                        class="material-icons touchspin-up"></i></button><button
+                      class="btn btn-touchspin js-touchspin bootstrap-touchspin-down" type="button"><i
+                        class="material-icons touchspin-down"></i></button></span></div>
+              </div>
+
+              <div class="add">
+                <button class="btn add-to-cart" type="submit">Add to cart</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="product-additional-info">
+            <div class="social-sharing">
+              <span>Share:</span>
+              <ul>
+                <li class="facebook icon-gray"><a href="https://www.facebook.com/sharer.php?u= ADD LINK HERE" target="_blank">Share</a></li>
+                <li class="twitter icon-gray"><a href="https://twitter.com/intent/tweet?text= ADD TEXT HERE - - ADD LINK HERE" target="_blank">Tweet</a></li>
+                <li class="pinterest icon-gray"><a href="https://www.pinterest.com/pin/create/button/?media= ADD LINK HERE" target="_blank">Pinterest</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="product_more_info" *ngIf="product">
+  <div class="row">
+    <div class="col">
+      <h3 class="section_title">Information</h3>
+    </div>
+    <div class="col" >
+      <p [innerHTML]="product.description"></p>
+    </div>
+  </div>
+</section>
+
+
+<section class="shop_section five_cols" *ngIf="similarProducts && similarProducts.length >= 2"> <!-- && similarProducts.length >= 5 -->
+  <div class="row center">
+    <div class="col">
+      <h2 class="section_title">Similar products</h2>
+    </div>
+    <div class="col text-center">
+
+      <ngx-slick-carousel #slickModal="slick-carousel" [config]="slideConfig" (beforeChange)="beforeChange($event)"
+        (afterChange)="afterChange($event)">
+        <div class="prod_listing" ngxSlickItem *ngFor="let product of similarProducts">
+
+          <div class="single">
+            <span class="promo_percentage" *ngIf="product.oldPrice">-{{(100 - (product.price / product.oldPrice *
+              100)).toFixed(0)}}%</span>
+
+            <label class="product_cnt" (click)="onClick($event, product)" [class.disabled]="disableClickEvent">
+              <span class="default_block">
+                <img src="{{product.imgUrl}}" alt="">
+              </span>
+              <span class="product_title">{{product.title}}</span>
+              <span class="short_txt">{{product.shortDescription}}</span>
+            </label>
+
+            <span class="price_block">
+              <span class="old_price" *ngIf="product.oldPrice">${{product.oldPrice.toFixed(2)}}</span>
+              <span class="price">${{product.price.toFixed(2)}}</span>
+            </span>
+            <div class="row button_group">
+              <div class="col tiny_6">
+                <a class="btn btn_outline wide" [routerLink]="['/product/', product._id]">View</a>
+              </div>
+              <div class="col tiny_6">
+                <a class="btn wide add_to_cart" href="#">Buy</a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </ngx-slick-carousel>
+
+
+    </div>
+  </div>
+  <!-- <a class="all-product-link float-xs-left float-md-right h4" href="">
+    Всички продукти на разпродажба<i class="material-icons">&#xE315;</i>
+  </a> -->
+</section>

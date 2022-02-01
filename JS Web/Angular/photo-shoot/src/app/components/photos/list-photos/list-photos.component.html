@@ -53,7 +53,7 @@
         </div>
       </div>
       
-      <pagination-controls (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+      <pagination-controls *ngIf="totalItems > 12" (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
     </div>
   </div>
 </section>

@@ -1,0 +1,102 @@
+<div class="row products-selection">
+  <div class="col default_8 total-products">
+    <p>{{totalItems}} product(s) are available.</p>
+  </div>
+  <div class="col default_4 default_flex default_end default_middle change_view">
+    <a id="box_view" href="javascript:void(0)" (click)="isListLayout = false" class="fas fa-th-large" [ngClass]="isListLayout ? '' : 'active'" style="margin-right: 8px;"></a>
+    <a id="list_view" href="javascript:void(0)" (click)="isListLayout = true" class="fas fa-th-list" [ngClass]="isListLayout ? 'active' : ''"></a>
+  </div>
+</div>
+
+<div id="js-product-list">
+  <div class="products row text-center">
+
+    <div
+      class="product-miniature js-product-miniature prod_listing col "
+      [ngClass]="isListLayout ? 'list_layout' : 'box_layout default_6 medium_6 large_4 giant_3'"
+      *ngFor="let product of products | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }"
+    >
+
+      <div class="single" *ngIf="!isListLayout">
+        <span class="promo_percentage" *ngIf="product.oldPrice">-{{(100 - (product.price / product.oldPrice * 100)).toFixed(0)}}%</span>
+
+        <a class="product_cnt" [routerLink]="['/product/', product._id]">
+          <span class="default_block">
+            <img src="{{product.imgUrl}}" alt="">
+          </span>
+          <span class="product_title">{{product.title}}</span>
+          <span class="short_txt">{{product.shortDescription}}</span>
+        </a>
+        
+        <span class="price_block">
+          <span class="old_price" *ngIf="product.oldPrice">${{product.oldPrice.toFixed(2)}}</span>
+          <span class="price">${{product.price.toFixed(2)}}</span>
+        </span>
+        <div class="row button_group">
+          <div class="col tiny_6">
+            <a class="btn btn_outline wide"  [routerLink]="['/product/', product._id]">View</a>
+          </div>
+          <div class="col tiny_6">
+            <a class="btn wide add_to_cart" href="#">Buy</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="single" *ngIf="isListLayout">
+        <span class="promo_percentage" *ngIf="product.oldPrice">-{{(100 - (product.price / product.oldPrice * 100)).toFixed(0)}}%</span>
+        <div class="row default_middle">
+          <div class="image_col col tiny_4">
+            <a class="product_cnt"  [routerLink]="['/product/', product._id]">
+              <img src="{{product.imgUrl}}" >
+            </a>
+          </div>
+          <div class="cnt_col col tiny_8">
+            <a  [routerLink]="['/product/', product._id]">
+              <span class="product_title">{{product.title}}</span>
+            </a>
+            <span class="short_txt">{{product.shortDescription}}</span>
+
+            <span class="price_block">
+              <span class="old_price" *ngIf="product.oldPrice">${{product.oldPrice.toFixed(2)}}</span>
+              <span class="price">${{product.price.toFixed(2)}}</span>
+            </span>
+            <div class="row button_group">
+              <div class="col tiny_6">
+                <a class="btn btn_outline wide"  [routerLink]="['/product/', product._id]">
+                  View
+                </a>
+              </div>
+              <div class="col tiny_6">
+                <a class="btn wide add_to_cart" href="#">
+                  Buy
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!products?.length">
+    <div class="col">
+      <h2 style="margin: 200px 0;">
+        There is no products yet
+      </h2>
+    </div>
+  </div>
+  
+  <nav class="row default_middle pagination">
+    <div class="col small_6">
+      Showing {{currentPage}}-{{itemsPerPage * currentPage}} from {{totalItems}} item(s)
+    </div>
+    <div class="col small_6 default_flex default_end default_middle" *ngIf="totalItems > 8">
+      <div class="spinner" *ngIf="loading">LOADING...</div>
+      <pagination-controls  (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+    </div>  
+  </nav>
+
+</div>

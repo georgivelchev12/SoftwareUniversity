@@ -17,15 +17,31 @@ let controller = {
       $(this).toggleClass("active");
     });
     
-    if ($("select").length) {
-      $("select").niceSelect();
+    if ($("select:not(.default_select)").length) {
+      $("select:not(.default_select)").niceSelect();
     }
 
-    }, 1000);
+    }, 1200);
 
     window.addEventListener("click", function () {
-      $("select").niceSelect();
+      $("select:not(.default_select)").niceSelect();
     });
+
+
+
+    jQuery("body").on("click", "a[data-leftcol]", function (e) {
+      e.preventDefault();
+      let currTabId = jQuery(this).attr("data-leftcol");
+
+        if (jQuery(`div[data-leftcol=${currTabId}]`).hasClass("open")) {
+            jQuery(`div[data-leftcol=${currTabId}]`).removeClass("open");
+            jQuery("body").removeClass("disable_scroll");
+        } else {
+            jQuery(`div[data-leftcol=${currTabId}]`).addClass("open");
+            jQuery("body").addClass("disable_scroll");
+        }
+    });
+
 
   },
   mobileCheckboxClass: function () {

@@ -199,6 +199,49 @@
   }
 }
 
+app-root .slick-dots {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 20px 0 0;
+  list-style-type: none;
+
+  li {
+    all: unset;
+    margin: 0 0.25rem;
+  }
+
+  button {
+    margin: 0;
+    all: unset;
+    display: block;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 20px;
+    background: #c4c4c4;
+    text-indent: -9999px;
+    outline: none;
+    transition: all 0.3s;
+    &:before{
+      content: none !important;
+    }
+    &:hover {
+      background: #c4c4c4;
+    }
+  }
+
+  li.slick-active button {
+    background-color: $secondary;
+    width: 20px;
+  }
+}
+.slick-prev:before, .slick-next:before{
+  color: $secondary;
+  transition: all 0.3s;
+}
+
 .base_slider {
   background: $tertiary;
   .base_content {

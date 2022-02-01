@@ -98,6 +98,19 @@
           <li class="list_item">
             <a routerLink="/">Home</a>
           </li>
+          <li class="list_item" *ngIf="authService.getUserRole() != 'admin'">
+            <a routerLink="/product-categories">Shop</a>
+          </li>
+          <li class="list_item dropdown_link" *ngIf="authService.getUserRole() == 'admin'">
+            <a routerLink="/product-categories" title="Link" class="dropdown_toggle_mobile has_sub">
+              Shop <span class="dropdown_icon"></span>
+            </a>
+            <ul class="dropdown_menu">
+              <li class="list_item"><a routerLink="/product-categories">Products</a></li>
+              <li class="list_item"><a routerLink="/product/create">Create product</a></li>
+              <li class="list_item"><a routerLink="/product-categories/create">Create new category</a></li>
+            </ul>
+          </li>
           <li class="list_item dropdown_link">
             <a routerLink="/photo/list" title="Link" class="dropdown_toggle_mobile has_sub">
               Photos <span class="dropdown_icon"></span>
@@ -105,6 +118,7 @@
             <ul class="dropdown_menu">
               <li class="list_item"><a routerLink="/photo/list">All photos</a></li>
               <li class="list_item"><a routerLink="/photo/create">Create photo</a></li>
+              <li class="list_item" *ngIf="authService.getUserRole() == 'admin'"><a routerLink="/categories/create">Create new category</a></li>
             </ul>
           </li>
           <li class="list_item dropdown_link" *ngIf="categories.length">

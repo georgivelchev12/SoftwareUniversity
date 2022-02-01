@@ -1,25 +1,33 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./ListPhotos.scss";
 import * as photoService from "../../../core/services/photo.service";
-import { Link, useLocation } from "react-router-dom";
-import UserContext from "../../../Context";
+import { Link, Navigate, useLocation } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 function ListPhotos({ myPhotos, userPhotos, category }) {
   const location = useLocation();
   const [photos, setPhotos] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
+  const [redirect, setRedirect] = useState(false);
+
   useEffect(() => {
-    console.log(userPhotos);
     photoService.getPhotos(userPhotos, myPhotos, 100, 1, category).then((result) => {
-      console.log('result photos0', result);
       setPhotos(result.photos);
       setTotalItems(result.count)
+      setRedirect(false)
     });
-  }, []);
+  }, [redirect]);
 
-  function deletePhoto() {}
+  function deletePhotoHandler(id) {
+    photoService.deletePhoto(id).then(data => {
+      toast.success(data.message, { theme: "colored" });
+      setRedirect(true)
+    })
+  }
   return (
     <>
+    {redirect && <Navigate to="/user/profile" />}
+
     {
       photos.length ? (
         <>{
@@ -111,7 +119,7 @@ function ListPhotos({ myPhotos, userPhotos, category }) {
                           photo.author._id == localStorage.getItem('id') ? (
                             <div className="buttons">
                               <Link to={'/photo/edit/' + photo._id} className="far fa-edit"></Link>
-                              <a onClick={deletePhoto(photo._id)} className="far fa-trash-alt"></a>
+                              <a onClick={() => deletePhotoHandler(photo._id)} className="far fa-trash-alt"></a>
                               {/* <!-- <a (click)="likePhoto(photo._id)" className="far fa-heart"></a> --> */}
                             </div>
                           ) : (

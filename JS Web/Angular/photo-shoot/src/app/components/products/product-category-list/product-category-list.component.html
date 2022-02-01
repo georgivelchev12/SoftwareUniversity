@@ -1,0 +1,112 @@
+<section class="category_page">
+  <div class="row">
+    <div id="left-column" class="col medium_4 large_3" data-leftcol="toggle">
+      <a href="javascript:void(0);" class="close_left_col" data-leftcol="toggle"></a>
+      <!-- ps_faceredsearch module -->
+      <div id="search_filters_wrapper">
+        <div id="search_filters" class="filter_sidebar">
+          <div class="filter_by color_secondary">
+            <strong><i class="fas fa-filter"></i>&nbsp; Filter by</strong>
+            <a href="javascript:void(0);" class="fas fa-times medium_hide" data-leftcol="toggle"></a>
+          </div>
+          <section class="facet clearfix">
+            <span class="filter_title">Categories</span>
+            <ul class="checkbox_ul">
+              <a *ngIf="childCategories && currentCategory.title != 'rootCategory'" href="javascript:history.back()" class="back_btn">
+                <i class="fas fa-long-arrow-alt-left"></i>
+                Go back
+              </a>
+              <li *ngFor="let category of childCategories; let i = index">
+                <a [routerLink]="['/product-categories']" [queryParams]="{categoryId: category._id}"> <!-- *ngIf="category.products.length > 0" -->
+                  <i class="fas fa-caret-right"></i>
+                  <span class="filter_name">{{category.title}}</span>
+                  <span class="magnitude" *ngIf="category.products.length > 0">({{category.products.length}})</span>
+                </a>
+              </li>
+            </ul>
+          </section>
+          <!-- <section class="facet clearfix">
+            <span class="filter_title">Brands</span>
+            <ul class="checkbox_ul">
+              <li>
+                <a [routerLink]="['/product-categories']" [queryParams]="{categoryId: category._id}">
+                  <i class="fas fa-caret-right"></i>
+                  <span class="filter_name">{{category.title}}</span>
+                  <span class="magnitude">({{category.products.length}})</span>
+                </a>
+              </li>
+            </ul>
+          </section> -->
+        </div>
+      </div>
+      <!-- ps_faceredsearch module / END-->
+    </div>
+    <!-- Ако текущата страница има филтри добавяме  -->
+    <div id="content-wrapper" class="col medium_8 large_9">
+      <!-- product-list file -->
+      <section id="main">
+        <!-- category-header file -->
+        <section class="categories style_1">
+          <div class="row">
+            <div class="col">
+              <h2 class="section_title">
+                {{currentCategory?.title === 'rootCategory' ? 'Shop' : currentCategory?.title}}
+              </h2>
+            </div>
+            <div class="col default_6 tiny_4 large_3 single_category" *ngFor="let category of childCategories;">
+              <a *ngIf="category.products.length > 0" [routerLink]="['/product-categories']" [queryParams]="{categoryId: category._id}">
+                <figure class="cover_figure">
+                  <img src="{{category.imgUrl}}" >
+                </figure>
+                <strong>{{category.title}}</strong>
+              </a>
+            </div>
+            <div class="col" *ngIf="currentCategory?.description != 'rootCategory'">
+              <div class="separator large_separator"></div>
+                <div [innerHTML]="currentCategory?.description"></div>
+              </div>
+              <div class="separator large_separator"></div>
+          </div>
+        </section>
+        <!-- category-header file / END-->
+        <section id="products" class="shop_section">
+          <!-- products-top file -->
+          <div id="js-product-list-top" class="row products-selection">
+            <!-- sort-orders file -->
+            <div class="col">
+              <div class="row default_bottom">
+                <div class="col default_7">
+                  <div class="sort_wrapper style_1">
+                    <span class="sort_title">Сортиране по:</span>
+                    <select >
+                      <option value="">Приложимост</option>
+                      <option value="">По име, от А до Я</option>
+                      <option value="">По име, от Я до А</option>
+                      <option value="">Цена: От ниска към висока</option>
+                      <option value="">Цена: От висока към ниска</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col default_5 medium_hide default_flex default_end">
+                  <a href="javascript:void(0);" class="btn wide" data-leftcol="toggle"><span
+                      class="gp gp-filter"></span> Филтър</a>
+                </div>
+              </div>
+            </div>
+            <!-- hidden -->
+            <!-- sort-orders file / END -->
+          </div>
+          <!-- products-top file / END -->
+ 
+
+
+          <!-- <app-list-product [category]="'&category='+ category._id +''"></app-list-product> -->
+          {{paramCategoryID}}
+          <app-list-product (categories)="onUpdate($event)" [categoryId]="paramCategoryID ? '&categoryId=' + paramCategoryID : ''"></app-list-product>
+
+        </section>
+      </section>
+      <!-- product-list file / END -->
+    </div>
+  </div>
+</section>
