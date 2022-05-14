@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { DataSharingService } from 'src/app/core/services/data_sharing.service';
+import { ProductService } from 'src/app/core/services/product.service';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +14,12 @@ export class HeaderComponent implements OnInit {
   profile;
   location;
   categories = [];
+  totalQty = '0';
 
   constructor(
     public authService: AuthService,
     public categoriesService: CategoryService,
+    public productService: ProductService,
     public router: Router,
     private dataSharingService: DataSharingService
   ) {}
@@ -24,10 +27,12 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.getMyProfile();
     this.getCategories();
+    this.totalQty = this.productService.getCartData()?.totalQty || '0'
     this.dataSharingService.isDataChanged.subscribe((isChanged) => {
       if (isChanged) {
         this.getMyProfile();
         this.getCategories();
+        this.totalQty =this.productService.getCartData()?.totalQty || '0'
       }
     });
   }
@@ -47,5 +52,6 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.productService.clearCartData();
   }
 }

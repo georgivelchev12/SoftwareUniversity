@@ -1,0 +1,17 @@
+<div class="container" *ngIf="orders">
+  <h2>Orders</h2>
+  <div class="responsive-table">
+    <div class="table-header">
+      <div class="col col-1">Order ID</div>
+      <div class="col col-2">Customer Name</div>
+      <div class="col col-3">Total quantity</div>
+      <div class="col col-4">Amount Due</div>
+    </div>
+    <a class="table-row" *ngFor="let order of orders" routerLink="/checkout/order/{{order._id}}" [queryParams]="{showThankYou: false}">
+      <span class="col col-1" data-label="Order ID">{{order._id}}</span>
+      <span class="col col-2" data-label="Customer Name">{{order.firstName}} {{order.lastName}}</span>
+      <span class="col col-3" data-label="Quantity">{{order.cart.totalQty}}</span>
+      <span class="col col-4" data-label="Amount">${{order.cart.totalPrice}}</span>
+    </a>
+  </div>
+</div>

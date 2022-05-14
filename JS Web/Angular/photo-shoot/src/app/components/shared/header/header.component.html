@@ -83,6 +83,7 @@
                   <ul id="lang-menu" class="toggle_data">
                     <li><a routerLink="/user/profiles">Block/Delete user</a></li>
                     <li><a routerLink="/categories/create">Create new category</a></li>
+                    <li><a routerLink="/checkout/orders">See orders</a></li>
                   </ul>
                 </div>
               </ul>
@@ -118,7 +119,7 @@
             <ul class="dropdown_menu">
               <li class="list_item"><a routerLink="/photo/list">All photos</a></li>
               <li class="list_item"><a routerLink="/photo/create">Create photo</a></li>
-              <li class="list_item" *ngIf="authService.getUserRole() == 'admin'"><a routerLink="/categories/create">Create new category</a></li>
+              <li class="list_item" *ngIf="authService.getUserRole() == 'admin'"><a routerLink="/categories/create">Create new category</a></li>              
             </ul>
           </li>
           <li class="list_item dropdown_link" *ngIf="categories.length">
@@ -130,6 +131,14 @@
             </ul>
           </li>
 
+          <li class="list_item" ngClass="{{totalQty == '0' ? 'no_items' : ''}}">
+            <a routerLink="/checkout/">
+                <span class="cart">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>{{totalQty}}</span>
+                </span>
+              </a>
+          </li>
           <!-- Account action  Start -->
           <li class="dropdown_link profile_dropdown" *ngIf="authService.getIsAuth();">
             <a routerLink="/user/profile" class="profile">
@@ -152,6 +161,8 @@
                 <ul id="links_menu" class="toggle_data">
                   <li><a routerLink="/user/profiles">Block/Delete user</a></li>
                   <li><a routerLink="/categories/create">Create new category</a></li>
+                  <li><a routerLink="/checkout/orders">See orders</a></li>
+
                 </ul>
               </div>
             </ul>

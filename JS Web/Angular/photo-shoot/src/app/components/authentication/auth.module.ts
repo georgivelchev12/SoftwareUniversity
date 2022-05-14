@@ -11,9 +11,10 @@ import { PhotosModule } from '../photos/photos.module';
 import { ListAuthorsComponent } from './list-authors/list-authors.component';
 import { RouterModule } from '@angular/router';
 import { CartInterceptor } from 'src/app/core/interceptors/cart.interceptor';
+import { ShopModule } from '../products/shop.module';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PhotosModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PhotosModule, ShopModule],
   declarations: [AuthComponent, RegisterComponent, LoginComponent, UserProfileComponent, ListAuthorsComponent],
   exports: [AuthComponent, RegisterComponent, LoginComponent, UserProfileComponent, ListAuthorsComponent],
   providers: [

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { loadPhotos } from './+store/actions';
 import { selectGlobalPhotos } from './+store/selectors';
 import { AuthService } from './core/services/auth.service';
+import { ProductService } from './core/services/product.service';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +12,12 @@ import { AuthService } from './core/services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'photo-shoot';
-
-  // photos$ = this.store.select(selectGlobalPhotos)
-
   constructor(
-    public authService: AuthService, 
-    // private store: Store<any>
+    private authService: AuthService, 
+    private productService: ProductService, 
   ) {}
   ngOnInit() {
     this.authService.autoAuthUser();
-    // this.store.dispatch(loadPhotos())
-    
+    this.productService.autoCheckCart();
   }
 }

@@ -12,7 +12,7 @@
           <section class="facet clearfix">
             <span class="filter_title">Categories</span>
             <ul class="checkbox_ul">
-              <a *ngIf="childCategories && currentCategory.title != 'rootCategory'" href="javascript:history.back()" class="back_btn">
+              <a *ngIf="childCategories && currentCategory?.title != 'rootCategory'" href="javascript:history.back()" class="back_btn">
                 <i class="fas fa-long-arrow-alt-left"></i>
                 Go back
               </a>
@@ -20,7 +20,7 @@
                 <a [routerLink]="['/product-categories']" [queryParams]="{categoryId: category._id}"> <!-- *ngIf="category.products.length > 0" -->
                   <i class="fas fa-caret-right"></i>
                   <span class="filter_name">{{category.title}}</span>
-                  <span class="magnitude" *ngIf="category.products.length > 0">({{category.products.length}})</span>
+                  <!-- <span class="magnitude" *ngIf="category.products.length > 0">({{category.products.length}})</span> -->
                 </a>
               </li>
             </ul>
@@ -48,13 +48,16 @@
         <!-- category-header file -->
         <section class="categories style_1">
           <div class="row">
-            <div class="col">
-              <h2 class="section_title">
-                {{currentCategory?.title === 'rootCategory' ? 'Shop' : currentCategory?.title}}
-              </h2>
+            <div class="col category_title">
+              <h2 class="section_title">{{currentCategory?.title === 'rootCategory' ? 'Shop' : currentCategory?.title}}</h2>
+              <div class="category_actions" *ngIf="authService.getUserRole() == 'admin' && currentCategory?.title != 'rootCategory'">
+                <button class="btn" [routerLink]="['/product-categories/edit/', currentCategory?._id]">Edit</button>
+                <button class="btn btn_danger" (click)="deleteCategory()">Delete</button>
+              </div>
             </div>
+            <div class="separator no_bg" *ngIf="childCategories?.length"></div>
             <div class="col default_6 tiny_4 large_3 single_category" *ngFor="let category of childCategories;">
-              <a *ngIf="category.products.length > 0" [routerLink]="['/product-categories']" [queryParams]="{categoryId: category._id}">
+              <a [routerLink]="['/product-categories']" [queryParams]="{categoryId: category._id}">
                 <figure class="cover_figure">
                   <img src="{{category.imgUrl}}" >
                 </figure>
@@ -63,7 +66,7 @@
             </div>
             <div class="col" *ngIf="currentCategory?.description != 'rootCategory'">
               <div class="separator large_separator"></div>
-                <div [innerHTML]="currentCategory?.description"></div>
+                <div class="paragraph" [innerHTML]="currentCategory?.description"></div>
               </div>
               <div class="separator large_separator"></div>
           </div>
@@ -76,7 +79,7 @@
             <div class="col">
               <div class="row default_bottom">
                 <div class="col default_7">
-                  <div class="sort_wrapper style_1">
+                  <!-- <div class="sort_wrapper style_1">
                     <span class="sort_title">Сортиране по:</span>
                     <select >
                       <option value="">Приложимост</option>
@@ -85,7 +88,7 @@
                       <option value="">Цена: От ниска към висока</option>
                       <option value="">Цена: От висока към ниска</option>
                     </select>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="col default_5 medium_hide default_flex default_end">
                   <a href="javascript:void(0);" class="btn wide" data-leftcol="toggle"><span
@@ -109,3 +112,10 @@
     </div>
   </div>
 </section>
+
+
+<div class="full-wh-spinner" *ngIf="isLoading">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+</div>

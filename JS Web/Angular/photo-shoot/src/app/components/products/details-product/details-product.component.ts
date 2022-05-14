@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { ProductService } from 'src/app/core/services/product.service';
 
 @Component({
@@ -8,7 +10,8 @@ import { ProductService } from 'src/app/core/services/product.service';
   styleUrls: ['./details-product.component.scss']
 })
 export class DetailsProductComponent implements OnInit {
-  
+  quantity: number = 1;
+
   slideConfig = {
     slidesToShow: 2,
     swipeToSlide: true,
@@ -41,7 +44,9 @@ export class DetailsProductComponent implements OnInit {
   constructor(
     public productService: ProductService,
      public route: ActivatedRoute,
-     public router: Router
+     public router: Router,
+     public toastr: ToastrService,
+     public authService: AuthService
      ) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
      }
@@ -49,8 +54,7 @@ export class DetailsProductComponent implements OnInit {
   ngOnInit() {
     this.productService.getProduct(this.route.snapshot.params.id).subscribe(({message, product}) => {
       this.product = product;
-     
-      console.log(this.product);
+
       this.product.oldPrice = Number(this.product.oldPrice);
       this.product.price = Number(this.product.price);
       
@@ -80,4 +84,23 @@ export class DetailsProductComponent implements OnInit {
   afterChange(event) {
     this.disableClickEvent = false;
   }
+
+
+  deleteProduct(){
+    this.productService.deleteProduct(this.product._id).subscribe(data => {
+      this.toastr.success(data['message'], 'Success!');
+      this.router.navigateByUrl('/product-categories');
+    })
+  }
+
+
+  addToCart(){
+    if(this.quantity <= 0){
+      this.toastr.error('Quantity must be positive number!', 'Error!')
+      return;
+    }
+    this.productService.addToCart(this.product._id, this.quantity);
+    this.router.navigateByUrl('/checkout');
+  }
+  
 }

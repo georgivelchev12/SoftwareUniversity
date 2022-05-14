@@ -46,6 +46,9 @@
               <a href="javascript:void(0);" data-panel="#panel_1">My photos</a>
             </li>
             <li class="tab">
+              <a href="javascript:void(0);" data-panel="#panel_3">My orders</a>
+            </li>
+            <li class="tab">
               <a href="javascript:void(0);" data-panel="#panel_2">Edit profile</a>
             </li>
             <li class="tab danger">
@@ -55,6 +58,7 @@
 
           <select class="tabs_filter filter_select medium_hide">
             <option value="#panel_1">My Photos</option>
+            <option value="#panel_3">My Orders</option>
             <option value="#panel_2">Edit profile</option>
           </select>
 
@@ -148,6 +152,9 @@
                 </div>
               </div>
 
+            </div>
+            <div class="panel panel_3" style="display: none;">
+              <app-checkout-list-order [myOrders]="'?myOrders=true'"></app-checkout-list-order>
             </div>
           </div>
         </div>

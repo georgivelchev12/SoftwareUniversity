@@ -18,13 +18,13 @@ let controller = {
     });
     
     if ($("select:not(.default_select)").length) {
-      $("select:not(.default_select)").niceSelect();
+      $("select:not(.default_select)").not('.ql-toolbar select').niceSelect();
     }
 
     }, 1200);
 
     window.addEventListener("click", function () {
-      $("select:not(.default_select)").niceSelect();
+      $("select:not(.default_select)").not('.ql-toolbar select').niceSelect();
     });
 
 
@@ -40,6 +40,18 @@ let controller = {
             jQuery(`div[data-leftcol=${currTabId}]`).addClass("open");
             jQuery("body").addClass("disable_scroll");
         }
+    });
+
+
+
+    $(".radio_wrap .radio_label input:checked").parent().addClass("checked-label");
+
+    $("body").on('click', '.radio_wrap .radio_label input', function () {
+      $(this)
+        .parent()
+        .addClass("checked-label")
+        .siblings()
+        .removeClass("checked-label");
     });
 
 

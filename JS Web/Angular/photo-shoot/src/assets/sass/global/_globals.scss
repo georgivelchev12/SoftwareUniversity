@@ -226,6 +226,9 @@ ul.unstyled_ul {
   &.mt_0 {
     margin-top: 0;
   }
+  &.no_bg{
+    background: transparent;
+  }
 }
 
 .filter_tabs {
@@ -294,4 +297,119 @@ ul.unstyled_ul {
 .ngx-pagination .pagination-next a::after,
 .ngx-pagination .pagination-next.disabled::after {
   margin: 0 !important;
+}
+
+
+
+
+
+//
+// Rotating border
+//
+
+$spinner-width:         2rem !default;
+$spinner-height:        $spinner-width !default;
+$spinner-border-width:  .25em !default;
+
+$spinner-width-sm:        1rem !default;
+$spinner-height-sm:       $spinner-width-sm !default;
+$spinner-border-width-sm: .2em !default;
+
+@keyframes spinner-border {
+  from { transform: translate(-50%, -50%) rotate(0); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: $spinner-width;
+  height: $spinner-height;
+  vertical-align: text-bottom;
+  border: 7px solid currentColor;
+  border-right-color: transparent;
+  // stylelint-disable-next-line property-blacklist
+  border-radius: 50%;
+  animation: spinner-border .75s linear infinite;
+}
+
+.spinner-border-sm {
+  width: $spinner-width-sm;
+  height: $spinner-height-sm;
+  border-width: $spinner-border-width-sm;
+}
+
+//
+// Growing circle
+//
+
+@keyframes spinner-grow {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.spinner-grow {
+  display: inline-block;
+  width: $spinner-width;
+  height: $spinner-height;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  // stylelint-disable-next-line property-blacklist
+  border-radius: 50%;
+  opacity: 0;
+  animation: spinner-grow .75s linear infinite;
+}
+
+.spinner-grow-sm {
+  width: $spinner-width-sm;
+  height: $spinner-height-sm;
+}
+
+
+
+.full-wh-spinner{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba($color: #fff, $alpha: 0.7);
+  top: 0;
+  left: 0;
+  z-index: 5;
+  .spinner-border{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 110px;
+    height: 110px;
+    animation: spinner-border .75s linear infinite,
+               toggleColors 3s linear infinite;
+  }
+}
+
+@keyframes toggleColors {
+  0% {
+    color: blue;
+  }
+  20%{
+    color: cyan;
+  }
+  40%{
+    color: purple;
+  }
+  60%{
+    color: pink;
+  }
+  80% {
+    color: orange;
+  }
+  100%{
+    color: green;
+  }
+}
+
+.ql-editor{
+  background: $light;
 }

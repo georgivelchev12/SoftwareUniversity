@@ -59,11 +59,11 @@
         <ul class="footer_contact">
           <li>
             <i class="fas fa-map-marker-alt"></i>
-            bul. Bulgaria №65, Asenovgrad, Bulgaria
+            bul. Bulgaria №165, Plovdiv, Bulgaria
           </li>
           <li>
             <i class="fas fa-phone"></i>
-            <a title="Phone" href="tel:0884166172">088 41 66 172</a>
+            <a title="Phone" href="tel:0883233888">0883 233 888</a>
           </li>
           <li>
             <i class="fas fa-envelope"></i>
@@ -99,8 +99,8 @@
       <span class="footer_title">Account</span>
       <div>
         <ul>
-          <li><a routerLink="/user/profile" *ngIf="isUser">My profile</a></li>
-          <li><a routerLink="/user/profile" *ngIf="isUser">My photos</a></li>
+          <li *ngIf="isUser"><a routerLink="/user/profile">My profile</a></li>
+          <li *ngIf="isUser"><a routerLink="/user/profile">My photos</a></li>
           <li *ngIf="!isUser">
             <a routerLink="/user/login" title="Link" class="login">
               Login

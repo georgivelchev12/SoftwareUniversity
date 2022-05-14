@@ -2,7 +2,7 @@
 ::ng-deep,
 :host {
   .slide_form_wrapper{
-    background: $dark;
+    background: $tertiary;
     padding: 100px 0;
   }
   .slide_form {
@@ -10,7 +10,7 @@
     margin: 0px auto;
     border-radius: 10px;
     background: $light;
-    border: 2px solid $light;
+    // border: 2px solid $light;
     position: relative;
     overflow: hidden;
     width: 768px;

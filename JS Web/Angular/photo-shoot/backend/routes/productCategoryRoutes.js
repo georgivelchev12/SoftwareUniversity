@@ -5,8 +5,8 @@ const { isAdmin } = require("../middlewares/guardsMiddleware");
 const router = require("express").Router();
 
 // /photo-shoot/api/product-categories
-router.post("/", extractFile, createProductCategory);
-router.put("/edit", extractFile, editProductCategory);
+router.post("/", isAdmin(), extractFile, createProductCategory);
+router.put("/edit", isAdmin(), extractFile, editProductCategory);
 router.get("/delete/:id", isAdmin(), deleteProductCategory);
 router.get("/list", getProductCategories);
 router.get("/:id", getProductCategory);

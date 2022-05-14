@@ -2,8 +2,10 @@
 @import "../../../../assets/sass/grid/mixins";
 
 .photo_list {
-  background: #f5f5f5;
   padding: 50px 0;
+  &.in_home{
+    background: #f5f5f5;
+  }
   .photo {
     position: relative;
     margin: 10px 0;

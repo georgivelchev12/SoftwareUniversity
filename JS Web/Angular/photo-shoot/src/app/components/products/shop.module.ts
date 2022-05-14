@@ -11,6 +11,11 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ProductCategoryCreateComponent } from './product-category-create/product-category-create.component';
 import { ProductCategoryEditComponent } from './product-category-edit/product-category-edit.component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { QuillModule } from 'ngx-quill';
+import { StriphtmlPipe } from 'src/app/pipes/striphtml.pipe';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { CheckoutOrderDetailsComponent } from './checkout-order-details/checkout-order-details.component';
+import { CheckoutListOrderComponent } from './checkout-list-order/checkout-list-order.component';
 
 @NgModule({
   imports: [
@@ -20,6 +25,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     ReactiveFormsModule,
     SlickCarouselModule,
     NgxPaginationModule,
+    QuillModule.forRoot(),
   ],
   declarations: [
     CreateProductComponent,
@@ -29,6 +35,10 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     ListProductComponent,
     ProductCategoryCreateComponent,
     ProductCategoryEditComponent,
+    CheckoutComponent,
+    CheckoutOrderDetailsComponent,
+    CheckoutListOrderComponent,
+    StriphtmlPipe
   ],
   exports: [
     CreateProductComponent,
@@ -38,7 +48,12 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     ListProductComponent,
     ProductCategoryCreateComponent,
     ProductCategoryEditComponent,
+    CheckoutComponent,
+    CheckoutOrderDetailsComponent,
+    CheckoutListOrderComponent
   ],
-  providers: [],
+  providers: [
+    StriphtmlPipe
+  ],
 })
 export class ShopModule {}

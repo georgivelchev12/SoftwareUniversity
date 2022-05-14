@@ -11,7 +11,9 @@ const BACKEND_URL = environment.apiUrl + '/product';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-
+  items;
+  totalQty;
+  totalPrice;
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -21,54 +23,61 @@ export class ProductService {
 
 
   // Called on app edit
-  autoAuthUser() {
+  autoCheckCart() {
     const authInfo = this.getCartData();
     if (!authInfo) {
       return;
     }
-
+    this.items = authInfo.items;
+    this.totalQty = authInfo.totalQty;
+    this.totalPrice = authInfo.totalPrice;
   }
 
   private saveCartData(
-    token: string,
-    expirationDate: Date,
-    userRole: string,
-    userEmail: string,
-    userId: string
+    items,
+    totalQty,
+    totalPrice,
   ) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('expiration', expirationDate.toISOString());
-    localStorage.setItem('role', userRole);
-    localStorage.setItem('email', userEmail);
-    localStorage.setItem('id', userId);
+    localStorage.setItem('items', JSON.stringify(items));
+    localStorage.setItem('totalQty', totalQty);
+    localStorage.setItem('totalPrice', totalPrice);
   }
-  private clearCartData() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiration');
-    localStorage.removeItem('role');
-    localStorage.removeItem('email');
-    localStorage.removeItem('id');
+  public clearCartData() {
+    localStorage.removeItem('items');
+    localStorage.removeItem('totalQty');
+    localStorage.removeItem('totalPrice');
   }
-  private getCartData() {
-    const token = localStorage.getItem('token');
-    const expirationDate = localStorage.getItem('expiration');
-    const userRole = localStorage.getItem('role');
-    const userEmail = localStorage.getItem('email');
-    const userId = localStorage.getItem('id');
+  public getCartData() {
+    const items = localStorage.getItem('items');
+    const totalQty = localStorage.getItem('totalQty');
+    const totalPrice = localStorage.getItem('totalPrice');
 
-    if (!token || !expirationDate || !userRole || !userEmail || !userId) {
+    if (!items || !totalQty || !totalPrice) {
       return;
     }
     return {
-      token,
-      expirationDate: new Date(expirationDate),
-      userRole,
-      userEmail,
-      userId,
+      items,
+      totalQty,
+      totalPrice,
     };
   }
 
+  getCartItems(){
+    return this.items;
+  }
+  getTotalQty(){
+    return this.totalQty;
+  }
+  getTotalPrice(){
+    return this.totalPrice;
+  }
 
+  addToCart(id, quantity = 1){
+    this.http.post<{message, cart: { items, totalQty, totalPrice }}>(`${environment.apiUrl}/checkout/addToCart/${id}`, { quantity }).subscribe(({message, cart}) => {
+      this.saveCartData(cart.items, cart.totalQty, cart.totalPrice)
+      this.dataSharingService.isDataChanged.next(true);
+    });  
+  }
 
   createProduct(body) {
     let productData = new FormData();
@@ -129,5 +138,42 @@ export class ProductService {
     productData.append('image', body.imgUrl, body.title);
     productData.append('parentId', body.parentId);
     return this.http.post(`${BACKEND_URL}-categories`, productData)
+  }
+
+  editProductCategory(body){
+    let productData;
+    if (typeof body.imgUrl === 'object') {
+      productData = new FormData();
+      productData.append('title', body.title);
+      productData.append('description', body.description);
+      productData.append('image', body.imgUrl, body.title);
+      productData.append('parentId', body.parentId);
+  } else {
+      productData = {
+        ...body,
+      };
+    }
+    return this.http.put(`${BACKEND_URL}-categories/edit`, productData);
+  }
+
+  getProductCategory(id){
+    return this.http.get<{ message: string, category: Object }>(`${BACKEND_URL}-categories/${id}`)
+  }
+
+  deleteProductCategory(id){
+    return this.http.get<{message: string}>(`${BACKEND_URL}-categories/delete/${id}`)
+  }
+
+  // To do checkout 
+  createOrder(body){
+    return this.http.post<{}>(`${environment.apiUrl}/checkout/createOrder`, body);  
+  }
+
+  getOrder(id){
+    return this.http.get<{ message: string, order: Object }>(`${environment.apiUrl}/checkout/order/${id}`);
+  }
+
+  getOrders(query){
+    return this.http.get<{ message: string, orders: Object }>(`${environment.apiUrl}/checkout/orders/${query}`);
   }
 }

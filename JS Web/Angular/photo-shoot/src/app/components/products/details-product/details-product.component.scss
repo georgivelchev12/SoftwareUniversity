@@ -47,6 +47,27 @@
         }
       }
     }
+
+    .buttons {
+      @include position(absolute, 10px 60px null null);
+      a {
+        background: rgba($color: $black, $alpha: 0.7);
+        padding: 8px;
+        color: $light;
+        margin: 0 5px;
+        position: relative;
+        cursor: pointer;
+        &:hover {
+          background: $secondary;
+        }
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 
   // Rightcol
@@ -262,12 +283,12 @@
   font-size: 20px;
 }
 
-.shop_section{
+.shop_section {
   background: #f5f5f5;
-  label{
+  label {
     cursor: pointer;
   }
-  img{
+  img {
     height: 200px;
     object-fit: contain;
   }

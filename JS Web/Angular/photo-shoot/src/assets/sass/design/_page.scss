@@ -69,7 +69,8 @@ main {
       margin: 10px 0;
       margin-right: 10px;
     }
-    .nice-select {
+    .nice-select, select {
+      width: auto;
       margin: 0;
       max-width: 100%;
     }
@@ -227,6 +228,9 @@ main {
     font-family: $secondary-font;
     font-weight: 600;
     min-height: 1.6em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     font-size: 14px;
     @include breakpoint(small) {
       font-size: 16px;
@@ -266,6 +270,10 @@ main {
     color: #595959;
     line-height: 18px;
     margin: 0 auto 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     @include breakpoint(small) {
       font-size: 14px;
     }

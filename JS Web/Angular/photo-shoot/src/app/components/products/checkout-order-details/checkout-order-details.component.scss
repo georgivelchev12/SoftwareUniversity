@@ -1,0 +1,47 @@
+@import "../../../../assets/sass/setup";
+@import "../../../../assets/sass/grid/mixins";
+.logo {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  @include breakpoint(large) {
+    max-width: none;
+    font-size: 20px;
+  }
+  img,
+  svg {
+    transition: all 0.3s;
+    margin-right: 8px;
+
+    @include box(40px);
+    @include breakpoint(medium) {
+      @include box(50px);
+    }
+    @include breakpoint(large) {
+      @include box(60px);
+    }
+    path {
+      fill: $secondary;
+    }
+  }
+  .logo_inner {
+    strong {
+      color: $dark;
+      margin-bottom: 3px;
+      font-size: 20px;
+      @include breakpoint(medium) {
+        font-size: 22px;
+      }
+      @include breakpoint(large) {
+        font-size: 26px;
+      }
+    }
+    span {
+      color: $secondary;
+      font-size: 13px;
+      @include breakpoint(large) {
+        font-size: 15px;
+      }
+    }
+  }
+}

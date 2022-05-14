@@ -1,0 +1,327 @@
+<section class="checkout_page">
+  <div class="checkout_page_inner">
+  
+    <div class="row default_center">
+      <div class="col">
+        <h1 class="order_title">
+          Order
+          <span>
+            For further questions:
+            <a href="tel:+123123123">+123 081 222 11</a>
+          </span>
+        </h1>
+      </div>
+    </div>
+  
+    <form class="row" [formGroup]="form" (ngSubmit)="checkout()">
+      <div class="col">
+  
+        <div class="supercheckout-blocks confirmCheckoutBack">
+          <div class="opc_shoppingcart custom-panel smallViewSection">
+            <div id="complete_cart_summary">
+  
+              <!-- Order table -->
+              <div class="row default_center default_middle">
+                <div class="col">
+                  <div class="color_wrap">
+                    <div class="table inside_wrapper">
+  
+                      <div class="thead">
+                        <div class="tcell title_col">Product</div>
+                        <div class="tcell desc_col">Description</div>
+                        <div class="tcell quantity_cell">Quantity</div>
+                        <div class="tcell total_col">Total</div>
+                      </div>
+  
+                      <div class="trow cart_list_item" id="{{product.item._id}}" *ngFor="let product of cartProducts">
+                        <div class="tcell title_col" data-th="Product">
+  
+                          <!-- Remove product link -->
+                          <!-- <a (click)="deleteProductFromCart(product.item._id);"
+                            class="remove_pr fa fa-times default_hide medium_flex remove-from-cart"
+                            rel="nofollow">
+                          </a> -->
+  
+                          <figure class="product_img">
+                            <img src="{{product.item.imgUrl}}">
+                          </figure>
+  
+                          <div class="product_title">
+                            <a routerLink="/product/{{product.item._id}}">{{product.item.title}}</a>
+  
+                            <div class="price_block">
+                              <span class="price">
+                                <span class="p-price">${{product.item.price}}</span>
+                              </span>
+                            </div>
+                          </div>
+  
+                        </div>
+  
+                        <div class="tcell desc_col" data-th="Description">
+                          <a routerLink="/product/{{product.item._id}}">{{product.item.title}}</a>
+                          <div class="price_block">
+                            <span class="price">
+                              <span class="p-price">${{product.item.price}}</span>
+                            </span>
+                          </div>
+                        </div>
+  
+  
+                        <div class="tcell quantity_cell" data-th="Quantity">
+  
+                          <div class="custom_quantity qty">
+                            <div class="input-group bootstrap-touchspin">
+  
+                              <input 
+                                min="1" 
+                                max="100" 
+                                type="text" 
+                                class="form-control input-number quantitybox" 
+                                name="{{product.item._id}}"
+                                [value]="product.qty || 1"
+                              >
+  
+                                <button 
+                                  type="button"
+                                  class="cart_quantity_down qty-btn increase_button quantity-left-minus  btn-touchspin bootstrap-touchspin-down"
+                                  (click)="adjustQuantity(product, '-')"
+                                >
+                                  <i class="material-icons touchspin-up"></i>
+                                </button>
+  
+                                <button 
+                                  type="button"
+                                  class="cart_quantity_down qty-btn decrease_button quantity-right-plus btn-touchspin bootstrap-touchspin-up"
+                                  (click)="adjustQuantity(product, '+')"
+                                >
+                                  <i class="material-icons touchspin-down"></i>
+                                </button>
+  
+                            </div>
+                          </div>
+  
+                        </div>
+  
+                        <div class="tcell total_col" data-th="Total">
+  
+                          <div class="price_block">
+                            $ {{product.price}}
+                          </div>
+  
+                          <!-- Remove product link -->
+                          <!-- <a 
+                            (click)="deleteProductFromCart(product.item._id);"
+                            class="remove_pr fa fa-times medium_hide remove-from-cart" 
+                            rel="nofollow">
+                          </a> -->
+                        </div>
+                    
+                      </div>
+  
+                        <div class="row default_end outside">
+                          <div class="col medium_8 large_6 giant_5">
+                            <div class="summary_wrap">
+                              <div class="inside_wrapper">
+  
+                                <div class="summary_row" id="supercehckout_summary_total_products">
+                                  <p>Subtotal</p>
+                                  <p class="value"><span>${{subTotalPrice}}</span></p>
+                                </div>
+  
+                                <div class="summary_row" id="supercehckout_summary_total_shipping">
+                                  <p>Shippment</p>
+                                  <p class="value"><span>$6,00</span></p>
+                                </div>
+  
+                                <div class="summary_row total cart-total">
+                                  <span>Total price (tax inc.)</span>
+                                  <span class="price amountMoney">${{totalPrice}}</span>
+                                  <input type="hidden" id="total_price" value="{{totalPrice}}">
+                                </div>
+  
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Order table END -->
+  
+            </div>
+          </div>
+        </div>
+        <div class="row supercheckout-blocks" data-row="3">
+          <div class="col">
+            <div class="color_wrap">
+              <h3 class="cart_title text-center">Shipping</h3>
+             
+              <!-- Shipping fields -->
+              <div class="supercheckout-blocks" data-column="0" data-row="3" data-column-inside="0">
+                <div id="checkoutShippingAddress">
+  
+                  <div class="opc_shipping_address custom-panel">
+  
+                    <div class="row sort_data">
+
+                      <div class="col small_6">
+                        <div class="input_wrapper required">
+                          <label class="small_title">
+                            First name <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('firstName').valid && form.get('firstName').touched"></span>
+                          </label>
+                          <input type="text" formControlName="firstName" placeholder="Your first name" />
+                          <div class="errors" *ngIf="!form.get('firstName').valid && form.get('firstName').touched">
+                            <span *ngIf="form.get('firstName').hasError('required')">First name is required</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col small_6">
+                        <div class="input_wrapper required">
+                          <label class="small_title">
+                            Last name <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('lastName').valid && form.get('lastName').touched"></span>
+                          </label>
+                          <input type="text" formControlName="lastName" placeholder="Your last name" />
+                          <div class="errors" *ngIf="!form.get('lastName').valid && form.get('lastName').touched">
+                            <span *ngIf="form.get('lastName').hasError('required')">Last name is required</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col small_6">
+                        <div class="input_wrapper required">
+                          <label class="small_title">
+                            Email <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('email').valid && form.get('email').touched"></span>
+                          </label>
+                          <input type="text" formControlName="email" placeholder="Your email" />
+                          <div class="errors" *ngIf="!form.get('email').valid && form.get('email').touched">
+                            <span *ngIf="form.get('email').hasError('required')">Email is required</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col small_6">
+                        <div class="input_wrapper required">
+                          <label class="small_title">
+                            Phone <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('phone').valid && form.get('phone').touched"></span>
+                          </label>
+                          <input type="text" formControlName="phone" placeholder="Your phone" />
+                          <div class="errors" *ngIf="!form.get('phone').valid && form.get('phone').touched">
+                            <span *ngIf="form.get('phone').hasError('required')">Phone is required</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="input_wrapper required">
+                      <label class="small_title">
+                        Country <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('country').valid && form.get('country').touched"></span>
+                      </label>
+                      <input type="text" formControlName="country" placeholder="Your country" />
+                      <div class="errors" *ngIf="!form.get('country').valid && form.get('country').touched">
+                        <span *ngIf="form.get('country').hasError('required')">Country is required</span>
+                      </div>
+                    </div>
+
+                    <div class="input_wrapper required">
+                      <label class="small_title">
+                        Town <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('town').valid && form.get('town').touched"></span>
+                      </label>
+                      <input type="text" formControlName="town" placeholder="Your town" />
+                      <div class="errors" *ngIf="!form.get('town').valid && form.get('town').touched">
+                        <span *ngIf="form.get('town').hasError('required')">Town is required</span>
+                      </div>
+                    </div>
+
+                    <div class="input_wrapper required">
+                      <label class="small_title">
+                        Address <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('address').valid && form.get('address').touched"></span>
+                      </label>
+                      <input type="text" formControlName="address" placeholder="Your Address" />
+                      <div class="errors" *ngIf="!form.get('address').valid && form.get('address').touched">
+                        <span *ngIf="form.get('address').hasError('required')">Address is required</span>
+                      </div>
+                    </div>
+
+                  </div>
+            
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+        <div class="supercheckout-blocks">
+          <div class="row">
+            <div class="col">
+              <div class="color_wrap">
+                <div class="opc_payment_method">
+                  <h3 class="cart_title text-center">Payment method</h3>
+                  <div class="row default_center">
+                    <div class="col small_11 medium_10 large_8">
+                      <div class="radio_wrap">
+
+                        <div class="errors" *ngIf="!form.get('paymentMethod').valid && form.get('paymentMethod').touched">
+                          <span *ngIf="form.get('paymentMethod')">Please choose payment method.</span>
+                        </div>
+
+                        <label class="radio_label payment_options" #switch [ngClass]="switch.classList.contains('checked')  ? 'gray' : 'black'">
+                          <input type="radio" value="credit_card" formControlName="paymentMethod" id="credit_card">
+                          <figure class="radio_img">
+                            <img class="cash_payment" src="assets/images/cards.png">
+                          </figure>
+                          <span>
+                            <strong>Credit card</strong>
+                            <small>Pay with credit/debit card (Visa, Master card, etc.)</small>
+                          </span>
+                        </label>
+
+                        <label class="radio_label payment_options">
+                          <input type="radio" value="cash_on_delivery" formControlName="paymentMethod" id="cash_on_delivery">
+                          <figure class="radio_img">
+                            <img class="cash_payment" src="assets/images/cashondelivery.png">
+                          </figure>
+                          <span>
+                            <strong>Cash on delivery</strong>
+                            <small>Pay for the goods at the time of delivery</small>
+                          </span>
+                        </label>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="supercheckout-blocks opc_confirmcart custom-panel columnleftsort">
+          <div id="order-shipping-extra" class="text_center">
+            <div class="checkbox">
+              <div class="errors" *ngIf="!form.get('termsAndConditions').valid && form.get('termsAndConditions').touched">
+                <span *ngIf="form.get('termsAndConditions')">Terms and condition are required</span>
+              </div>
+              <input type="checkbox" id="termsAndConditions" formControlName="termsAndConditions">
+              <label for="termsAndConditions">
+                I agree with the <a href="#">general conditions</a> and will abide by them unconditionally. 
+              </label>
+            </div>
+          </div>
+          <br>
+          <div class="row default_center">
+            <div class="col medium_8 text_center">
+              <button type="submit" class="btn" style="width: 300px;">Buy</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</section>

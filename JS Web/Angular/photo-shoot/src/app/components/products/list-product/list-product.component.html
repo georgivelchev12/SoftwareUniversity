@@ -1,4 +1,4 @@
-<div class="row products-selection">
+<div class="row products-selection" *ngIf="!isHome">
   <div class="col default_8 total-products">
     <p>{{totalItems}} product(s) are available.</p>
   </div>
@@ -25,7 +25,7 @@
             <img src="{{product.imgUrl}}" alt="">
           </span>
           <span class="product_title">{{product.title}}</span>
-          <span class="short_txt">{{product.shortDescription}}</span>
+          <span class="short_txt">{{product.shortDescription | striphtml}}</span>
         </a>
         
         <span class="price_block">
@@ -34,10 +34,10 @@
         </span>
         <div class="row button_group">
           <div class="col tiny_6">
-            <a class="btn btn_outline wide"  [routerLink]="['/product/', product._id]">View</a>
+            <a class="btn btn_outline wide" [routerLink]="['/product/', product._id]">View</a>
           </div>
           <div class="col tiny_6">
-            <a class="btn wide add_to_cart" href="#">Buy</a>
+            <a class="btn wide add_to_cart" (click)="addToCart(product._id, 1)">Buy</a>
           </div>
         </div>
 
@@ -52,7 +52,7 @@
             </a>
           </div>
           <div class="cnt_col col tiny_8">
-            <a  [routerLink]="['/product/', product._id]">
+            <a [routerLink]="['/product/', product._id]">
               <span class="product_title">{{product.title}}</span>
             </a>
             <span class="short_txt">{{product.shortDescription}}</span>
@@ -63,14 +63,10 @@
             </span>
             <div class="row button_group">
               <div class="col tiny_6">
-                <a class="btn btn_outline wide"  [routerLink]="['/product/', product._id]">
-                  View
-                </a>
+                <a class="btn btn_outline wide" [routerLink]="['/product/', product._id]">View</a>
               </div>
               <div class="col tiny_6">
-                <a class="btn wide add_to_cart" href="#">
-                  Buy
-                </a>
+                <a class="btn wide add_to_cart" (click)="addToCart(product._id, 1)">Buy</a>
               </div>
             </div>
 
@@ -89,12 +85,11 @@
     </div>
   </div>
   
-  <nav class="row default_middle pagination">
+  <nav class="row default_middle pagination" *ngIf="!isHome">
     <div class="col small_6">
       Showing {{currentPage}}-{{itemsPerPage * currentPage}} from {{totalItems}} item(s)
     </div>
     <div class="col small_6 default_flex default_end default_middle" *ngIf="totalItems > 8">
-      <div class="spinner" *ngIf="loading">LOADING...</div>
       <pagination-controls  (pageChange)="getPage($event)" previousLabel="" nextLabel=""></pagination-controls>
     </div>  
   </nav>

@@ -131,7 +131,7 @@
   @include breakpoint(medium) {
     display: none;
   }
-  label[for="toggle_nav"]{
+  label[for="toggle_nav"] {
     margin-left: 10px;
   }
 }
@@ -417,5 +417,12 @@ header .register {
     @include breakpoint(medium) {
       display: block;
     }
+  }
+}
+
+.no_items {
+  cursor: not-allowed !important;
+  a{
+    pointer-events: none;
   }
 }

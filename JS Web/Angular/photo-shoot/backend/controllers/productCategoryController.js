@@ -1,3 +1,4 @@
+const { Types } = require("mongoose");
 const Product = require("../models/Product");
 const ProductCategory = require("../models/ProductCategory");
 const {
@@ -20,11 +21,12 @@ async function getProductCategories(req, res) {
         ProductCategory.rebuildTree(rootCategory, 1, async function () {
 
           // Listing products of current category, including products of child categories (without duplication of products)
-          let productsOfCurrentCategories = await Product.find();;
+          let productsOfCurrentCategories = [];
           const currentCategory = await ProductCategory.findOne(filterOptions) || rootCategory
           
           if(!currentCategory.isRoot()){
             await currentCategory.children(async function (err, productIds) {
+
               currentCategory.products.forEach(id => {
                 if(!productIds.includes(id)){
                   productIds.push(id)
@@ -42,6 +44,8 @@ async function getProductCategories(req, res) {
               }
               
             }).distinct("products")
+          } else {
+            productsOfCurrentCategories = await Product.find();
           }
 
           currentCategory.children(function (err, childCategories) {
@@ -50,7 +54,7 @@ async function getProductCategories(req, res) {
               currentCategory,
               childCategories,
               productsOfCurrentCategories,
-              count: productsOfCurrentCategories?.length || 0
+              count: productsOfCurrentCategories && productsOfCurrentCategories.length || 0
             };
 
             if(currentCategory.isRoot()){
@@ -74,11 +78,11 @@ async function getProductCategories(req, res) {
 
 async function getProductCategory(req, res) {
   try {
-    const product = await ProductCategory.findById({ _id: req.params.id })
+    const category = await ProductCategory.findById({ _id: req.params.id })
       .populate("products")
       .lean();
-    if (product) {
-      res.status(200).json({ message: "Product category fetched!", product });
+    if (category) {
+      res.status(200).json({ message: "Product category fetched!", category });
     }
   } catch (err) {
     console.error("getProductCategory - Database error: ", err.message);
@@ -100,8 +104,6 @@ async function createProductCategory(req, res) {
       parentId: req.body.parentId || rootCategory._id,
     });
 
-    console.log(productCategory);
-    
     await productCategory.save();
     res.status(200).json({ message: "You create category successfully!", productCategory });
 
@@ -116,12 +118,39 @@ async function createProductCategory(req, res) {
 async function deleteProductCategory(req, res) {
   // To do ... delete category and handle all products in that category in proper way
   
-  const foundProduct = await Product.findOne({ _id: req.params.id });
-  res.status(200).json({ message: "Product deleted!" });
+  const foundProductCategory = await ProductCategory.findOne({ _id: req.params.id });
   try {
-    await deleteImage(getImagePath(req, foundProduct.imgUrl));
-    await Product.deleteOne({ _id: req.params.id });
-    res.status(200).json({ message: "Product deleted!" });
+    
+    foundProductCategory.parent(function (err, parentCategory){
+
+      ProductCategory.updateOne(
+        { _id: parentCategory._id },
+        { $addToSet: { products: foundProductCategory.products } }
+      ).then(data => {
+        // console.log(data);
+        Product.updateMany(
+          { _id: { $in: foundProductCategory.products } },
+          {
+            $set: { categories: Types.ObjectId(parentCategory._id) }
+          },
+        ).then(d => {
+          console.log('d>', d);
+        });
+      })
+   
+    })
+
+    await Product.updateMany(
+      {},
+      {
+        $pull: { categories: Types.ObjectId(req.params.id) }
+      },
+    );
+
+    await deleteImage(getImagePath(req, foundProductCategory.imgUrl));
+    await ProductCategory.deleteOne({ _id: req.params.id });
+    res.status(200).json({ message: "Product category deleted!" });
+
   } catch (err) {
     console.log(`Something went wrong: ${err}`);
   }
@@ -129,31 +158,29 @@ async function deleteProductCategory(req, res) {
 
 async function editProductCategory(req, res) {
   try {
-    const productCategories = await ProductCategory.find({
-      _id: filterEmptyArr(req.body.categories),
+    const rootCategory = await ProductCategory.findOne({
+      title: "rootCategory",
+      lft: 1,
     });
 
-    const product = await Product.findById(req.body._id);
-    const newProductData = {
+    const category = await ProductCategory.findById(req.body._id);
+    const newCategoryData = {
       _id: req.body._id,
       title: req.body.title,
-      shortDescription: req.body.shortDescription,
       description: req.body.description,
-      imgUrl: getImagePath(req).image || product.imgUrl,
-      price: req.body.price,
-      oldPrice: req.body.oldPrice,
-      categories: productCategories,
+      imgUrl: getImagePath(req).image || category.imgUrl,
+      parentId: req.body.parentId || rootCategory._id,
     };
-    Object.assign(product, newProductData);
-    await product.save();
+    Object.assign(category, newCategoryData);
+    await category.save();
     res
       .status(200)
-      .json({ message: "You edited product successfully!", product });
+      .json({ message: "You edited category successfully!", category });
   } catch (err) {
     if (err.kind == "ObjectId") {
       throw new Error("Invalid data!");
     }
-    throw new Error("editProduct err:" + err.message);
+    throw new Error("editProductCategory err:" + err.message);
   }
 }
 

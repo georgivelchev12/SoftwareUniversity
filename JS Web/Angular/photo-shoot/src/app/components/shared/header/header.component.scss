@@ -45,3 +45,22 @@
     }
   }
 }
+
+.cart {
+  font-size: 20px;
+  color: $secondary;
+  position: relative;
+  span {
+    font-size: 13px;
+    @include position(absolute, -12px -12px null null);
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+    background: $main;
+    color: $light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+  }
+}

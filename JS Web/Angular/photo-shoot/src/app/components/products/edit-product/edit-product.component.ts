@@ -15,11 +15,11 @@ import { mimeType } from '../../photos/create-photo/myme-type.validator';
 export class EditProductComponent implements OnInit {
   
   form = new FormGroup({
-    title: new FormControl('', [ Validators.required, Validators.maxLength(50) ]),
-    shortDescription: new FormControl('', [ Validators.required, Validators.maxLength(150) ]),
-    description: new FormControl('', [ Validators.required, Validators.maxLength(900) ]),
+    title: new FormControl('', [ Validators.required, Validators.maxLength(100) ]),
+    shortDescription: new FormControl('', [ Validators.required, Validators.maxLength(1500) ]),
+    description: new FormControl('', [ Validators.required, Validators.maxLength(5000) ]),
     oldPrice: new FormControl('', [ Validators.pattern(/^[\d\.,]+$/) ]),
-    price: new FormControl('', [ Validators.pattern(/^[\d\.,]+$/) ]),
+    price: new FormControl('', [ Validators.required, Validators.pattern(/^[\d\.,]+$/) ]),
     image: new FormControl(null, {
       validators: [Validators.required],
       asyncValidators: [mimeType],
@@ -89,8 +89,12 @@ export class EditProductComponent implements OnInit {
 
       this.allCategories.forEach((c) => {
         // Select form checkboxes which current photo has. (Init form checkboxes)
-        const containsCategory = this.currentProduct.categories.find((catInProduct) => catInProduct._id == c._id) || false;
-        (this.form.get('categories') as FormArray).push(new FormControl(containsCategory));
+        if(this.currentProduct.categories){
+          const containsCategory = this.currentProduct.categories.find((catInProduct) => catInProduct._id == c._id) || false;
+          (this.form.get('categories') as FormArray).push(new FormControl(containsCategory));
+        } else {
+          (this.form.get('categories') as FormArray).push(new FormControl(false));
+        }
       });
       this.getSelectedCategories();
     });
@@ -133,4 +137,9 @@ export class EditProductComponent implements OnInit {
     this.onDragover = false;
   }
 
+
+
+  deleteProduct(){
+    
+  }
 }

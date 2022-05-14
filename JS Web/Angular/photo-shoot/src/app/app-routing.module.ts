@@ -13,6 +13,9 @@ import { CreatePhotoComponent } from './components/photos/create-photo/create-ph
 import { DetailsPhotoComponent } from './components/photos/details-photo/details-photo.component';
 import { EditPhotoComponent } from './components/photos/edit-photo/edit-photo.component';
 import { ListPhotosComponent } from './components/photos/list-photos/list-photos.component';
+import { CheckoutListOrderComponent } from './components/products/checkout-list-order/checkout-list-order.component';
+import { CheckoutOrderDetailsComponent } from './components/products/checkout-order-details/checkout-order-details.component';
+import { CheckoutComponent } from './components/products/checkout/checkout.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
 import { DetailsProductComponent } from './components/products/details-product/details-product.component';
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';
@@ -59,13 +62,17 @@ const routes: Routes = [
   { path: 'product-categories/create', component: ProductCategoryCreateComponent, canActivate: [AdminGuard] },
   { path: 'product-categories/edit/:id', component: ProductCategoryEditComponent, canActivate: [AdminGuard] },
 
+  // Product orders & checkout
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout/order/:id', component: CheckoutOrderDetailsComponent },
+  { path: 'checkout/orders', component: CheckoutListOrderComponent, canActivate: [AdminGuard] },
 
   // Not Found
   { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,  { scrollPositionRestoration: 'enabled' })],
+  imports: [RouterModule.forRoot(routes,  { scrollPositionRestoration: 'enabled' })], // scrolls back to top on route change
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

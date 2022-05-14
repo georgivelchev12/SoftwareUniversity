@@ -49,8 +49,8 @@
         <div class="col">
           <div class="input_wrapper">
             <label>Description:</label>
-            <textarea placeholder="Enter Description" formControlName="description" rows="5"></textarea>
-            <!-- <ngx-editor formControlName="description"></ngx-editor> -->
+            <!-- <textarea placeholder="Enter Description" formControlName="description" rows="5"></textarea> -->
+            <quill-editor formControlName="description" [styles]="{height: '200px'}"></quill-editor>
             <div class="errors" *ngIf="!form.get('description').valid && form.get('description').touched">
               <span *ngIf="form.get('description').hasError('required')">Description is required</span>
               <span *ngIf="form.get('description').hasError('maxlength')">Description is too long</span>

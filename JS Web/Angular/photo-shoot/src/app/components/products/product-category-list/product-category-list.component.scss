@@ -17,6 +17,22 @@
     @include breakpoint(medium) {
       padding: 30px 0 0;
     }
+    .category_title{
+      margin-bottom: -20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .category_actions{
+        display: flex;
+        align-items: center;
+        .btn{
+          max-width: 100%;
+          width: 160px;
+          margin: 8px 5px;
+        }
+      }
+    }
     .single_category {
       @include breakpoint(giant) {
         max-width: 14.2%;
@@ -233,7 +249,7 @@
     }
     .section_title {
       padding-top: 0;
-      margin-bottom: -20px;
+      margin: 0;
     }
     .facet {
       margin-bottom: 30px;

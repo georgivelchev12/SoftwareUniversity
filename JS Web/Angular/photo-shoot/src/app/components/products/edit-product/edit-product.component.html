@@ -36,8 +36,8 @@
         </div>
 
         <div class="col">
-          <div class="input_wrapper">
-            <label>Short Description:</label>
+          <div class="input_wrapper required">
+            <label>Short Description: <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('shortDescription').valid && form.get('shortDescription').touched"></span></label>
             <textarea placeholder="Enter Short Description" formControlName="shortDescription" rows="5"></textarea>
             <div class="errors" *ngIf="!form.get('shortDescription').valid && form.get('shortDescription').touched">
               <span *ngIf="form.get('shortDescription').hasError('required')">Short description is required</span>
@@ -47,9 +47,10 @@
         </div>
 
         <div class="col">
-          <div class="input_wrapper">
-            <label>Description:</label>
-            <textarea placeholder="Enter Description" formControlName="description" rows="5"></textarea>
+          <div class="input_wrapper required">
+            <label>Description: <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('description').valid && form.get('description').touched"></span></label>
+            <!-- <textarea placeholder="Enter Description" formControlName="description" rows="5"></textarea> -->
+            <quill-editor formControlName="description" [styles]="{height: '200px'}"></quill-editor>
             <div class="errors" *ngIf="!form.get('description').valid && form.get('description').touched">
               <span *ngIf="form.get('description').hasError('required')">Description is required</span>
               <span *ngIf="form.get('description').hasError('maxlength')">Description is too long</span>
@@ -67,8 +68,8 @@
           </div>
         </div>
         <div class="col medium_6">
-          <div class="input_wrapper">
-            <label>Price ($):</label>
+          <div class="input_wrapper required">
+            <label>Price ($): <span class="fas fa-exclamation-circle color_accent" *ngIf="!form.get('price').valid && form.get('price').touched"></span></label>
             <input type="text" placeholder="Enter price" formControlName="price" />
             <div class="errors" *ngIf="!form.get('price').valid && form.get('price').touched">
               <span *ngIf="form.get('price').hasError('required')">Price is required</span>
@@ -113,10 +114,10 @@
             </div>
     
         </div>
-        <div class="col medium_6 large_4">
-          <button type="submit" class="btn wide" [disabled]="!form.valid">
-            Edit product
-          </button>
+        <div class="col default_flex default_middle default_center">
+          <button type="submit" class="btn wide" [disabled]="!form.valid">Edit product</button>
+          <div style="margin: 20px 10px 0;">OR</div>
+          <button class="btn btn_danger wide" type="button" (click)="deleteProduct()">Delete product</button>
         </div>
     
       </div>

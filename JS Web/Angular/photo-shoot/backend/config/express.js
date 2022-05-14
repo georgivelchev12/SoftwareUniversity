@@ -13,7 +13,7 @@ module.exports = (app) => {
     );
     res.setHeader(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cart"
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cart, errorMessage"
     );
     
     next();

@@ -118,6 +118,8 @@ export class AuthService {
     localStorage.removeItem('role');
     localStorage.removeItem('email');
     localStorage.removeItem('id');
+    // Add clear because of Cart data
+    localStorage.clear();
   }
   private getAuthData() {
     const token = localStorage.getItem('token');
